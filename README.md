@@ -149,7 +149,7 @@
 ```bash
 mkdir -p ~/.claude/skills/rag-system-planner
 curl -o ~/.claude/skills/rag-system-planner/SKILL.md \
-  https://raw.githubusercontent.com/MasterGenm/rag-system-planner/main/skills/rag-system-planner/SKILL.md
+  https://raw.githubusercontent.com/MasterGenm/rag-system-planner-demo/main/skills/rag-system-planner/SKILL.md
 ```
 
 ### OpenAI Codex CLI
@@ -157,7 +157,7 @@ curl -o ~/.claude/skills/rag-system-planner/SKILL.md \
 ```bash
 mkdir -p ~/.codex/skills/rag-system-planner
 curl -o ~/.codex/skills/rag-system-planner/SKILL.md \
-  https://raw.githubusercontent.com/MasterGenm/rag-system-planner/main/skills/rag-system-planner/SKILL.md
+  https://raw.githubusercontent.com/MasterGenm/rag-system-planner-demo/main/skills/rag-system-planner/SKILL.md
 ```
 
 ### Cursor
@@ -165,7 +165,7 @@ curl -o ~/.codex/skills/rag-system-planner/SKILL.md \
 ```bash
 mkdir -p .cursor/rules
 curl -o .cursor/rules/rag-system-planner.mdc \
-  https://raw.githubusercontent.com/MasterGenm/rag-system-planner/main/cursor/rules/rag-system-planner.mdc
+  https://raw.githubusercontent.com/MasterGenm/rag-system-planner-demo/main/cursor/rules/rag-system-planner.mdc
 ```
 
 ### Kiro
@@ -173,11 +173,11 @@ curl -o .cursor/rules/rag-system-planner.mdc \
 ```bash
 mkdir -p .kiro/steering
 curl -o .kiro/steering/rag-system-planner.md \
-  https://raw.githubusercontent.com/MasterGenm/rag-system-planner/main/kiro/steering/rag-system-planner.md
+  https://raw.githubusercontent.com/MasterGenm/rag-system-planner-demo/main/kiro/steering/rag-system-planner.md
 
 mkdir -p .kiro/skills/rag-system-planner
 curl -o .kiro/skills/rag-system-planner/SKILL.md \
-  https://raw.githubusercontent.com/MasterGenm/rag-system-planner/main/skills/rag-system-planner/SKILL.md
+  https://raw.githubusercontent.com/MasterGenm/rag-system-planner-demo/main/skills/rag-system-planner/SKILL.md
 ```
 
 ### OpenClaw
@@ -185,7 +185,7 @@ curl -o .kiro/skills/rag-system-planner/SKILL.md \
 ```bash
 mkdir -p ~/.openclaw/skills/rag-system-planner
 curl -o ~/.openclaw/skills/rag-system-planner/SKILL.md \
-  https://raw.githubusercontent.com/MasterGenm/rag-system-planner/main/skills/rag-system-planner/SKILL.md
+  https://raw.githubusercontent.com/MasterGenm/rag-system-planner-demo/main/skills/rag-system-planner/SKILL.md
 ```
 
 ### OpenCode
@@ -193,7 +193,7 @@ curl -o ~/.openclaw/skills/rag-system-planner/SKILL.md \
 ```bash
 mkdir -p ~/.config/opencode/skills/rag-system-planner
 curl -o ~/.config/opencode/skills/rag-system-planner/SKILL.md \
-  https://raw.githubusercontent.com/MasterGenm/rag-system-planner/main/skills/rag-system-planner/SKILL.md
+  https://raw.githubusercontent.com/MasterGenm/rag-system-planner-demo/main/skills/rag-system-planner/SKILL.md
 ```
 
 ### Google Antigravity
@@ -201,7 +201,7 @@ curl -o ~/.config/opencode/skills/rag-system-planner/SKILL.md \
 ```bash
 mkdir -p ~/.gemini/antigravity/skills/rag-system-planner
 curl -o ~/.gemini/antigravity/skills/rag-system-planner/SKILL.md \
-  https://raw.githubusercontent.com/MasterGenm/rag-system-planner/main/skills/rag-system-planner/SKILL.md
+  https://raw.githubusercontent.com/MasterGenm/rag-system-planner-demo/main/skills/rag-system-planner/SKILL.md
 ```
 
 ## 仓库结构
@@ -209,7 +209,6 @@ curl -o ~/.gemini/antigravity/skills/rag-system-planner/SKILL.md \
 ```text
 rag-system-planner/
 ├─ README.md
-├─ README.zh-CN.md
 ├─ LICENSE
 ├─ .gitignore
 ├─ cursor/
