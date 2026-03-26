@@ -1,0 +1,49 @@
+---
+description: "Plan and diagnose retrieval-augmented generation systems. Use when comparing vector stores, retrieval strategies, chunking, reranking, evaluation, and observability choices in a RAG application."
+globs:
+alwaysApply: false
+---
+
+# rag-system-planner
+
+Use this rule when the task is about designing or debugging a RAG system rather than just implementing one component.
+
+## What This Rule Does
+
+- turns vague RAG symptoms into concrete investigation paths
+- compares architecture options with explicit tradeoffs
+- prefers the smallest viable baseline before recommending upgrades
+- separates recall problems, ranking problems, generation problems, and observability gaps
+
+## Use It For
+
+- choosing embeddings, chunking, indexing, and vector stores
+- deciding between `Chroma`, `Qdrant`, `FAISS`, or hybrid retrieval
+- deciding whether to add query rewriting, decomposition, or reranking
+- deciding whether a plain retrieval pipeline is enough or whether orchestration is justified
+- adding evaluation, tracing, and observability to an existing RAG stack
+
+## Default Decision Style
+
+1. gather constraints first
+2. keep the architecture framework-neutral until the constraints force a recommendation
+3. prefer the smallest working baseline
+4. require side-by-side evidence before expensive upgrades
+5. state what is intentionally *not* being added yet
+
+## Retrieval Heuristics
+
+- if the right evidence is missing from the candidate pool, investigate chunking, metadata, filters, query processing, or retrieval first
+- if the right evidence is present but ranked badly, consider reranking before rebuilding the stack
+- if retrieval is good but answers are still weak, inspect prompt assembly, citations, and generation behavior
+
+## Output Shape
+
+Return a compact decision memo with:
+
+1. decision context
+2. options compared
+3. recommendation
+4. why this fits
+5. not chosen because
+6. what would change the decision
