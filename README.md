@@ -61,7 +61,8 @@
 
 ## 它是怎么工作的
 
-![[流程描述.png]]
+<img width="778" height="760" alt="流程描述" src="https://github.com/user-attachments/assets/c8a9cc3a-7bac-4c8a-addd-0cd09c9632ae" />
+
 
 这个 skill 有两种主模式。
 
