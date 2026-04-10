@@ -1,4 +1,4 @@
 interface:
   display_name: "RAG System Planner"
-  short_description: "Plan and diagnose bounded-complexity RAG"
-  default_prompt: "Use $rag-system-planner to diagnose a RAG system or decide whether it should stay simple or escalate in complexity."
+  short_description: "Plan bounded-complexity RAG and maintain durable RAG knowledge artifacts"
+  default_prompt: "Use $rag-system-planner to diagnose a RAG system, design a bounded-complexity RAG architecture, or update a durable RAG knowledge artifact with reusable patterns, failure modes, and stack decisions."
