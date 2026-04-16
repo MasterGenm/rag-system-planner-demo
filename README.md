@@ -1,22 +1,16 @@
 # rag-system-planner
 
- RAG 规划与诊断 skill，重点是控制升级复杂度。
+RAG 规划与诊断 skill，重点是控制升级复杂度，并把会重复出现的判断沉淀成 durable artifacts，而不是只留在聊天里。
 
 <p align="center">
-  <a href="#核心问题">问题</a> ·
-  <a href="#这个-skill-到底做什么">作用</a> ·
-  <a href="#它是怎么工作的">工作方式</a> ·
-  <a href="#能力面板capability-panel">能力</a> ·
-  <a href="#症状--需求--该打开哪份-reference">导航</a> ·
-  <a href="#交付产物deliverables">交付</a>
+  <a href="#核心问题">核心问题</a> ·
+  <a href="#现在这个-skill-是什么">现在这个 skill 是什么</a> ·
+  <a href="#两层模型">两层模型</a> ·
+  <a href="#主要工作流">主要工作流</a> ·
+  <a href="#从哪里开始">从哪里开始</a> ·
+  <a href="#仓库里有什么">仓库里有什么</a> ·
+  <a href="#安装">安装</a>
 </p>
-
-<p align="center">
-  <a href="#仓库里包含什么">内容</a> ·
-  <a href="#安装">安装</a> ·
-  <a href="#仓库结构">结构</a>
-</p>
-
 
 <p align="center">
   <img src="https://img.shields.io/badge/Claude_Code-black?style=flat-square&logo=anthropic&logoColor=white" alt="Claude Code">
@@ -28,7 +22,6 @@
   <img src="https://img.shields.io/badge/License-MIT-green?style=flat-square" alt="MIT License">
 </p>
 
-
 ---
 
 ## 核心问题
@@ -37,179 +30,238 @@
 
 常见情况是：
 
-- 还没确认当前瓶颈，就先换向量库
-- 真问题是排序，却先去重做 chunking
+- 还没确认瓶颈，就先换向量库
+- 真问题是排序，却先重做 chunking
 - 真问题是缺评测和可观测性，却先怪模型不够强
 - plain RAG 还没稳定，就急着升级到 graph / agentic RAG
 
-`rag-system-planner` 的作用，就是把这些分叉口变成更清楚、更有顺序、也更不容易拍脑袋的决策。
+`rag-system-planner` 的目标，是把这些分叉口变成更清楚、更有顺序、也更不容易拍脑袋的决策。
 
-| 团队常见做法 | 这个 planner 会强迫团队先做什么 |
+| 团队常见做法 | 这个 skill 会强迫团队先做什么 |
 | --- | --- |
 | 先改基础设施 | 先说清失败模式：retrieval、ranking、generation 还是 observability |
 | 因为某个工具“听起来更生产级”就提前升级 | 先保住最小 baseline，再明确 tradeoff |
 | 从 plain RAG 直接跳到 graph / agentic RAG | 只有分支条件和工作流需求真实存在时才升级 |
 
+## 现在这个 skill 是什么
 
-## 这个 skill 到底做什么
+这个 skill 现在不只是一个一次性的 RAG 顾问 prompt。
 
-这个 skill 帮团队回答一个很实际的问题：
+它已经是一个 **artifact-aware 的 RAG planner**：
 
-**这个 RAG 系统下一步到底该修什么，哪些升级现在还不该做？**
+- 会做 `greenfield` 规划
+- 会做 `diagnosis` 分诊
+- 会做轻量 `comparison`
+- 会把值得复用的结论写回 durable artifacts
 
-它适合处理：
+适合处理的场景：
 
 - RAG 架构取舍
 - retrieval 故障诊断
 - eval / observability 设计
 - 判断 plain RAG 何时该保持简单，何时才值得升级到 hybrid / graph / agentic workflow
+- 把 recurring failure modes、stack decisions、case notes、evaluation heuristics 沉淀成工作区资产
 
-它不是一个“默认推荐更复杂架构”的 skill。它最重要的价值，是把决策顺序拉回到更稳的轨道上。
+核心 skill 在 [skills/rag-system-planner/SKILL.md](skills/rag-system-planner/SKILL.md)。
 
-| 团队常见做法 | 这个 planner 会强迫团队先做什么 |
-|---|---|
-| 先改基础设施 | 先说清失败模式：retrieval、ranking、generation 还是 observability |
-| 因为某个工具听起来更生产级就提前升级 | 先保住最小 baseline，再明确 tradeoff |
-| 从 plain RAG 直接跳到 graph / agentic RAG | 只有分支条件和工作流需求真实存在时才升级 |
+## 两层模型
 
-## 它是怎么工作的
+现在的 skill 明确分成两层：
 
-<img width="778" height="760" alt="流程描述" src="https://github.com/user-attachments/assets/c8a9cc3a-7bac-4c8a-addd-0cd09c9632ae" />
+### 1. `planner`
 
+负责有边界的判断：
 
-这个 skill 有两种主模式。
+- `greenfield`
+- `diagnosis`
+- `comparison`
 
-### 1. 新系统规划（Greenfield）模式
+### 2. `artifact-maintenance`
+
+负责 durable workspace 的维护：
+
+- `ingest`
+- `query`
+- `lint`
+- `index`
+
+一句话说：
+
+- `planner` 负责判断下一步该做什么
+- `artifact-maintenance` 负责把这些会再次出现的判断保存下来
+
+如果你只想得到一份方案或诊断，停在 `planner` 也可以。
+如果你希望团队以后不再重复推理同一件事，就需要 `artifact-maintenance`。
+
+## 主要工作流
+
+### 1. Greenfield
 
 用于设计一个新 RAG 系统，或替换一个旧系统的大部分结构。
 
-它会：
+输出重点：
 
-- 先澄清问题、用户和约束
-- 默认先处理 retrieval 设计
-- 只在需要时补读额外 reference
-- 最后产出完整方案包
+- assumptions and constraints
+- recommended stack
+- retrieval design
+- evaluation plan
+- observability plan
+- phased rollout
+- durable artifact summary
 
-### 2. 诊断模式
+### 2. Diagnosis
 
 用于系统已经存在，但出现了召回差、排序差、幻觉、高延迟、缺引用、难调试等问题。
 
-它会：
+这个流程现在是 **triage-first**：
 
-- 从症状开始，而不是从猜测开始
-- 给每条假设贴上 `observed / inferred / unknown`
-- 跳到最相关的排障 reference
-- 最后给出有优先级的修复路径
+1. 先描述症状
+2. 先读已有 workspace
+3. 从 failure taxonomy 的 triage matrix 开始
+4. 落到最接近的 canonical failure page
+5. 给每条假设贴上 `observed / inferred / unknown`
+6. 再补 retrieval / eval / observability 的静态 references
 
-### 3. 比较型请求
+### 3. Comparison
 
-如果用户主要在比较选项，这个 skill 不会额外开第三条主流程。它会留在当前模式里，改用一个更轻的决策备忘录输出：
+用于比较几个 bounded 选项，而不是重做整个系统设计。
 
-1. 决策背景
-2. 比较的选项
-3. 推荐结论
-4. 为什么适合
-5. 为什么不选别的
-6. 什么条件会改变当前结论
+默认输出一个轻量 decision memo：
 
-## 能力面板（Capability Panel）
+1. Decision context
+2. Options compared
+3. Recommendation
+4. Why this fits
+5. Not chosen because
+6. What would change the decision
 
-| 模块 | 一句话说明 | 何时触发 | 主要参考文件 |
-| --- | --- | --- | --- |
-| **需求澄清（Intake / Clarification）** | 在需求不完整时，只收集会影响架构决策的最小关键信息。 | 用户只说“做个 RAG”或上下文不完整时 | `references/intake-checklist.md` |
-| **新系统规划（Greenfield Planner）** | 为新系统或大规模重构输出最小可行且可扩展的 RAG 方案。 | 新系统设计、旧系统重搭、要定 baseline 时 | `SKILL.md`, `references/retrieval-design.md`, `references/eval-design.md` |
-| **诊断分诊（Diagnostic Triage）** | 从症状出发做排障，而不是从工具偏好出发。 | recall 差、hallucination、latency、citation 弱、难调试时 | `references/diagnosis-playbook.md` |
-| **选型比较备忘录（Option Comparison Memo）** | 把选型问题压缩成可执行的 decision memo，而不是泛泛对比。 | `Qdrant vs Chroma`、`LangGraph 值不值`、`reranking` 现在要不要上 | `references/vector-db-choice.md`, `references/agent-framework-choice.md`, `references/embedding-choice.md` |
-| **检索设计（Retrieval Design）** | 优先处理 chunking、metadata、retrieval、reranking 和 citation flow。 | 怀疑问题在召回、排序、chunking、filter、citation 时 | `references/retrieval-design.md` |
-| **升级边界检查（Upgrade Boundary Check）** | 检查系统是否真的满足升级到 hybrid / graph / agentic 的条件。 | 团队想升级复杂度，但条件是否成立还不清楚时 | `references/agent-framework-choice.md`, `references/retrieval-design.md` |
-| **评测设计（Eval Design）** | 设计能证明系统是否真的变好的评测，而不是只做 demo。 | 缺离线评测、hard cases、judge 设计、回归集时 | `references/eval-design.md` |
-| **可观测性设计（Observability Design）** | 定义 trace、日志、dashboard 和 stage-level signals。 | 无法定位 retrieval / generation / latency 问题时 | `references/observability-design.md` |
-| **输出渲染（Output Rendering）** | 把结构化结论渲染成团队可读的 Markdown 交付文档。 | 需要把 plan 或 diagnostic 发给团队时 | `scripts/render_rag_plan.py`, `scripts/render_rag_diagnostic.py` |
+### 4. Artifact-Maintenance
 
-## 症状 / 需求 → 该打开哪份 reference
+当结论值得复用时，不要只把它留在 chat 里。
 
-| 用户问题 / 典型症状 | 优先参考 | 最终应返回什么 |
-| --- | --- | --- |
-| recall 很差，正确证据经常不在候选集里 | `references/diagnosis-playbook.md` | `RAG Diagnostic` |
-| 相关证据在候选集里，但 top-ranked 结果不准，怀疑 reranking 有问题 | `references/retrieval-design.md` | `RAG Diagnostic` 或 `Comparison Memo` |
-| hallucination 高，答案看起来像编的 | `references/diagnosis-playbook.md` | `RAG Diagnostic` |
-| latency 很高，不知道是 retrieval 太重还是 orchestration 太重 | `references/observability-design.md` | `RAG Diagnostic` |
-| 回答里缺 citation，或者 citation 不可检查 | `references/retrieval-design.md` | `RAG Diagnostic` |
-| 语料里有 PDF、表格、截图、图像证据 | `references/multimodal-retrieval.md` | `RAG Plan` 或 `RAG Diagnostic` |
-| embedding 应该怎么选，hosted 还是 local，multilingual 怎么办 | `references/embedding-choice.md` | `Comparison Memo` 或 `RAG Plan` 中的选型段落 |
-| `FAISS` / `Chroma` / `Qdrant` / `Milvus` 应该怎么选 | `references/vector-db-choice.md` | `Comparison Memo` |
-| 到底值不值得上 agentic RAG / LangGraph / multi-agent | `references/agent-framework-choice.md` | `Comparison Memo` 或带 “not now” 的 `RAG Plan` |
-| 现在应该先改 chunking、metadata、retrieval strategy 还是 reranking | `references/retrieval-design.md` | `RAG Diagnostic` |
-| eval 该怎么做，先测什么，怎么建 hard cases | `references/eval-design.md` | `RAG Plan` 或 `Comparison Memo` |
-| observability 该怎么做，最少要 trace 什么 | `references/observability-design.md` | `RAG Plan` 或 `RAG Diagnostic` |
+这一层负责：
 
-## 交付产物（Deliverables）
+- 把原始证据收进 `sources/`
+- 把 recurring knowledge 收进 `wiki/`
+- 把暂时有用但还不够 canonical 的结果放进 `queries/`
+- 刷新 `index.md`、hub pages 和 `log.md`
 
-这个仓库里有两个现成的 renderer：
+## 从哪里开始
+
+按你想做的事选入口。
+
+### 只想直接用 skill
+
+从这里开始：
+
+- [skills/rag-system-planner/SKILL.md](skills/rag-system-planner/SKILL.md)
+- [skills/rag-system-planner/references/diagnosis-playbook.md](skills/rag-system-planner/references/diagnosis-playbook.md)
+- [skills/rag-system-planner/references/retrieval-design.md](skills/rag-system-planner/references/retrieval-design.md)
+
+### 想理解 durable artifact 模型
+
+从这里开始：
+
+- [skills/rag-system-planner/references/artifact-workflow.md](skills/rag-system-planner/references/artifact-workflow.md)
+- [skills/rag-system-planner/references/artifact-maintenance-contract.md](skills/rag-system-planner/references/artifact-maintenance-contract.md)
+- [artifacts/rag-wiki-template/README.md](artifacts/rag-wiki-template/README.md)
+- [artifacts/rag-wiki-template/AGENTS.md](artifacts/rag-wiki-template/AGENTS.md)
+- [artifacts/rag-wiki-template/index.md](artifacts/rag-wiki-template/index.md)
+
+### 想先看真实示例
+
+从这里开始：
+
+- [examples/README.md](examples/README.md)
+- [examples/sample-rag-end-to-end.md](examples/sample-rag-end-to-end.md)
+- [examples/sample-rag-planner-handoff.md](examples/sample-rag-planner-handoff.md)
+- [examples/sample-rag-real-walkthroughs.md](examples/sample-rag-real-walkthroughs.md)
+- [artifacts/rag-wiki-template/wiki/failure-modes/triage-matrix.md](artifacts/rag-wiki-template/wiki/failure-modes/triage-matrix.md)
+
+## 仓库里有什么
+
+### Skill
+
+- [skills/rag-system-planner/SKILL.md](skills/rag-system-planner/SKILL.md)
+- [skills/rag-system-planner/agents/openai.yaml](skills/rag-system-planner/agents/openai.yaml)
+
+### References
+
+静态参考主要分成两类：
+
+- 判断层
+  - [intake-checklist.md](skills/rag-system-planner/references/intake-checklist.md)
+  - [retrieval-design.md](skills/rag-system-planner/references/retrieval-design.md)
+  - [embedding-choice.md](skills/rag-system-planner/references/embedding-choice.md)
+  - [vector-db-choice.md](skills/rag-system-planner/references/vector-db-choice.md)
+  - [multimodal-retrieval.md](skills/rag-system-planner/references/multimodal-retrieval.md)
+  - [agent-framework-choice.md](skills/rag-system-planner/references/agent-framework-choice.md)
+  - [eval-design.md](skills/rag-system-planner/references/eval-design.md)
+  - [observability-design.md](skills/rag-system-planner/references/observability-design.md)
+  - [diagnosis-playbook.md](skills/rag-system-planner/references/diagnosis-playbook.md)
+- durable artifact 层
+  - [artifact-workflow.md](skills/rag-system-planner/references/artifact-workflow.md)
+  - [artifact-maintenance-contract.md](skills/rag-system-planner/references/artifact-maintenance-contract.md)
+  - [artifact-operation-checklists.md](skills/rag-system-planner/references/artifact-operation-checklists.md)
+  - [reference-to-artifact-map.md](skills/rag-system-planner/references/reference-to-artifact-map.md)
+
+### Templates
+
+phase 1 已经带上了最小模板集：
+
+- [skills/rag-system-planner/templates](skills/rag-system-planner/templates)
+- [artifacts/rag-wiki-template/templates](artifacts/rag-wiki-template/templates)
+
+### Artifact Scaffold
+
+[artifacts/rag-wiki-template](artifacts/rag-wiki-template) 是一个可复制的 durable workspace。
+
+它包含：
+
+- `sources/`
+  原始证据
+- `wiki/`
+  failure modes、patterns、evaluations、stack decisions、case notes
+- `queries/`
+  暂时有用但未必 canonical 的 memo
+- `index.md`
+  根导航
+- `log.md`
+  维护日志
+
+### Examples
+
+完整列表见 [examples/README.md](examples/README.md)。
+
+重点例子：
+
+- [sample-rag-plan.md](examples/sample-rag-plan.md)
+- [sample-rag-diagnostic.md](examples/sample-rag-diagnostic.md)
+- [sample-rag-end-to-end.md](examples/sample-rag-end-to-end.md)
+- [sample-rag-planner-handoff.md](examples/sample-rag-planner-handoff.md)
+- [sample-rag-real-walkthroughs.md](examples/sample-rag-real-walkthroughs.md)
+
+## 明确不做什么
+
+当前主线还不做这些：
+
+- `health / drift / repair`
+- optional mirror 语义
+- memory engine 绑定
+- vector DB / graph DB 的 repo 级强绑定
+- helper scripts for sync / drift / repair
+- 把这个仓库直接扩成完整 document engine
+
+这些内容仍然只放在本地 workbench 里探索，不是正式主线的一部分。
+
+## 渲染脚本
+
+仓库里仍然保留两个 renderer：
 
 - `scripts/render_rag_plan.py`
 - `scripts/render_rag_diagnostic.py`
 
-它们的作用不是做架构判断，也不是替你决定该上什么技术栈。  
-它们只负责一件事：**把已经形成的结构化结论，渲染成团队可读、可转发、可归档的 Markdown 交付物**。
-
-也就是说：
-
-- 架构判断来自 `SKILL.md` + `references/`
-- 交付格式来自 renderer scripts
-
-典型用途：
-
-- 把 `greenfield` 的结构化输出渲染成 `RAG Plan`
-- 把 `diagnosis` 的结构化输出渲染成 `RAG Diagnostic`
-- 让团队拿到更稳定、更一致的方案文档，而不是一段随手生成的长回复
-
-示例输出：
-
-- [`examples/sample-rag-plan.md`](examples/sample-rag-plan.md)
-- [`examples/sample-rag-diagnostic.md`](examples/sample-rag-diagnostic.md)
-
-
-## 仓库里包含什么
-
-核心 skill 在 [`skills/rag-system-planner`](skills/rag-system-planner)。
-
-### 核心文件
-
-- `SKILL.md`
-  触发 description 和主工作流说明。
-- `agents/openai.yaml`
-  skill 列表和 UI metadata。
-
-### References
-
-- `intake-checklist.md`
-  需求不清时先问什么。
-- `retrieval-design.md`
-  chunking、metadata、retrieval strategy、reranking、graph retrieval、web fallback、abstention。
-- `embedding-choice.md`
-  hosted / local、multilingual、tradeoff。
-- `vector-db-choice.md`
-  FAISS、Chroma、Qdrant、Milvus 以及存储权衡。
-- `multimodal-retrieval.md`
-  OCR、截图、图表、表格等非纯文本证据。
-- `agent-framework-choice.md`
-  什么时候 LangGraph / tool use / bounded agentic RAG 才真的值得上。
-- `eval-design.md`
-  offline eval、judge-based eval、graph / agentic eval、dataset design。
-- `observability-design.md`
-  tracing、logs、runtime signals、minimum dashboards。
-- `diagnosis-playbook.md`
-  symptom-driven 排障和 triage 顺序。
-
-### Scripts
-
-- `render_rag_plan.py`
-  把结构化绿地方案渲染成 Markdown。
-- `render_rag_diagnostic.py`
-  把结构化诊断报告渲染成 Markdown。
-
-这些脚本只负责格式化输出，不负责做架构判断。
+它们只负责把已经形成的结构化结论渲染成 Markdown，不负责替你做架构判断。
 
 ## 安装
 
@@ -282,9 +334,9 @@ rag-system-planner/
 ├─ README.md
 ├─ LICENSE
 ├─ .gitignore
-├── examples/
-│   ├── sample-rag-plan.md
-│   └── sample-rag-diagnostic.md
+├─ artifacts/
+│  └─ rag-wiki-template/
+├─ examples/
 ├─ cursor/
 │  └─ rules/
 │     └─ rag-system-planner.mdc
@@ -297,16 +349,20 @@ rag-system-planner/
       ├─ agents/
       │  └─ openai.yaml
       ├─ references/
+      ├─ templates/
       └─ scripts/
 ```
 
 ## 总结
 
-`rag-system-planner` 是一个 **bounded-complexity RAG planner**。
+`rag-system-planner` 现在是一个 **artifact-aware, bounded-complexity RAG planner**。
 
 它最适合帮助团队判断：
 
 - 真正的失败模式是什么
 - 下一步该修哪一层
 - 哪些升级现在应该延后
-- 规划 RAG 什么时候该保持简单，什么时候才值得受控升级
+- 哪些结论值得沉淀成 durable artifacts
+
+如果你只想做一次性分析，从 [skills/rag-system-planner/SKILL.md](skills/rag-system-planner/SKILL.md) 开始。
+如果你想让团队逐步积累自己的 RAG case law，就从 [artifacts/rag-wiki-template](artifacts/rag-wiki-template) 和 [examples/README.md](examples/README.md) 开始。
