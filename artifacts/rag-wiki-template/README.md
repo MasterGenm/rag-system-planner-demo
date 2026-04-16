@@ -17,3 +17,5 @@ Use this workspace to store:
 3. Add raw material to `sources/`.
 4. Use the templates in `templates/` when you want a durable ingest, lint, or index-refresh note.
 5. Ask the agent to ingest, query, lint, or refresh the workspace index.
+
+If you are using this scaffold for the first time, read [ADOPTION.md](ADOPTION.md) next.

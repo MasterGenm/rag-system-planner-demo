@@ -19,6 +19,11 @@
 1. [sample-rag-end-to-end.md](sample-rag-end-to-end.md)
 2. [sample-rag-planner-handoff.md](sample-rag-planner-handoff.md)
 3. [sample-rag-real-walkthroughs.md](sample-rag-real-walkthroughs.md)
+4. [sample-rag-artifact-maintenance-ops.md](sample-rag-artifact-maintenance-ops.md)
+
+如果你准备开始第一次真实 workspace 运行，先读：
+
+- [../artifacts/rag-wiki-template/ADOPTION.md](../artifacts/rag-wiki-template/ADOPTION.md)
 
 ## Shorter Examples
 
