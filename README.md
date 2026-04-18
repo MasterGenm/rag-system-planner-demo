@@ -74,7 +74,8 @@
 
 ## 它是怎么工作的
 
-<img width="778" height="760" alt="流程描述" src="https://github.com/user-attachments/assets/c8a9cc3a-7bac-4c8a-addd-0cd09c9632ae" />
+<img width="2048" height="2048" alt="流程展示v2" src="https://github.com/user-attachments/assets/50c1dff3-7570-489b-93c2-7887cd3d6f2f" />
+
 
 
 这个 skill 有两种主模式。
