@@ -155,6 +155,14 @@ Keep these out of the main adoption path:
 
 Those are useful final outputs, but they do not teach the durable workflow as directly.
 
+## First Evaluation Path
+
+After the first source and first durable page exist, use this shorter path for an initial evaluation-oriented pass:
+
+1. Read [wiki/evaluations/README.md](wiki/evaluations/README.md).
+2. Read [wiki/evaluations/hard-case-trace-review.md](wiki/evaluations/hard-case-trace-review.md).
+3. Save the first reusable evaluation conclusion in `wiki/evaluations/` or `queries/`, depending on how stable it is.
+
 ## Success Criteria
 
 This guide worked if, after one session, you can point to:

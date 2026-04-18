@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Show how the proposed skill should behave after the split into `planner` and `artifact-maintenance`.
+Show how `rag-system-planner` should behave after the split into `planner` and `artifact-maintenance`.
 
 ## Example Case
 

@@ -58,6 +58,21 @@ Before reasoning from scratch:
 3. In diagnosis mode, start from `wiki/failure-modes/triage-matrix.md` if the workspace has one.
 4. Prefer targeted reading over blind full-document synthesis on large sources.
 
+### Workspace State Rules
+
+Adapt the first step to the actual workspace state:
+
+- no workspace exists
+  - skip workspace reading
+  - proceed with the minimum static references instead of pretending prior artifact knowledge exists
+  - if the artifact update threshold is met, explicitly suggest the first durable artifact to create
+- workspace exists but is still thin
+  - read `index.md` plus one relevant hub or page
+  - prefer one scoped `ingest` or `query` action over broad maintenance
+- workspace contains relevant canonical pages
+  - cite and extend those pages first
+  - prefer updating existing pages over creating near-duplicates
+
 ## Comparison Requests
 
 If the user is primarily comparing options instead of asking for a full greenfield design or diagnosis, keep the reasoning inside the current workflow but return a lighter decision memo.

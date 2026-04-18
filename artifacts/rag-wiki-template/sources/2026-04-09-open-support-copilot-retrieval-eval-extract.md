@@ -4,7 +4,7 @@
 
 - local project: `E:\dt\open-support-copilot`
 - evaluation slice: `tests/retrieval_eval`
-- purpose: use a labeled retrieval audit as a real scattered-evidence demo for `rag-system-planner-v2-lab`
+- purpose: use a labeled retrieval audit as a real scattered-evidence demo for `rag-system-planner`
 
 ## Relevant Files
 

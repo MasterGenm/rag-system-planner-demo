@@ -39,4 +39,4 @@ Together they show two different diagnosis paths:
 - candidate set is good enough but ranking is weak
 - topic match exists but evidence breadth is too narrow for the question type
 
-That makes the scaffold more credible as a real `rag-system-planner` v2 proposal rather than a prompt-only rewrite.
+That makes the scaffold more credible as a real extension of `rag-system-planner`, not just a prompt-only rewrite.
