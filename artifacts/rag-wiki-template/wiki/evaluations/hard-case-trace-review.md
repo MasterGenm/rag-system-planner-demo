@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Pair hard-case evaluation with trace review so teams can tell whether a failure came from retrieval, ranking, generation, or missing observability.
+把 hard-case evaluation 和 trace review 绑在一起，这样团队才能区分 failure 到底来自 retrieval、ranking、generation，还是 observability 缺口。
 
 ## Evaluation Dimensions
 
@@ -13,7 +13,7 @@ Pair hard-case evaluation with trace review so teams can tell whether a failure 
 - abstention behavior
 - stage-level latency
 
-## Trace Signals To Capture
+## 需要采集的 Trace Signals
 
 - retrieved chunk ids
 - retrieval scores
@@ -24,21 +24,21 @@ Pair hard-case evaluation with trace review so teams can tell whether a failure 
 - generation latency
 - total latency
 
-## Hard-Case Types
+## Hard-Case 类型
 
 - multi-hop evidence
-- scattered evidence across many chunks
-- negation and absence
+- 分散在许多 chunks 里的 scattered evidence
+- negation 与 absence
 - temporal ordering
-- citation drift despite good candidate recall
-- comparison questions where one side of the evidence is missing from retrieval
+- candidate recall 看起来不错、但 citation 发生 drift 的案例
+- comparison 问题里，某一边证据根本没进 retrieval 的案例
 
 ## Review Questions
 
-- was the right evidence present in the candidate pool?
-- did ranking surface the right evidence?
-- did the answer cite the correct span or only a nearby one?
-- did missing traces block diagnosis?
+- 正确证据有没有进入 candidate pool？
+- ranking 有没有把正确证据抬上来？
+- 答案引用的是精确 span，还是只是一个附近的段落？
+- 缺失的 traces 有没有直接阻碍 diagnosis？
 
 ## Related Pages
 
@@ -48,4 +48,4 @@ Pair hard-case evaluation with trace review so teams can tell whether a failure 
 
 ## Source Trail
 
-- eval and telemetry ideas drawn from local reference projects
+- 评测与 telemetry 思路来自本地参考项目

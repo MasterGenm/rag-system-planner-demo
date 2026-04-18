@@ -1,64 +1,64 @@
 # Intake Checklist
 
-Use this checklist when requirements are incomplete. Ask only for the fields that change architecture decisions.
+当需求不完整时，使用这份 checklist。只问那些会改变架构决策的字段。
 
 ## Greenfield Intake
 
 ### Product Goal
 
-- What does the system need to answer or produce?
-- Who are the users?
-- Is this simple Q&A, multi-turn chat, or agent-assisted work?
+- 系统需要回答或产出什么？
+- 用户是谁？
+- 这是简单问答、多轮对话，还是 agent-assisted work？
 
 ### Data
 
-- What data types are involved: text, PDF, web pages, images, audio, tables, or mixed?
-- How many documents or records exist now?
-- How often does the corpus change?
-- Are metadata filters important?
+- 涉及哪些数据类型：text、PDF、web pages、images、audio、tables，还是混合？
+- 当前有多少文档或记录？
+- corpus 多久变化一次？
+- metadata filters 是否重要？
 
 ### Constraints
 
-- What matters most: recall, precision, latency, cost, or traceability?
-- What are the deployment constraints: local, cloud, CPU, GPU, or compliance boundaries?
-- Is there an existing stack that should be reused?
+- 最重要的是什么：recall、precision、latency、cost，还是 traceability？
+- 部署约束是什么：local、cloud、CPU、GPU，还是 compliance boundaries？
+- 是否有必须复用的现有技术栈？
 
 ### Output Expectations
 
-- Are citations required?
-- Is tool use required?
-- Is human review in the loop?
-- Is offline evaluation required before launch?
+- 是否要求 citations？
+- 是否要求 tool use？
+- human review 是否在环？
+- 是否要求上线前先做 offline evaluation？
 
 ## Diagnosis Intake
 
-- What symptom is visible right now?
-- When did it start?
-- Is the problem retrieval quality, answer quality, latency, stability, or observability?
-- What stack is already in place?
-- What evidence exists: logs, traces, labeled examples, dashboards, evaluation runs?
-- What has already been tried?
+- 当前可见的 symptom 是什么？
+- 什么时候开始的？
+- 问题属于 retrieval quality、answer quality、latency、stability，还是 observability？
+- 现在已经用了什么 stack？
+- 现有证据有哪些：logs、traces、labeled examples、dashboards、evaluation runs？
+- 已经尝试过什么？
 
 ## Minimal Assumption Rules
 
-If the user cannot answer everything, proceed with explicit assumptions.
+如果用户无法把所有问题都答清，就带着显式 assumptions 往下走。
 
-Good assumptions:
+好的 assumptions：
 
-- "Assume a medium-size corpus with daily updates."
-- "Assume citation quality matters more than raw latency."
-- "Assume Python-based orchestration is acceptable."
+- “假设 corpus 规模中等，且每天更新。”
+- “假设 citation quality 比极限 latency 更重要。”
+- “假设基于 Python 的 orchestration 可以接受。”
 
-Bad assumptions:
+坏的 assumptions：
 
-- "Assume the user wants agents."
-- "Assume the most complex architecture is appropriate."
+- “假设用户想要 agents。”
+- “假设最复杂的架构就是合适的。”
 
 ## Required Vs Optional
 
 ### Usually Required
 
-- Task type: greenfield or diagnosis
+- Task type：greenfield 还是 diagnosis
 - Data type
 - Approximate scale
 - Primary optimization target
@@ -69,4 +69,4 @@ Bad assumptions:
 - Exact cloud vendor
 - Exact benchmark target
 
-If a field is optional, do not stop progress waiting for it.
+如果某个字段是 optional，就不要为了等它而停住进度。

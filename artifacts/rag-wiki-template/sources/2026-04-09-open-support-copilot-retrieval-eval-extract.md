@@ -2,9 +2,9 @@
 
 ## Dataset
 
-- local project: `E:\dt\open-support-copilot`
-- evaluation slice: `tests/retrieval_eval`
-- purpose: use a labeled retrieval audit as a real scattered-evidence demo for `rag-system-planner`
+- 本地项目：`E:\dt\open-support-copilot`
+- evaluation slice：`tests/retrieval_eval`
+- 用途：把一份带标签的 retrieval audit 当作 `rag-system-planner` 的真实 scattered-evidence 示例
 
 ## Relevant Files
 
@@ -17,9 +17,9 @@
 
 ## Selected Walkthrough Example
 
-- `id`: `architecture-01`
-- question: `Should a support copilot over framework docs and GitHub issues stay on Chroma or move to Qdrant as filtering needs and update frequency grow?`
-- why this case matters: the gold answer explicitly requires evidence from both sides of the comparison
+- `id`：`architecture-01`
+- question：`Should a support copilot over framework docs and GitHub issues stay on Chroma or move to Qdrant as filtering needs and update frequency grow?`
+- 这个案例重要的原因：gold answer 明确要求比较双方的证据都要出现
 
 ## Gold Evidence
 
@@ -33,14 +33,14 @@ https://qdrant.tech/documentation/faq/qdrant-fundamentals/
 ## Chroma Retrieval Summary
 
 - `Recall@5 = 0.5000`
-- matched URLs:
+- matched URLs：
   - `https://docs.trychroma.com/reference/where-filter`
   - `https://docs.trychroma.com/docs/querying-collections/metadata-filtering`
-- missing from top 5:
+- top 5 里缺失：
   - `https://qdrant.tech/documentation/concepts/filtering/`
   - `https://qdrant.tech/documentation/faq/qdrant-fundamentals/`
 
-Top retrieved URLs:
+Top retrieved URLs：
 
 ```text
 1. https://docs.trychroma.com/reference/overview
@@ -53,14 +53,14 @@ Top retrieved URLs:
 ## Qdrant Retrieval Summary
 
 - `Recall@5 = 0.2500`
-- matched URLs:
+- matched URLs：
   - `https://docs.trychroma.com/reference/where-filter`
-- missing from top 5:
+- top 5 里缺失：
   - `https://docs.trychroma.com/docs/querying-collections/metadata-filtering`
   - `https://qdrant.tech/documentation/concepts/filtering/`
   - `https://qdrant.tech/documentation/faq/qdrant-fundamentals/`
 
-Top retrieved URLs visible in the audit:
+审计里可见的 Top retrieved URLs：
 
 ```text
 1. https://docs.trychroma.com/reference/overview
@@ -69,7 +69,7 @@ Top retrieved URLs visible in the audit:
 
 ## Initial Read
 
-This is not just a generic bad result. The comparison query requires evidence breadth across two product families, but retrieval collapses around the Chroma side of the neighborhood and never surfaces enough Qdrant evidence to support a balanced answer.
+这不只是一个泛泛的坏结果。这个 comparison query 需要跨两个 product family 收齐证据，但 retrieval 一直围绕 `Chroma` 一侧塌缩，从来没有把足够多的 `Qdrant` 证据抬出来，因此无法支撑平衡答案。
 
 ## Related Pages
 
@@ -78,4 +78,4 @@ This is not just a generic bad result. The comparison query requires evidence br
 
 ## Source Trail
 
-- local retrieval-eval files inspected on 2026-04-09
+- 本地 retrieval-eval 文件于 2026-04-09 被检查

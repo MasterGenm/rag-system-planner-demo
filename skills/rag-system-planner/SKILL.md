@@ -1,83 +1,83 @@
 ---
 name: rag-system-planner
-description: Plan, diagnose, and steadily document retrieval-augmented generation systems with bounded complexity. Use for greenfield RAG design, retrieval failure diagnosis, evaluation planning, and maintaining durable RAG knowledge artifacts that capture recurring failure modes, stack decisions, and case notes over time.
+description: 以受控复杂度规划、诊断并持续沉淀 retrieval-augmented generation（RAG）系统。适用于 greenfield RAG 设计、检索故障诊断、评测规划，以及维护能够长期保存 failure modes、stack decisions 和 case notes 的 durable RAG 工件。
 ---
 
 # RAG System Planner
 
-## Overview
+## 概览
 
-Design new RAG systems and diagnose existing ones without defaulting to unnecessary complexity.
-This skill is artifact-aware: when a conclusion is likely to matter again, preserve it in durable workspace artifacts instead of letting it disappear into chat history.
+在不默认引入不必要复杂度的前提下，设计新的 RAG 系统，并诊断已有系统。
+这个 skill 是 artifact-aware 的：当某个结论很可能再次重要时，应把它保存在 durable workspace artifacts 中，而不是让它消失在聊天记录里。
 
-Keep the workflow framework-neutral. Prefer the simplest architecture that meets the user's goals. Escalate to hybrid, graph, or agentic patterns only when the failure mode or workflow clearly requires it.
+保持 workflow 与具体框架无关。优先选择能够满足用户目标的最简单架构。只有当 failure mode 或 workflow 明确要求时，才升级到 hybrid、graph 或 agentic 模式。
 
-Read `references/artifact-workflow.md` for the persistent workspace model.
-Read `references/artifact-maintenance-contract.md` for the execution contract that governs maintenance work.
-Read `references/artifact-operation-checklists.md` for the shortest deterministic runbook for each maintenance operation.
-Read `references/reference-to-artifact-map.md` when deciding what kind of durable page to create.
+持久化工作区模型见 `references/artifact-workflow.md`。
+维护工作的执行合同见 `references/artifact-maintenance-contract.md`。
+每种维护操作的最短确定性 runbook 见 `references/artifact-operation-checklists.md`。
+当你要判断该创建哪类 durable 页面时，读取 `references/reference-to-artifact-map.md`。
 
-## Two-Layer Model
+## 双层模型（Two-Layer Model）
 
-This skill has two explicit layers:
-
-- `planner`
-  - make bounded-complexity judgments for greenfield design, diagnosis, and comparison
-- `artifact-maintenance`
-  - preserve and organize durable sources, evaluations, failure pages, case notes, and workspace structure
-
-Planner is the reasoning layer.
-Artifact-maintenance is the compounding knowledge layer that planner should consult and update when reusable findings appear.
-
-## Workflow Selection
-
-Choose the primary layer first:
+这个 skill 明确分成两层：
 
 - `planner`
-  - the user wants design, diagnosis, prioritization, or a recommendation
+  - 为 greenfield 设计、diagnosis 和 comparison 做复杂度受控的判断
 - `artifact-maintenance`
-  - the user wants ingest, workspace updates, linting, or durable knowledge cleanup
+  - 保存并整理 durable 的 sources、evaluations、failure pages、case notes 和 workspace 结构
 
-Within `planner`, choose one of these modes:
+Planner 是推理层。
+Artifact-maintenance 是知识复利层；当出现可复用结论时，planner 应先查询它，并在需要时更新它。
+
+## Workflow 选择
+
+先选主层：
+
+- `planner`
+  - 用户要的是设计、诊断、优先级判断或建议
+- `artifact-maintenance`
+  - 用户要的是 ingest、workspace 更新、lint，或者 durable knowledge 清理
+
+在 `planner` 内部，再选一种模式：
 
 - `greenfield`
-  - the user is designing a new RAG system or replacing most of an old one
+  - 用户正在设计一个新的 RAG 系统，或准备替换旧系统的大部分结构
 - `diagnosis`
-  - the user already has a RAG system and wants to improve recall, latency, groundedness, observability, or operational reliability
+  - 用户已经有一个 RAG 系统，想提升 recall、latency、groundedness、observability 或 operational reliability
 - `comparison`
-  - the user primarily wants a bounded option comparison instead of a full design or diagnosis
+  - 用户主要想做一个有边界的方案比较，而不是完整设计或完整诊断
 
-If the request mixes layers, start in `planner`, then hand off to `artifact-maintenance` before finishing whenever the artifact update threshold is met.
+如果请求同时跨越两层，先从 `planner` 开始；当达到 artifact update threshold 时，再在结束前 hand off 给 `artifact-maintenance`。
 
-## Planner First Step
+## Planner 的第一步（Planner First Step）
 
-Before reasoning from scratch:
+不要一上来就从零推理：
 
-1. Inspect the artifact workspace if one exists.
-2. Read `index.md` and the most relevant hubs, evaluation pages, failure pages, or stack-decision pages.
-3. In diagnosis mode, start from `wiki/failure-modes/triage-matrix.md` if the workspace has one.
-4. Prefer targeted reading over blind full-document synthesis on large sources.
+1. 如果存在 artifact workspace，先检查它。
+2. 读取 `index.md` 和最相关的 hub、evaluation page、failure page 或 stack-decision page。
+3. 在 diagnosis 模式下，如果 workspace 中存在 `wiki/failure-modes/triage-matrix.md`，先从它开始。
+4. 面对大 source 时，优先有目标地导航与阅读，不要对整份长文档做盲目综合。
 
-### Workspace State Rules
+### Workspace 状态规则（Workspace State Rules）
 
-Adapt the first step to the actual workspace state:
+根据 workspace 的真实状态调整第一步：
 
-- no workspace exists
-  - skip workspace reading
-  - proceed with the minimum static references instead of pretending prior artifact knowledge exists
-  - if the artifact update threshold is met, explicitly suggest the first durable artifact to create
-- workspace exists but is still thin
-  - read `index.md` plus one relevant hub or page
-  - prefer one scoped `ingest` or `query` action over broad maintenance
-- workspace contains relevant canonical pages
-  - cite and extend those pages first
-  - prefer updating existing pages over creating near-duplicates
+- 不存在 workspace
+  - 跳过 workspace 阅读
+  - 直接读取最小静态 references，不要假装已有 artifact knowledge
+  - 如果达到了 artifact update threshold，要明确建议先创建哪一个 durable artifact
+- workspace 已存在，但还很薄
+  - 读取 `index.md`，再读一个相关 hub 或页面
+  - 优先做一个有边界的 `ingest` 或 `query`，而不是大范围维护
+- workspace 中已经有相关 canonical pages
+  - 优先引用并扩展这些页面
+  - 优先更新现有页面，而不是创建近似重复页
 
-## Comparison Requests
+## 比较型请求（Comparison Requests）
 
-If the user is primarily comparing options instead of asking for a full greenfield design or diagnosis, keep the reasoning inside the current workflow but return a lighter decision memo.
+如果用户主要在比较选项，而不是要完整 greenfield 设计或完整 diagnosis，就保留在当前 workflow 中，但返回一个更轻的 decision memo。
 
-Use these sections:
+使用这些 section：
 
 1. Decision context
 2. Options compared
@@ -86,93 +86,93 @@ Use these sections:
 5. Not chosen because
 6. What would change the decision
 
-## Artifact Update Threshold
+## Artifact 更新阈值（Artifact Update Threshold）
 
-Do not leave these only in chat.
-Update durable artifacts when the answer contains any of the following:
+以下内容不要只留在 chat 里。
+只要答案里出现了这些内容，就应该更新 durable artifacts：
 
-- a reusable failure mode
-- a recurring retrieval or architecture pattern
-- a stack boundary or `not now` decision
-- a reusable evaluation heuristic or hard-case rule
-- a case note likely to matter again
+- 可复用的 failure mode
+- 会重复出现的 retrieval 或 architecture pattern
+- stack boundary 或 `not now` 决策
+- 可复用的 evaluation heuristic 或 hard-case rule
+- 未来大概率还会用到的 case note
 
 ## Intake
 
-Use `references/intake-checklist.md` whenever requirements are missing or vague.
+当需求缺失或表述含糊时，使用 `references/intake-checklist.md`。
 
-Collect only the details needed to make architecture decisions:
+只收集那些会影响架构决策的信息：
 
-- data type and source
-- scale and update frequency
-- interaction pattern
-- quality priorities
-- cost and latency constraints
-- deployment constraints
-- existing stack and migration constraints
-- evaluation and observability expectations
+- 数据类型和来源
+- 规模与更新频率
+- 交互模式
+- 质量优先级
+- 成本与延迟约束
+- 部署约束
+- 现有技术栈和迁移约束
+- 评测与可观测性预期
 
-If the user cannot answer everything, proceed with a short assumptions section instead of blocking.
+如果用户答不全，不要阻塞；改用一个简短的 assumptions section 继续往下做。
 
 ## Greenfield Workflow
 
-1. Clarify the problem, users, data modalities, and constraints.
-2. Perform the planner first step and workspace knowledge check.
-3. Read `references/retrieval-design.md` to shape chunking, metadata, retrieval, reranking, and citation flow.
-4. Read `references/multimodal-retrieval.md` if the corpus contains scans, screenshots, diagrams, tables, or other non-text evidence.
-5. Read `references/embedding-choice.md` when embedding selection is not obvious.
-6. Read `references/vector-db-choice.md` when storage, filtering, hybrid search, or operations tradeoffs matter.
-7. Read `references/agent-framework-choice.md` only if the user wants agent behavior, tool use, or orchestration.
-8. Read `references/eval-design.md` to define offline and online validation.
-9. Read `references/observability-design.md` to define tracing, monitoring, and failure analysis.
-10. Produce a solution package with assumptions, stack choices, architecture, evaluation, observability, rollout phases, and explicit `not now` decisions for complexity that is intentionally deferred.
-11. If the artifact update threshold is met, hand off durable patterns or decisions to `artifact-maintenance`.
-12. If a structured final document would help, run `scripts/render_rag_plan.py`.
+1. 澄清问题、用户、数据模态和约束。
+2. 执行 planner first step 和 workspace knowledge check。
+3. 读取 `references/retrieval-design.md`，确定 chunking、metadata、retrieval、reranking 和 citation flow。
+4. 如果语料包含扫描件、截图、图表、表格或其他非文本证据，读取 `references/multimodal-retrieval.md`。
+5. 如果 embedding 选择并不显然，读取 `references/embedding-choice.md`。
+6. 当存储、过滤、hybrid search 或运维权衡变得重要时，读取 `references/vector-db-choice.md`。
+7. 只有当用户明确需要 agent behavior、tool use 或 orchestration 时，才读取 `references/agent-framework-choice.md`。
+8. 读取 `references/eval-design.md`，定义 offline 和 online 验证。
+9. 读取 `references/observability-design.md`，定义 tracing、monitoring 和 failure analysis。
+10. 产出一个 solution package，包含 assumptions、stack choices、architecture、evaluation、observability、rollout phases，以及明确的 `not now` 决策，说明哪些复杂度是有意延后的。
+11. 如果达到了 artifact update threshold，就把 durable patterns 或 decisions hand off 给 `artifact-maintenance`。
+12. 如果结构化最终文档有帮助，运行 `scripts/render_rag_plan.py`。
 
 ## Diagnosis Workflow
 
-1. Summarize symptoms in concrete terms: low recall, irrelevant retrieval, hallucinations, latency, cost, missing citations, or poor agent behavior.
-2. Perform the planner first step and workspace knowledge check.
-3. Read `references/diagnosis-playbook.md` first.
-4. Start from `wiki/failure-modes/triage-matrix.md` when an artifact workspace exists and classify the symptom into the smallest plausible failure family.
-5. Read the closest concrete failure page before broadening the scope.
-6. Label each hypothesis as `observed`, `inferred`, or `unknown`. Do not let missing evidence silently turn into a root-cause claim.
-7. Read `references/retrieval-design.md` if the issue may come from chunking, metadata, retrieval, reranking, or prompt assembly.
-8. Read `references/multimodal-retrieval.md` if scans, screenshots, diagrams, tables, OCR quality, or modality routing may be involved.
-9. Read `references/embedding-choice.md` if representation quality or multilingual behavior is suspect.
-10. Read `references/vector-db-choice.md` if filtering, indexing, hybrid search, persistence, or scale appear to be the bottleneck.
-11. Read `references/eval-design.md` to identify missing benchmarks and datasets.
-12. Read `references/observability-design.md` to identify missing traces or runtime signals.
-13. Produce a diagnostic report with likely causes, missing evidence, investigation order, and a prioritized remediation path. In `Recommended changes`, prefer a `now`, `next`, `later` ordering and favor reversible fixes before expensive redesign.
-14. If the artifact update threshold is met, hand off reusable failure notes, investigation heuristics, or stack decisions to `artifact-maintenance`.
-15. If a structured final document would help, run `scripts/render_rag_diagnostic.py`.
+1. 用具体术语总结症状：低 recall、检索不相关、幻觉、高延迟、高成本、缺 citation 或 agent 行为差。
+2. 执行 planner first step 和 workspace knowledge check。
+3. 先读取 `references/diagnosis-playbook.md`。
+4. 当存在 artifact workspace 时，从 `wiki/failure-modes/triage-matrix.md` 开始，把症状归入“最小 plausible failure family”。
+5. 在扩大阅读范围之前，先读最接近的具体 failure page。
+6. 把每个 hypothesis 标记成 `observed`、`inferred` 或 `unknown`。不要让缺失证据悄悄变成 root-cause claim。
+7. 如果问题可能来自 chunking、metadata、retrieval、reranking 或 prompt assembly，读取 `references/retrieval-design.md`。
+8. 如果问题涉及扫描件、截图、图表、表格、OCR 质量或模态路由，读取 `references/multimodal-retrieval.md`。
+9. 如果怀疑表示质量或多语言行为有问题，读取 `references/embedding-choice.md`。
+10. 如果 filtering、indexing、hybrid search、persistence 或 scale 看起来是瓶颈，读取 `references/vector-db-choice.md`。
+11. 读取 `references/eval-design.md`，找出缺失的 benchmark 和 dataset。
+12. 读取 `references/observability-design.md`，找出缺失的 traces 或 runtime signals。
+13. 产出一个 diagnostic report，包含 likely causes、missing evidence、investigation order 和按优先级排序的 remediation path。在 `Recommended changes` 中，优先使用 `now`、`next`、`later` 的排序，并且先做可逆修改，再做高成本重构。
+14. 如果达到了 artifact update threshold，把可复用的 failure notes、investigation heuristics 或 stack decisions hand off 给 `artifact-maintenance`。
+15. 如果结构化最终文档有帮助，运行 `scripts/render_rag_diagnostic.py`。
 
 ## Artifact-Maintenance Workflow
 
-Use this layer when the primary goal is to maintain the persistent workspace or when planner has produced durable findings that must be preserved.
+当主要目标是维护持久化 workspace，或者 planner 已经产出了必须保存的 durable findings 时，使用这一层。
 
-Before any maintenance operation:
+在执行任何维护操作之前：
 
-1. Read `references/artifact-maintenance-contract.md`.
-2. Follow the matching runbook in `references/artifact-operation-checklists.md`.
-3. Keep the operation scoped. Maintenance preserves and organizes knowledge; it does not become an unconstrained redesign pass.
+1. 读取 `references/artifact-maintenance-contract.md`。
+2. 按照 `references/artifact-operation-checklists.md` 中匹配的 runbook 执行。
+3. 保持操作有边界。Maintenance 的职责是保存和整理知识，不是借机做无限制重构。
 
-Use one of these operations:
+使用以下操作之一：
 
 - `ingest`
-  - convert raw evidence into durable pages
+  - 把原始证据转成 durable pages
 - `query`
-  - answer from the workspace and save durable results when appropriate
+  - 从 workspace 回答问题，并在合适时保存 durable 结果
 - `lint`
-  - detect duplicates, unsupported claims, stale pages, weak navigation, and taxonomy drift
+  - 检测重复项、缺证据断言、过时页面、弱导航和 taxonomy drift
 - `index`
-  - refresh or repair workspace entry points and hubs
+  - 刷新或修复 workspace 的入口页和 hub 页
 
-## Output Contract
+## 输出合同（Output Contract）
 
-### Greenfield Output
+### Greenfield 输出
 
-Return a complete solution package with these sections:
+返回一个完整的 solution package，包含这些 section：
 
 1. Problem summary
 2. Assumptions and constraints
@@ -186,13 +186,13 @@ Return a complete solution package with these sections:
 10. Phased rollout plan
 11. Durable artifact summary
 
-Within `Recommended stack` and `Risks and tradeoffs`, explain why the chosen level of complexity fits and what is intentionally not being added yet.
-Within `Retrieval design`, include modality routing and fallback behavior when the corpus is not text-only.
-Within `Durable artifact summary`, say what durable pages were created or updated, or why the result stays chat-only.
+在 `Recommended stack` 和 `Risks and tradeoffs` 中，解释为什么当前复杂度级别合适，以及哪些东西是有意不加入的。
+在 `Retrieval design` 中，如果语料不只是文本，要包含模态路由和 fallback behavior。
+在 `Durable artifact summary` 中，说明创建或更新了哪些 durable pages；如果没有写入 durable 页面，也要说清为什么结果保持为 chat-only。
 
-### Comparison Output
+### Comparison 输出
 
-Return a lighter decision memo with these sections:
+返回一个更轻的 decision memo，包含这些 section：
 
 1. Decision context
 2. Options compared
@@ -201,12 +201,12 @@ Return a lighter decision memo with these sections:
 5. Not chosen because
 6. What would change the decision
 
-Within `Recommendation`, keep the answer bounded and say what complexity is intentionally deferred.
-Within `What would change the decision`, name the missing evidence, evaluation result, or workload change that would justify escalation.
+在 `Recommendation` 中，保持结论有边界，并说明当前有意延后的复杂度。
+在 `What would change the decision` 中，点明哪类缺失证据、评测结果或 workload 变化会成为升级理由。
 
-### Diagnosis Output
+### Diagnosis 输出
 
-Return a diagnostic report with these sections:
+返回一个 diagnostic report，包含这些 section：
 
 1. Symptom summary
 2. Working hypotheses
@@ -218,73 +218,73 @@ Return a diagnostic report with these sections:
 8. Risks and expected impact
 9. Durable artifact summary
 
-Within `Working hypotheses`, label what is observed versus inferred.
-Within `Recommended changes`, order actions as `now`, `next`, and `later` when the sequence matters.
-Within `Evaluation additions`, specify whether the next validation should focus on `single passage`, `multi passage`, or `no answer` style checks when that distinction matters, and say which failure family the evaluation is meant to confirm or falsify.
-Within `Durable artifact summary`, say what durable pages were created or updated, or why the result stays chat-only.
-Do not speculate past missing evidence.
+在 `Working hypotheses` 中，标明哪些是 observed，哪些是 inferred。
+在 `Recommended changes` 中，当顺序重要时，用 `now`、`next`、`later` 排序。
+在 `Evaluation additions` 中，当区分很重要时，明确下一轮验证应该聚焦 `single passage`、`multi passage` 还是 `no answer` 风格的检查，并说明它要确认或证伪的是哪一个 failure family。
+在 `Durable artifact summary` 中，说明创建或更新了哪些 durable pages；如果没有写入 durable 页面，也要说清为什么结果保持为 chat-only。
+不要在缺失证据之外做过度推测。
 
-## Minimal Reading Sets
+## 最小阅读集（Minimal Reading Sets）
 
-- `greenfield` minimum:
+- `greenfield` 最小集：
   - `references/intake-checklist.md`
   - `references/retrieval-design.md`
   - `references/eval-design.md`
-- `diagnosis` minimum:
+- `diagnosis` 最小集：
   - `references/diagnosis-playbook.md`
   - `references/retrieval-design.md`
   - `references/observability-design.md`
-  - `wiki/failure-modes/triage-matrix.md` when an artifact workspace exists
+  - 当存在 artifact workspace 时，再加 `wiki/failure-modes/triage-matrix.md`
 
-Read beyond these only when the request or failure mode clearly requires it.
+只有当请求内容或 failure mode 明确要求时，才读取超出这些范围的文档。
 
 - `references/intake-checklist.md`
-  Read when the task lacks requirements or when you need a structured interview.
+  当任务缺少需求信息，或你需要一个结构化访谈时读取。
 - `references/embedding-choice.md`
-  Read when choosing or challenging the embedding layer.
+  当你要选择或质疑 embedding 层时读取。
 - `references/vector-db-choice.md`
-  Read when comparing storage, filtering, indexing, scale, or retrieval operations.
+  当你要比较存储、过滤、索引、规模或检索运维时读取。
 - `references/retrieval-design.md`
-  Read for chunking, metadata, hybrid retrieval, reranking, and citation design.
+  当你要处理 chunking、metadata、hybrid retrieval、reranking 和 citation design 时读取。
 - `references/multimodal-retrieval.md`
-  Read when the corpus or failure mode depends on scans, screenshots, diagrams, tables, or cross-modal routing.
+  当语料或 failure mode 涉及扫描件、截图、图表、表格或跨模态路由时读取。
 - `references/agent-framework-choice.md`
-  Read only when the user needs tool use, agents, or orchestration.
+  只有当用户需要 tool use、agents 或 orchestration 时才读取。
 - `references/eval-design.md`
-  Read when planning measurement, benchmarks, or regression checks.
+  当你在规划 measurement、benchmarks 或 regression checks 时读取。
 - `references/observability-design.md`
-  Read when planning traces, logs, dashboards, or runtime monitoring.
+  当你在规划 traces、logs、dashboards 或 runtime monitoring 时读取。
 - `references/diagnosis-playbook.md`
-  Read first in diagnosis mode.
+  在 diagnosis 模式中先读它。
 - `references/artifact-workflow.md`
-  Read when the task should preserve durable RAG knowledge instead of ending in chat.
+  当任务应该把 durable RAG knowledge 保存下来，而不是只停在 chat 中时读取。
 - `references/artifact-maintenance-contract.md`
-  Read when the task includes ingest, query, lint, index, or durable artifact updates.
+  当任务包含 ingest、query、lint、index 或 durable artifact updates 时读取。
 - `references/artifact-operation-checklists.md`
-  Read when a short deterministic maintenance runbook is needed.
+  当你需要一份最短、确定性的 maintenance runbook 时读取。
 - `references/reference-to-artifact-map.md`
-  Read when deciding whether a conclusion belongs in a pattern page, failure page, evaluation page, stack decision, or case note.
+  当你要判断一个结论应该写进 pattern page、failure page、evaluation page、stack decision 还是 case note 时读取。
 
-## Scripts
+## 脚本（Scripts）
 
 - `scripts/render_rag_plan.py`
-  Render a consistent Markdown solution package from structured JSON input.
+  从结构化 JSON 输入渲染出一致的 Markdown solution package。
 - `scripts/render_rag_diagnostic.py`
-  Render a consistent Markdown diagnostic report from structured JSON input.
+  从结构化 JSON 输入渲染出一致的 Markdown diagnostic report。
 
-Use the scripts for formatting only. Do not move architecture judgment into Python.
+脚本只负责格式化，不负责做架构判断。不要把 architecture judgment 挪进 Python。
 
-## Principles
+## 原则（Principles）
 
-- Stay framework-neutral until the user's constraints justify a recommendation.
-- Do not introduce an agent framework if a plain retrieval pipeline is enough.
-- Do not enable agentic RAG unless the task has explicit decomposition needs, real branch conditions, and measurable benefit over simpler retrieval upgrades.
-- Prefer fewer moving parts for small or stable corpora.
-- Prefer a minimal viable baseline, then justify each extra layer you add.
-- Distinguish retrieval failures from generation failures.
-- Distinguish missing observability from actual model quality problems.
-- In diagnosis mode, prioritize instrumentation, evidence collection, and reversible changes before expensive redesign.
-- When recommending complexity, state what it buys and what it costs.
-- State when a recommendation is an inference rather than evidence.
-- Do not claim benchmark numbers that were not actually measured.
-- Do not let repeated conclusions die in conversation when they are likely to matter again.
+- 在用户约束足以支撑推荐之前，保持框架中立。
+- 如果 plain retrieval pipeline 已经够用，就不要引入 agent framework。
+- 除非任务有明确的分解需求、真实分支条件，并且比更简单的 retrieval 升级能带来可测收益，否则不要启用 agentic RAG。
+- 对小型或稳定语料，优先更少的 moving parts。
+- 先建立 minimal viable baseline，再为每一层新增复杂度给出理由。
+- 区分 retrieval failure 和 generation failure。
+- 区分 missing observability 和真实的 model quality problem。
+- 在 diagnosis 模式下，先做 instrumentation、evidence collection 和可逆修改，再做高成本重构。
+- 当你推荐复杂度时，要说清它带来什么，也要说清它的代价。
+- 明确指出哪些推荐是 inference，而不是 evidence。
+- 不要声称那些并未真实测量过的 benchmark numbers。
+- 当某个结论很可能再次重要时，不要让它死在对话里。

@@ -1,19 +1,19 @@
 # Sample Support Incident
 
-## Date
+## 日期
 
 2026-04-09
 
 ## System
 
-Internal support RAG assistant over product docs, runbooks, and incident history.
+一个面向产品文档、runbooks 和 incident 历史的内部 support RAG assistant。
 
-## Observations
+## 观察
 
-- retrieved candidates often include the correct document family
-- answers sometimes cite the previous or next section instead of the exact procedure
-- engineers cannot consistently tell whether the issue is chunking, ranking, or answer assembly because chunk ids and citation anchors are not always logged
+- retrieved candidates 往往能覆盖正确的文档族
+- 答案有时会引用前一节或后一节，而不是精确的步骤
+- 由于 chunk ids 和 citation anchors 不是总被记录，工程师无法稳定判断问题到底在 chunking、ranking 还是 answer assembly
 
-## Immediate Hypothesis
+## 初步假设
 
-The system likely has a citation precision problem layered on top of acceptable candidate recall.
+系统很可能是在可接受的 candidate recall 之上，又叠加了 citation precision 问题。

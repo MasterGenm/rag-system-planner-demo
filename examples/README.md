@@ -1,15 +1,15 @@
-# Examples
+# 示例
 
 这个目录分成两类示例：
 
-- artifact-aware 工作流示例
-- renderer 风格的最终交付物
+- 可沉淀工作流示例
+- 渲染器风格的最终交付物
 
-第一次接触这个仓库时，先看 workflow，不要先看 renderer 输出。
+第一次接触这个仓库时，先看工作流，不要先看渲染器输出。
 
-## Artifact-Aware Workflow
+## 工作流示例
 
-如果你想理解 phase 1 之后的 skill 怎么工作，从这里开始：
+如果你想理解 `phase 1` 之后的 `rag-system-planner` 怎么工作，从这里开始：
 
 0. [../artifacts/rag-wiki-template/ADOPTION.md](../artifacts/rag-wiki-template/ADOPTION.md)
 1. [sample-rag-end-to-end.md](sample-rag-end-to-end.md)
@@ -17,7 +17,7 @@
 3. [sample-rag-real-walkthroughs.md](sample-rag-real-walkthroughs.md)
 4. [sample-rag-artifact-maintenance-ops.md](sample-rag-artifact-maintenance-ops.md)
 
-如果你准备开始第一次真实 workspace 运行，先读：
+如果你准备开始第一次真实的工作区运行，先读：
 
 - [../artifacts/rag-wiki-template/ADOPTION.md](../artifacts/rag-wiki-template/ADOPTION.md)
 
@@ -26,14 +26,14 @@
 - [../artifacts/rag-wiki-template/wiki/evaluations/README.md](../artifacts/rag-wiki-template/wiki/evaluations/README.md)
 - [../artifacts/rag-wiki-template/wiki/evaluations/hard-case-trace-review.md](../artifacts/rag-wiki-template/wiki/evaluations/hard-case-trace-review.md)
 
-## Renderer Outputs
+## 渲染器输出
 
-这些文件更适合在你已经理解 workflow 之后，再看最终交付给团队的文档形状：
+这些文件更适合在你已经理解工作流之后，再看最终交付给团队的文档格式：
 
 - [sample-rag-plan.md](sample-rag-plan.md)
 - [sample-rag-diagnostic.md](sample-rag-diagnostic.md)
 
-## Shorter Examples
+## 精简示例
 
 这些文件适合按主题快速跳读：
 
@@ -43,7 +43,7 @@
 - [sample-rag-wiki-index.md](sample-rag-wiki-index.md)
 - [sample-rag-artifact-maintenance-ops.md](sample-rag-artifact-maintenance-ops.md)
 
-## Related Entry Points
+## 相关入口
 
 - [../skills/rag-system-planner/SKILL.md](../skills/rag-system-planner/SKILL.md)
 - [../artifacts/rag-wiki-template/README.md](../artifacts/rag-wiki-template/README.md)

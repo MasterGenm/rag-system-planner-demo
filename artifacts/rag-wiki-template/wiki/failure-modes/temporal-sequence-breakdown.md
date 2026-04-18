@@ -2,24 +2,24 @@
 
 ## Symptom
 
-The system retrieves relevant events but scrambles their order, so the final answer gets the timeline or causal sequence wrong.
+系统取回了相关事件，但把它们的顺序打乱了，导致最终答案在 timeline 或 causal sequence 上出错。
 
 ## Likely Causes
 
-- ranking is optimized for relevance instead of sequence
-- event chain information is not preserved clearly in metadata
-- answer assembly does not enforce chronological order
+- ranking 优化的是 relevance，而不是 sequence
+- event chain 信息没有在 metadata 里被清楚保留
+- answer assembly 没有强制 chronological order
 
 ## Investigation Order
 
-1. inspect whether the question fundamentally requires ordered event reasoning
-2. check whether the candidate set contained the right events but not in a stable sequence
-3. preserve temporal anchors before adding graph or agentic complexity
+1. 检查这个问题是否本质上需要有序的 event reasoning
+2. 检查 candidate set 是否包含了正确事件，但没有形成稳定顺序
+3. 在加 graph 或 agentic complexity 前，先保住 temporal anchors
 
 ## Common False Diagnoses
 
-- calling the problem generic hallucination when the issue is ordering
-- adding more retrieval breadth without adding temporal organization
+- 实际问题是 ordering，却误判成普通 hallucination
+- 只加 retrieval breadth，却不加 temporal organization
 
 ## Related Pages
 
@@ -29,4 +29,4 @@ The system retrieves relevant events but scrambles their order, so the final ans
 
 ## Source Trail
 
-- `14-rag-failures` temporal sequence taxonomy
+- `14-rag-failures` 里的 temporal sequence taxonomy

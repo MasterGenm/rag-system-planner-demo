@@ -1,24 +1,24 @@
 # Failure Modes
 
-Use this folder for recurring RAG failure classes and their investigation order.
+这个目录用于保存重复出现的 RAG failure 类别，以及它们的调查顺序。
 
-## How To Use This Section
+## 怎么使用这一节
 
-- start here when the symptom is still fuzzy
-- identify the closest failure class before recommending bigger architecture changes
-- use [Hard-Case And Trace Review](../evaluations/hard-case-trace-review.md) to separate retrieval, ranking, generation, and observability issues
-- link durable case evidence into the relevant failure page instead of repeating the same diagnosis in chat
-- use [Failure Triage Matrix](triage-matrix.md) when you need a fast mapping from symptom to likely checks and bounded-complexity fixes
+- 当症状还比较模糊时，从这里开始
+- 在建议更大的架构改动之前，先锁定最接近的 failure class
+- 用 [Hard-Case And Trace Review](../evaluations/hard-case-trace-review.md) 区分 retrieval、ranking、generation 和 observability 问题
+- 把 durable 的 case evidence 链接到对应 failure 页面，而不是反复在聊天里重复同一份 diagnosis
+- 当你需要把症状快速映射到可能检查项和 bounded-complexity 修复动作时，使用 [Failure Triage Matrix](triage-matrix.md)
 
-## Investigation Flow
+## 调查流
 
-1. Start with [Good Recall, Weak Ranking](good-recall-weak-ranking.md) if you suspect evidence exists but is not being surfaced well.
-2. Move into `Evidence Composition` or `Semantic Precision` before proposing graph or agentic changes.
-3. Escalate into `Structural Reasoning` only after you have checked chunking, aliases, ranking, and candidate coverage.
-4. Treat `Temporal Truth` as its own class of failure. Stale or mixed-truth answers are not fixed by "more retrieval" alone.
-5. Use [When Not To Use Agentic RAG](../stack-decisions/when-not-to-use-agentic-rag.md) as a guardrail before adding orchestration.
+1. 如果你怀疑证据其实存在、只是没被正确抬出来，就从 [Good Recall, Weak Ranking](good-recall-weak-ranking.md) 开始。
+2. 在提议 graph 或 agentic 方案之前，先在 `Evidence Composition` 或 `Semantic Precision` 里缩小范围。
+3. 只有在已经检查过 chunking、别名、ranking 和 candidate coverage 之后，才升级到 `Structural Reasoning`。
+4. 把 `Temporal Truth` 当成独立 failure 类。过时或混合 truth 的答案，不能靠“多做一点 retrieval”直接修好。
+5. 在增加 orchestration 之前，用 [When Not To Use Agentic RAG](../stack-decisions/when-not-to-use-agentic-rag.md) 作为 guardrail。
 
-## Cross-Cutting
+## 跨类问题
 
 - [Good Recall, Weak Ranking](good-recall-weak-ranking.md)
 
@@ -48,15 +48,15 @@ Use this folder for recurring RAG failure classes and their investigation order.
 - [Contradictory Facts And Recency](contradictory-facts-and-recency.md)
 - [Temporal Sequence Breakdown](temporal-sequence-breakdown.md)
 
-## Practical Starting Points
+## 实用起点
 
-- begin with [Scattered Evidence Cutoff](scattered-evidence-cutoff.md) when details are split across too many chunks or top-k feels too thin
-- begin with [Entity Ambiguity](entity-ambiguity.md) or [Synonymy And Jargon Gap](synonymy-and-jargon-gap.md) when naming mismatches dominate
-- begin with [Contradictory Facts And Recency](contradictory-facts-and-recency.md) or [Temporal Sequence Breakdown](temporal-sequence-breakdown.md) when freshness, precedence, or ordering matter
-- begin with [Hierarchy Loss](hierarchy-loss.md) when retrieved chunks feel locally correct but globally misframed
+- 当细节分散在太多 chunks 里，或 top-k 看起来太薄时，从 [Scattered Evidence Cutoff](scattered-evidence-cutoff.md) 开始
+- 当命名不一致占主导时，从 [Entity Ambiguity](entity-ambiguity.md) 或 [Synonymy And Jargon Gap](synonymy-and-jargon-gap.md) 开始
+- 当 freshness、优先级或顺序很重要时，从 [Contradictory Facts And Recency](contradictory-facts-and-recency.md) 或 [Temporal Sequence Breakdown](temporal-sequence-breakdown.md) 开始
+- 当 retrieved chunks 局部正确、但整体语境错位时，从 [Hierarchy Loss](hierarchy-loss.md) 开始
 
 ## Guardrails
 
-- do not jump to graph or agentic RAG before ruling out coverage, ranking, metadata, and packing failures
-- treat unsupported relationships as [Implicit Hallucination](implicit-hallucination.md) until you can show missing evidence instead of imagined evidence
-- prefer updating one canonical page per failure class instead of creating near-duplicates
+- 在排除 coverage、ranking、metadata 和 packing failure 之前，不要直接跳到 graph 或 agentic RAG
+- 在你能证明是缺证据、而不是凭空想象之前，把 unsupported relationship 当成 [Implicit Hallucination](implicit-hallucination.md)
+- 每一类 failure 优先维护一页 canonical page，而不是建一堆近似重复页

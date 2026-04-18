@@ -1,20 +1,20 @@
-# Sample RAG Case Note
+# 示例：案例记录
 
-## Context
+## 背景
 
-Internal support knowledge base with product docs, runbooks, and incident writeups.
+内部支持知识库，包含产品文档、运行手册和事故复盘记录。
 
-## Observed Problem
+## 观察到的问题
 
-Relevant evidence often appears in the retrieval pool, but final answers cite nearby sections instead of the precise troubleshooting step.
+相关证据经常已经出现在检索池里，但最终答案引用的却是邻近段落，而不是精确的排障步骤。
 
-## Durable Findings
+## 可沉淀结论
 
-- chunking should preserve section path metadata
-- citation quality is a separate problem from gross recall
-- reranking should be tested only after candidate quality is confirmed
+- 切块应该保留章节路径元数据
+- 引用质量是一个独立于整体召回的问题
+- 重排应该在确认候选集质量之后再测试
 
-## Related Wiki Pages
+## 关联的知识页
 
 - `wiki/patterns/section-aware-chunking.md`
 - `wiki/failure-modes/good-recall-weak-ranking.md`

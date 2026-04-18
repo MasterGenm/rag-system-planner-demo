@@ -1,11 +1,11 @@
 # Sources
 
-Store raw inputs here:
+把原始输入放在这里：
 
-- architecture notes
+- 架构说明
 - traces
-- eval outputs
-- incident writeups
-- benchmark summaries
+- eval 输出
+- incident 记录
+- benchmark 摘要
 
-Prefer date-prefixed names.
+优先使用带日期前缀的文件名。

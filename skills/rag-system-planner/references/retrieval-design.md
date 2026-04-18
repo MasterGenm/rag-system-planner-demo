@@ -1,247 +1,247 @@
 # Retrieval Design
 
-Design retrieval before choosing an orchestration framework. Many poor RAG systems fail because they start with framework plumbing instead of retrieval quality.
+在选择 orchestration framework 之前，先把 retrieval 设计好。很多糟糕的 RAG 系统失败，不是因为缺框架，而是因为它们先做了框架 plumbing，而不是先把 retrieval 质量打牢。
 
 ## Chunking
 
-Choose chunking based on document structure, not arbitrary token counts.
+按文档结构设计 chunking，不要按任意 token 数硬切。
 
 ### Good Defaults
 
-- Preserve section boundaries when possible
-- Keep metadata attached to every chunk
-- Use overlap only when it improves context continuity
+- 尽量保留 section boundaries
+- 每个 chunk 都带上 metadata
+- 只有在能改善上下文连续性时才使用 overlap
 
 ### When To Use Smaller Chunks
 
-- Fact lookup
-- Dense technical documentation
-- Narrow question spans
+- 事实查找
+- 稠密技术文档
+- 问题跨度很窄
 
 ### When To Use Larger Chunks
 
-- Narrative documents
-- Legal or policy text where context spans paragraphs
-- Summarization-oriented retrieval
+- 叙事型文档
+- 上下文跨越多个段落的法律或政策文本
+- 以总结为导向的检索
 
 ### Section-Aware Defaults
 
-For structured docs, split by section first and by paragraph second.
+对于结构化文档，先按 section 切，再按 paragraph 切。
 
-Prefer:
+优先：
 
-- document title plus heading path as a prefix
-- moderate chunk sizes that preserve local reasoning
-- section or page anchors that keep citations inspectable
+- 以 document title 和 heading path 作为前缀
+- 使用能保留局部推理链的适中 chunk size
+- 保留 section 或 page anchors，让 citations 保持可检查
 
-Do not assume smaller is always better. Over-splitting can destroy explanatory context, especially in issue threads or long-form technical docs.
+不要默认“越小越好”。过度切碎会破坏解释性上下文，尤其是在 issue threads 或长篇技术文档里。
 
-For issue-like corpora:
+对于 issue 类语料：
 
-- keep the issue title as a strong prefix
-- split the body by paragraph groups or subsections
-- avoid shredding the debugging narrative into tiny fragments
+- 保留 issue title 作为强前缀
+- 按段落组或子小节切正文
+- 不要把调试叙事撕成过小碎片
 
 ## Metadata
 
-Always design metadata early if you need:
+如果你需要以下能力，就要尽早设计 metadata：
 
-- Source citations
-- Time filtering
-- Tenant isolation
-- Document type filtering
-- Version awareness
+- source citations
+- 时间过滤
+- tenant isolation
+- document type filtering
+- 版本感知
 
-Poor metadata often looks like poor retrieval.
+糟糕的 metadata，经常会伪装成糟糕的 retrieval。
 
 ## Retrieval Strategy
 
-Start with a simple baseline:
+先从简单 baseline 开始：
 
-1. Dense retrieval
-2. Metadata filtering where relevant
-3. Top-k retrieval
+1. dense retrieval
+2. 必要时加 metadata filtering
+3. top-k retrieval
 
-Add complexity only if the baseline fails:
+只有当 baseline 失败时，才增加复杂度：
 
-- Hybrid retrieval for keyword-sensitive queries
-- Query rewriting for vague user input
-- Multi-query retrieval when recall is the main problem
-- Reranking when the initial candidate set is noisy
-- Parent-child retrieval when passages need larger source context
+- hybrid retrieval：适用于关键词敏感的查询
+- query rewriting：适用于用户输入模糊的场景
+- multi-query retrieval：适用于 recall 是主要问题的场景
+- reranking：适用于初始 candidate set 噪声较大的场景
+- parent-child retrieval：适用于 passage 需要更大 source context 的场景
 
-For each added layer, say:
+对每一层新增能力，都要说明：
 
-- why the baseline is not enough
-- what the extra layer improves
-- what it costs in latency, complexity, or operations
-- what you are deliberately not adding yet
+- 为什么 baseline 不够
+- 这层能力改善什么
+- 它在 latency、complexity 或 operations 上的代价是什么
+- 你现在有意不加什么
 
 ## Adaptive Retrieval Funnels
 
-Use an adaptive multi-stage retrieval funnel only when query families genuinely need different retrieval behavior.
+只有当不同 query family 真的需要不同 retrieval 行为时，才使用 adaptive multi-stage retrieval funnel。
 
-Good signals include:
+合理信号包括：
 
-- conversational or referential queries that need standalone rewrite
-- semantic gaps where HyDE or a hypothetical answer can improve first-stage recall
-- mixed query families where some requests are keyword-heavy, some semantic, and some need hybrid retrieval
-- high-value questions where broad recall followed by reranking and light distillation materially improves answer quality
+- 会话型或指代型查询，需要 rewrite 成 standalone query
+- 存在 semantic gap，HyDE 或 hypothetical answer 能改善 first-stage recall
+- 查询家族混杂：有些关键词重、有些偏语义、有些需要 hybrid retrieval
+- 高价值问题确实需要“先扩 recall，再做 reranking，再做轻量蒸馏”才能显著改善答案质量
 
-Treat this as a bounded retrieval upgrade, not as an excuse to introduce a large agentic workflow by default.
+把它视为一种有边界的 retrieval upgrade，而不是引入大型 agentic workflow 的借口。
 
-If you recommend an adaptive funnel, state:
+如果你推荐 adaptive funnel，要说明：
 
-- which query families trigger rewrite, HyDE, keyword, dense, or hybrid paths
-- what the default path is when no special trigger fires
-- what is logged at each stage so failures remain debuggable
-- what latency and cost overhead each extra stage adds
-- what fixed retrieval slice or hard-case set proves the funnel is better than a simpler baseline
+- 哪些 query family 会触发 rewrite、HyDE、keyword、dense 或 hybrid path
+- 默认路径是什么
+- 每个 stage 记录什么，才能保证失败仍然可调试
+- 每一层额外 stage 带来的 latency 和 cost 开销
+- 哪个固定 retrieval slice 或 hard-case set 能证明 funnel 比简单 baseline 更好
 
-Do not add a retrieval supervisor or HyDE first when:
+不要在以下情况下先上 retrieval supervisor 或 HyDE：
 
-- the corpus is small and the failure mode is not yet characterized
-- baseline dense or hybrid retrieval has not been measured
-- the team cannot explain which questions should bypass the extra stage
-- the extra layer only makes a demo look more sophisticated without a clear retrieval gain
+- corpus 很小，failure mode 还未明确
+- baseline dense 或 hybrid retrieval 还没有被测过
+- 团队无法解释哪些问题应该绕过额外 stage
+- 这层设计只是让 demo 看起来更高级，却没有清楚的 retrieval gain
 
 ## Reranking
 
-Treat reranking as a ranking fix, not a recall fix.
+把 reranking 当成“排序修复”，而不是“召回修复”。
 
-Add reranking when:
+以下情况下可以加 reranking：
 
-- The right evidence already appears in the candidate pool, but the top few results are misordered
-- Recall is acceptable but top-rank precision is weak
-- The top results are related but not precise enough for fact-heavy questions or citations
-- The query is fine-grained and multiple candidate chunks share the same broad topic
+- 正确证据已经在 candidate pool 里，但前几名排序错了
+- recall 尚可，但 top-rank precision 偏弱
+- 前排结果相关但不够精确，无法支撑事实密集型问题或 citations
+- query 很细粒度，而多个 candidate chunks 又共享同一个大主题
 
-Do not add reranking yet when:
+以下情况下先不要加 reranking：
 
-- Relevant evidence is missing from the candidate pool entirely
-- Chunking, metadata, filters, or query formulation are still clearly broken
-- The corpus is tiny and baseline retrieval is already precise enough
-- Latency budget is so tight that a second-stage model is hard to justify
+- 相关证据根本没进 candidate pool
+- chunking、metadata、filters 或 query formulation 仍然明显有问题
+- corpus 很小，而 baseline retrieval 已经足够精确
+- latency budget 很紧，不足以支撑 second-stage model
 
-Use the standard two-stage pattern:
+使用标准两阶段模式：
 
-1. First-stage retrieval to gather a candidate set
-2. Second-stage reranking over only the top-N candidates
+1. first-stage retrieval：收集 candidate set
+2. second-stage reranking：只在 top-N candidates 上做 rerank
 
-Cross-encoders fit naturally in the second stage because they are usually too expensive for full-corpus retrieval.
+Cross-encoder 很适合 second stage，因为它通常太贵，不适合全库检索。
 
-When planning reranking, state:
+在规划 reranking 时，要说明：
 
-- how you will confirm that candidate recall is already good enough
-- how many candidates enter the reranker
-- what latency budget the reranker consumes
-- what metric should improve if the reranker is working
+- 你会如何确认 candidate recall 已经足够
+- 有多少 candidates 会进入 reranker
+- reranker 会消耗多少 latency budget
+- 如果 reranker 有效，应该改善哪个 metric
 
-Input shaping matters. Do not feed only naked chunk text when structure carries meaning.
+输入整形很重要。不要只把裸 chunk text 喂给 reranker；当结构承载语义时，应把结构一并喂进去。
 
-Prefer prefixes such as:
+优先加入这些前缀：
 
-- section or chapter titles
-- document path or source title
-- page anchors or subsection ids
+- section 或 chapter titles
+- document path 或 source title
+- page anchors 或 subsection ids
 
-These often help the reranker separate "same topic" chunks from the chunk that answers the exact question.
+这些信息经常能帮助 reranker 区分“同主题 chunk”和“真正回答问题的 chunk”。
 
 ## Chunking Versus Reranking
 
-Use this decision rule:
+使用这个判断规则：
 
-- If relevant evidence is missing from the candidate pool, inspect chunking, metadata, filters, and retrieval strategy first.
-- If relevant evidence is already present in the candidate pool but misordered, inspect reranking first.
-- If retrieved chunks are broadly relevant but too coarse to answer precise questions, use section-aware chunking before reaching for larger architecture changes.
-- If the chunks are good and well-ranked but the answer is still weak, inspect prompt assembly or generation instead.
+- 如果相关证据没有进入 candidate pool，先检查 chunking、metadata、filters 和 retrieval strategy。
+- 如果相关证据已经在 candidate pool 中，但排序不对，先检查 reranking。
+- 如果 retrieved chunks 大体相关，但太粗，无法回答精确问题，那么先做 section-aware chunking，再考虑更大的架构变化。
+- 如果 chunks 本身不错、排序也对，但答案仍然弱，那么去检查 prompt assembly 或 generation。
 
-Do not use reranking as a substitute for obviously broken chunking, and do not rewrite chunking first when the real problem is ranking precision.
+不要把 reranking 当成修复明显坏掉的 chunking 的替代品；也不要在真实问题是 ranking precision 时，先重写 chunking。
 
 ## Graph RAG And Structural Retrieval
 
-Consider graph-structured retrieval only when the problem is structurally hard, not merely semantically fuzzy.
+只有当问题在结构上足够难，而不是仅仅语义模糊时，才考虑 graph-structured retrieval。
 
-Good signals include:
+合理信号包括：
 
-- multi-hop chains where intermediate entities must be traversed explicitly
-- hierarchy or parent-child lineage questions
-- directionality-sensitive queries such as ownership or dependency arrows
-- temporal latest-truth questions where ordering matters more than similarity
-- common-neighbor or intersection queries
-- negation, absence, or set-difference questions
-- influence, bottleneck, or centrality questions over a network
+- 需要显式 traversing intermediate entities 的 multi-hop 链路
+- 层级或 parent-child lineage 问题
+- 对方向性敏感的查询，例如 ownership 或 dependency arrows
+- “最新事实”这种时间顺序比相似度更重要的问题
+- common-neighbor 或 intersection 查询
+- negation、absence 或 set-difference 问题
+- influence、bottleneck 或 centrality 问题
 
-Do not jump to Graph RAG when:
+以下情况下不要急着跳到 Graph RAG：
 
-- the task is still mostly citation-heavy document QA
-- dense or hybrid retrieval has not been baselined yet
-- graph extraction quality is weak or too expensive to maintain
-- the team cannot explain which queries should use traversal instead of plain retrieval
+- 任务本质上仍然是 citation-heavy document QA
+- dense 或 hybrid retrieval 还没有 baseline
+- graph extraction 质量弱，或维护代价太高
+- 团队无法解释哪些 query family 应该走 traversal，而不是 plain retrieval
 
-If you recommend Graph RAG, state:
+如果你推荐 Graph RAG，要说明：
 
-- where entities and relations come from
-- how graph extraction or curation will be validated
-- which query families route to graph traversal
-- what simpler baseline the graph path must beat on fixed hard cases
-- what graph-specific failure modes you will observe, such as stale edges or wrong entity resolution
+- entities 和 relations 从哪里来
+- graph extraction 或人工整理如何验证
+- 哪些 query family 路由到 graph traversal
+- graph path 必须在什么固定 hard case 上打败更简单的向量检索 baseline
+- 你会观察哪些 graph-specific failure modes，例如 stale edges 或 entity resolution 错误
 
 ## Web Fallback And External Search
 
-Use external search only when the problem truly needs fresh or out-of-corpus evidence.
+只有当问题真的需要新鲜证据或 corpus 外证据时，才使用 external search。
 
-Good signals include:
+合理信号包括：
 
-- time-sensitive questions where internal documents are known to be stale
-- comparative questions that mix internal knowledge with recent public events
-- explicit coverage gaps that the internal corpus cannot reasonably fill
+- 对时间高度敏感，而内部文档明确过时
+- 比较型问题需要把内部知识和近期公开事件结合起来
+- 内部 corpus 存在明确覆盖缺口，且这个缺口无法合理补齐
 
-Do not treat web fallback as a substitute for weak internal retrieval. If internal documents should have answered the question, fix the internal path first.
+不要把 web fallback 当成内部 retrieval 弱的替代品。如果内部文档本该答出来，就先修内部路径。
 
-If you add web fallback, state:
+如果你加 web fallback，要说明：
 
-- which query families are allowed to leave the corpus
-- how external evidence is cited and separated from internal evidence
-- what freshness or source-trust rules apply
-- what fallback cap or routing rule prevents unnecessary external calls
+- 哪些 query family 允许离开 corpus
+- 外部证据如何引用，并如何与内部证据区分
+- 适用什么 freshness 或 source-trust 规则
+- 用什么 fallback cap 或 routing rule 防止不必要的外部调用
 
 ## Multimodal And Scan-Heavy Corpora
 
-If evidence lives in diagrams, screenshots, scanned pages, or tables, do not force everything into a plain text-only design.
+当证据存在于图表、截图、扫描页面或表格里时，不要强行把一切都塞进纯文本设计。
 
-- Keep text chunks, OCR text, and image or region assets distinct when they play different retrieval roles
-- Treat OCR confidence as metadata, not as a hidden implementation detail
-- Preserve page anchors, section ids, and asset ids so citations stay traceable
-- Use a text-only baseline only when visual semantics are not materially required
-- If image understanding matters, plan explicit modality routing or parallel retrieval branches
+- 当 text chunks、OCR text 和 image/region assets 承担不同检索角色时，应保持区分
+- 把 OCR confidence 当成 metadata，而不是隐藏实现细节
+- 保留 page anchors、section ids 和 asset ids，让 citations 可追溯
+- 只有当视觉语义不重要时，才用 text-only baseline
+- 如果 image understanding 确实重要，就规划明确的模态路由或并行检索分支
 
-Read `references/multimodal-retrieval.md` when multimodal evidence may change retrieval design.
+当多模态证据可能改变 retrieval 设计时，读取 `references/multimodal-retrieval.md`。
 
 ## Fallback And Abstention
 
-Design for weak-evidence cases:
+为弱证据场景做好设计：
 
-- what to do when retrieval returns little or no support
-- when to abstain instead of forcing an answer
-- how to surface low-confidence evidence to the user or downstream workflow
+- 当 retrieval 返回很少或没有支持时怎么办
+- 在什么条件下应该 abstain，而不是强行回答
+- 如何把低置信度证据暴露给用户或后续 workflow
 
 ## Generation Boundary
 
-Separate retrieval problems from generation problems:
+把 retrieval 问题和 generation 问题区分开：
 
-- Missing evidence in retrieved chunks is a retrieval issue
-- Good evidence but poor synthesis is a generation or prompt issue
-- Good answer quality but weak citations is often an assembly issue
+- retrieved chunks 里缺证据，是 retrieval 问题
+- 证据不错但综合很差，是 generation 或 prompt 问题
+- 答案不错但 citation 很弱，通常是 assembly 问题
 
 ## Recommendation Pattern
 
-State:
+明确说明：
 
-1. Chunking plan
-2. Metadata plan
-3. Retrieval plan
-4. Reranking plan if needed
-5. Citation strategy
-6. Fallback or abstention strategy if evidence is weak
-7. What you are not adding yet and why
+1. chunking plan
+2. metadata plan
+3. retrieval plan
+4. reranking plan（如果需要）
+5. citation strategy
+6. 当证据弱时的 fallback 或 abstention strategy
+7. 现在不加什么，以及原因

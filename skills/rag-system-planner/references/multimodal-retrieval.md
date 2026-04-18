@@ -1,107 +1,107 @@
 # Multimodal Retrieval
 
-Use this file when the corpus includes scans, screenshots, diagrams, tables, or other evidence that is not safely reducible to plain text retrieval.
+当 corpus 中包含 scans、screenshots、diagrams、tables，或其他无法安全压缩成纯文本检索的证据时，使用这份文件。
 
 ## Decide Whether Multimodal Retrieval Is Really Needed
 
-Text-only retrieval may still be enough when:
+在以下情况下，text-only retrieval 仍然可能够用：
 
-- OCR quality is high
-- the important evidence is mostly prose
-- page-level citations are acceptable
-- images are decorative rather than semantically necessary
+- OCR 质量高
+- 重要证据大多仍是 prose
+- page-level citations 已足够
+- 图片更多是装饰性的，而不是语义必需的
 
-Plan explicit multimodal retrieval when:
+当出现以下情况时，应该规划明确的 multimodal retrieval：
 
-- diagrams or screenshots contain the answer
-- the user needs image-aware citations
-- OCR loses important layout or labels
-- tables, charts, or visual states carry key meaning
+- diagrams 或 screenshots 本身就包含答案
+- 用户需要 image-aware citations
+- OCR 会丢掉关键布局或标签
+- tables、charts 或 visual states 承载关键意义
 
 ## Evidence Units
 
-Keep retrievable units explicit:
+保持可检索单元显式分离：
 
 - text chunks
 - OCR blocks
-- image or region assets
-- table extracts when table structure matters
+- image 或 region assets
+- 当表格结构本身重要时，再加入 table extracts
 
-Do not blur them into one undifferentiated store if they serve different retrieval paths.
+如果它们服务不同的 retrieval paths，就不要把它们模糊地混进一个无差别存储层。
 
 ## Metadata Requirements
 
-Preserve enough metadata to keep answers grounded:
+保留足够的 metadata，才能让答案保持 grounded：
 
 - document id
 - page number
 - section id
-- asset id or region id
+- asset id 或 region id
 - modality
-- OCR confidence when applicable
-- caption or nearby text anchors when available
+- 如果适用，保留 OCR confidence
+- 如果可用，保留 caption 或邻近文本锚点
 
 ## Retrieval Patterns
 
-Prefer the lightest pattern that matches the task:
+优先使用与任务匹配的最轻模式：
 
-1. text-first baseline with OCR support
-2. routed retrieval based on query type
-3. parallel text and image retrieval with merged ranking
+1. 带 OCR 支持的 text-first baseline
+2. 按 query type 做 routed retrieval
+3. 并行的 text 和 image retrieval，再做 merged ranking
 
-Only move beyond text-first when visual evidence measurably matters.
+只有当视觉证据在测量上真的重要时，才超出 text-first。
 
 ## Routing Guidance
 
-Use modality-aware routing when:
+以下情况下使用 modality-aware routing：
 
-- the question refers to a diagram, screenshot, UI state, label, or visual layout
-- support workflows depend on image-specific troubleshooting
-- scanned pages have weak OCR and need image context
+- 问题明确提到 diagram、screenshot、UI state、label 或 visual layout
+- 支持工作流依赖 image-specific troubleshooting
+- 扫描页面 OCR 很弱，需要 image context
 
-Keep the routing explainable. A user or engineer should be able to tell why the system searched text, images, or both.
+保持 routing 可解释。用户或工程师应能说清系统为什么搜 text、images，或同时搜两者。
 
 ## Fallback Behavior
 
-Plan for weak visual evidence:
+为弱视觉证据场景做好设计：
 
-- fall back to text evidence when images are low value
-- abstain when OCR confidence is weak and no grounded image path exists
-- expose low-confidence evidence rather than pretending certainty
+- 当 images 价值低时，fallback 到 text evidence
+- 当 OCR confidence 很低，且没有 grounded image path 时，选择 abstain
+- 暴露 low-confidence evidence，而不是伪装成确定结论
 
 ## Evaluation Changes
 
-Split evaluation by modality:
+按模态拆分 evaluation：
 
 - text-only questions
 - image-dependent questions
 - scan-heavy questions
 - mixed text-image questions
 
-Check:
+检查：
 
-- retrieval hit rate by modality
-- citation correctness by page or asset
-- groundedness under weak OCR conditions
-- failure rate when routing chooses the wrong branch
+- 各模态的 retrieval hit rate
+- 按 page 或 asset 统计的 citation correctness
+- 弱 OCR 条件下的 groundedness
+- 当 routing 走错分支时的 failure rate
 
 ## Observability Signals
 
-Trace at least:
+至少 trace：
 
-- chosen modality path
-- retrieved asset ids and chunk ids
+- 选择了哪条 modality path
+- retrieved asset ids 和 chunk ids
 - OCR confidence
-- branch-specific retrieval scores
+- 各分支的 retrieval scores
 - merged ranking decisions
-- final citation anchors
+- 最终 citation anchors
 
 ## Recommendation Pattern
 
-State:
+明确说明：
 
-1. why multimodal retrieval is or is not justified
-2. the minimal baseline to launch
-3. the routing strategy
-4. the fallback behavior
-5. what extra complexity is intentionally deferred
+1. 为什么 multimodal retrieval 值得或不值得做
+2. 可上线的最小 baseline 是什么
+3. routing strategy 是什么
+4. fallback behavior 是什么
+5. 哪些额外复杂度被有意延后

@@ -2,11 +2,11 @@
 
 ## Question
 
-Why did the API-key authentication answer fail even though the corpus contains relevant authentication chunks?
+语料里明明有相关的认证 chunks，为什么 API key 认证问题还是答错了？
 
-## Short Answer
+## 简短回答
 
-This case is closer to ranking drift than recall failure. In `QA000050 / run_49 / SC0004`, the relevant chunks exist in the top 10, but the first five ranked chunks are all irrelevant. The next move is to audit first-relevant-rank, test structure-aware chunking or metadata, and compare reranking behavior before considering any larger architecture upgrade.
+这个案例更接近 ranking drift，而不是 recall failure。在 `QA000050 / run_49 / SC0004` 里，相关 chunks 确实进入了 top 10，但前五个排序结果全都不相关。下一步应该先审计 `first relevant rank`，测试 structure-aware chunking 或 metadata，再比较 reranking 行为，而不是立刻讨论更大的架构升级。
 
 ## Evidence
 
@@ -17,7 +17,7 @@ This case is closer to ranking drift than recall failure. In `QA000050 / run_49 
 
 ## Follow-ups
 
-- add a `first relevant rank` audit to hard-case review
-- compare `sliding_window_256_overlap` against `by_heading` for developer docs
-- test title or heading-path metadata in ranking
-- keep the diagnosis inside bounded retrieval fixes before discussing graph or agentic changes
+- 在 hard-case review 里加入 `first relevant rank` 审计
+- 对 developer docs 比较 `sliding_window_256_overlap` 和 `by_heading`
+- 测试 title 或 heading-path metadata 对 ranking 的帮助
+- 在讨论 graph 或 agentic 之前，把 diagnosis 限定在 bounded retrieval fixes 里

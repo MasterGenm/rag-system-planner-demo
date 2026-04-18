@@ -1,14 +1,14 @@
 # Evaluation Design
 
-Define evaluation before claiming a RAG system works. Use both retrieval and answer-level checks.
+在声称一个 RAG 系统可用之前，先定义 evaluation。既要测 retrieval，也要测 answer 层。
 
 ## Offline Evaluation
 
 ### Retrieval Metrics
 
-Use when you can create labeled query-document pairs.
+当你能构造带标签的 query-document pairs 时使用。
 
-Common metrics:
+常见指标：
 
 - Recall@k
 - MRR
@@ -17,96 +17,96 @@ Common metrics:
 
 ### Answer Metrics
 
-Use when answers are the product surface.
+当“答案本身”就是产品表面时使用。
 
-Check:
+检查：
 
 - Groundedness
 - Citation correctness
 - Completeness
 - Conciseness
-- Task success for workflow-specific outputs
+- 针对特定 workflow 输出的 task success
 
 ## Judge-Based Evaluation
 
-Use LLM-as-a-judge for local pairwise comparisons, workflow-quality checks, or trace reviews, but do not let judge scores become the only proof that a system works.
+把 LLM-as-a-judge 用在局部 pairwise comparison、workflow 质量检查或 trace review 上，但不要让 judge score 成为系统可用的唯一证据。
 
-Pair judge-based evaluation with at least one of:
+Judge-based evaluation 至少要和以下之一配对：
 
-- labeled retrieval slices
-- fixed gold answers
-- manual audit of a representative subset
-- business-facing success checks when the system is already deployed
+- 带标签的 retrieval slices
+- 固定 gold answers
+- 对代表性子集做 manual audit
+- 当系统已部署时，再加面向业务的成功检查
 
-Keep the judge stable while comparing variants:
+在比较 variants 时，保持 judge 稳定：
 
 - same judge model
 - same scoring prompt
-- same candidate set or trace slice
+- same candidate set 或 trace slice
 
-Do not claim production readiness from notebook-local judge scores alone.
+不要仅凭 notebook 本地的 judge scores 就声称系统已经具备 production readiness。
 
 ## Agentic And Graph Evaluation
 
-If the system adds routing, rewrite loops, fallback tools, graph traversal, or multi-agent control, evaluate more than final-answer quality.
+如果系统引入 routing、rewrite loops、fallback tools、graph traversal 或 multi-agent control，就不能只看最终答案质量。
 
-Check:
+需要检查：
 
 - routing correctness
 - tool selection correctness
-- retry and loop termination behavior
-- fallback rate and abstention behavior
-- latency and cost overhead per extra control layer
-- graph-specific success on multi-hop, hierarchy, temporal, or negation cases when graph retrieval is used
+- retry 和 loop termination behavior
+- fallback rate 和 abstention behavior
+- 每增加一层 control layer 带来的 latency 和 cost overhead
+- 当使用 graph retrieval 时，在 multi-hop、hierarchy、temporal 或 negation cases 上的 graph-specific success
 
 ## Tutorial-Bias And Single-Case Bias
 
-Do not let a dramatic notebook walkthrough or a single hard query become the main proof that a system works.
+不要让一个戏剧化的 notebook walkthrough，或一条特别难的 query，变成系统可用的主要证据。
 
-One impressive case can be useful for demos, but it is not enough for architecture claims.
+一个精彩案例对 demo 有价值，但不足以支撑架构结论。
 
-Require at least:
+至少要求：
 
-- a small fixed scenario set rather than one hero query
-- a stable baseline to compare against
-- repeated runs or manual audit when stochastic components matter
-- explicit statement of what the showcased case does not prove
+- 一个小而固定的 scenario set，而不是单个 hero query
+- 一个稳定 baseline 用于比较
+- 当系统含随机成分时，要做 repeated runs 或 manual audit
+- 明确说明这个 showcase case 不能证明什么
 
 ## Dataset Design
 
-Create a small but representative evaluation set before over-optimizing architecture.
+在过度优化架构之前，先构建一个小但具有代表性的 evaluation set。
 
-Include:
+应包含：
 
 - Easy cases
 - Ambiguous cases
 - Long-tail domain cases
 - Failure-prone cases
-- Multilingual or multimodal cases if relevant
+- 若相关，还要加入 multilingual 或 multimodal cases
 
 ## Online Evaluation
 
-Track:
+持续追踪：
 
-- User success or abandonment
+- User success 或 abandonment
 - Citation usage
 - Follow-up question rate
 - Latency percentiles
-- Regeneration or retry rate
+- Regeneration 或 retry rate
 
 ## Common Mistakes
 
-- Measuring answer quality without measuring retrieval quality
-- Using only synthetic evaluation data
-- Ignoring hard negative examples
-- Changing embeddings or chunking without re-baselining
-- Treating LLM-as-a-judge traces as a substitute for retrieval ground truth
-- Adding agentic branches without measuring whether the branch improved anything
+- 只测 answer quality，不测 retrieval quality
+- 只用 synthetic evaluation data
+- 忽略 hard negative examples
+- 改了 embeddings 或 chunking，却不重做 baseline
+- 把 LLM-as-a-judge traces 当成 retrieval ground truth 的替代品
+- 加了 agentic branches，却不测这个 branch 到底有没有改善任何东西
 
 ## Recommendation Pattern
 
-For every architecture recommendation, include:
+对每一个架构建议，都要包含：
 
-1. What must be measured offline
-2. What must be observed online
-3. What threshold would justify iteration
+1. 必须做哪些 offline measurement
+2. 必须观察哪些 online signals
+3. 达到什么 threshold 才值得继续迭代

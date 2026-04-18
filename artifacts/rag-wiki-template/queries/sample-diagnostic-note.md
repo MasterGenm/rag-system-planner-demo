@@ -2,11 +2,11 @@
 
 ## Question
 
-Why does the support assistant often cite nearby sections instead of the exact troubleshooting step?
+为什么 support assistant 经常引用相邻章节，而不是精确的排障步骤？
 
-## Short Answer
+## 简短回答
 
-The problem appears to be closer to citation precision and ranking granularity than to gross retrieval failure. The next step is to improve section-aware chunking and add trace review for chunk ids, scores, and citation anchors before escalating architecture complexity.
+这个问题更接近 citation precision 和 ranking granularity，而不是明显的 retrieval failure。下一步应该先改进 section-aware chunking，并补上针对 chunk ids、scores 和 citation anchors 的 trace review，再考虑升级架构复杂度。
 
 ## Evidence
 
@@ -16,6 +16,6 @@ The problem appears to be closer to citation precision and ranking granularity t
 
 ## Follow-ups
 
-- test heading-path metadata
-- separate citation correctness from candidate recall in evals
-- add stage-level trace coverage
+- 测试 heading-path metadata
+- 在 eval 中把 citation correctness 和 candidate recall 分开
+- 补上 stage-level trace coverage

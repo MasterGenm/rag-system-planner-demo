@@ -2,9 +2,9 @@
 
 ## Dataset
 
-- Kaggle-facing concept: `RAG QA Logs & Corpus Data`
-- mirror used for access: <https://huggingface.co/datasets/tarekmasryo/rag-qa-logs-corpus-data>
-- reason the mirror was used: Kaggle auth is not configured on this machine
+- 面向 Kaggle 的概念名：`RAG QA Logs & Corpus Data`
+- 实际访问使用的镜像：<https://huggingface.co/datasets/tarekmasryo/rag-qa-logs-corpus-data>
+- 使用镜像的原因：这台机器没有配置 Kaggle auth
 
 ## Relevant Files
 
@@ -15,18 +15,18 @@
 
 ## Why This Dataset Matters
 
-This dataset is useful for bounded-complexity RAG diagnosis because it combines:
+这个数据集适合 bounded-complexity 的 RAG diagnosis，因为它把这些东西放在了一起：
 
-- question and gold-answer scenarios
-- per-run outcome labels such as `correctness_label`, `faithfulness_label`, and `hallucination_flag`
-- ranked retrieval traces with `is_relevant`
-- chunk-level corpus text for qualitative inspection
+- 问题与 gold-answer scenarios
+- 按 run 给出的结果标签，例如 `correctness_label`、`faithfulness_label` 和 `hallucination_flag`
+- 带 `is_relevant` 标记的 ranked retrieval traces
+- 便于做定性检查的 chunk-level corpus text
 
 ## Selected Walkthrough Example
 
-- `example_id`: `QA000050`
-- `run_id`: `run_49`
-- `scenario_id`: `SC0004`
+- `example_id`：`QA000050`
+- `run_id`：`run_49`
+- `scenario_id`：`SC0004`
 
 ## Scenario Row
 
@@ -58,18 +58,18 @@ rank,chunk_id,retrieval_score,is_relevant
 
 ## Chunk Excerpts
 
-- `C04776` rank 1, irrelevant
-  `Developer integration guide — Endpoint and Response`
-- `C01347` rank 6, relevant
+- `C04776` rank 1，irrelevant
+  `Developer integration guide бк Endpoint and Response`
+- `C01347` rank 6，relevant
   `API reference: Response endpoint (2021)` with authentication patterns
-- `C01230` rank 7, relevant
-  `Service-to-service auth and endpoint — engineering guide 2019`
-- `C04548` rank 8, relevant
+- `C01230` rank 7，relevant
+  `Service-to-service auth and endpoint бк engineering guide 2019`
+- `C04548` rank 8，relevant
   `API reference: Authentication endpoint (2019)`
 
 ## Initial Read
 
-The corpus appears to contain relevant authentication evidence, but the top of the ranked list is dominated by semantically similar endpoint or response chunks before the truly relevant authentication chunks surface.
+语料里看起来确实有相关的认证证据，但排序列表顶部被语义相近的 endpoint 或 response chunks 占满了，真正相关的 authentication chunks 只能在更后面才出现。
 
 ## Related Pages
 
@@ -78,4 +78,4 @@ The corpus appears to contain relevant authentication evidence, but the top of t
 
 ## Source Trail
 
-- Hugging Face dataset API and data files accessed on 2026-04-09
+- Hugging Face 数据集 API 与数据文件于 2026-04-09 被访问

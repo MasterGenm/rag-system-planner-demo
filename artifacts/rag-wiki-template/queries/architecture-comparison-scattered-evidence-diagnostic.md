@@ -2,11 +2,11 @@
 
 ## Question
 
-Why does the Chroma-versus-Qdrant architecture comparison keep collapsing into one-sided evidence?
+为什么 `Chroma` 对 `Qdrant` 的架构比较总会塌缩成单边证据？
 
-## Short Answer
+## 简短回答
 
-This case is closer to scattered-evidence cutoff than to a simple ranking issue. The answer needs evidence from both Chroma and Qdrant, but the retrieved set stays concentrated in the Chroma neighborhood. The next move is to test evidence-breadth strategies such as query decomposition, source-family coverage checks, and broader neighborhood expansion before discussing a more complex architecture.
+这个案例更接近 `Scattered Evidence Cutoff`，而不是简单的 ranking 问题。答案需要同时覆盖 `Chroma` 和 `Qdrant` 两边的证据，但实际 retrieved set 一直集中在 `Chroma` 附近。下一步应该先测试证据广度策略，例如 query decomposition、按 source family 做 coverage 检查，以及更宽的 neighborhood expansion，然后再讨论更复杂的架构升级。
 
 ## Evidence
 
@@ -17,7 +17,7 @@ This case is closer to scattered-evidence cutoff than to a simple ranking issue.
 
 ## Follow-ups
 
-- add comparison-side coverage checks to retrieval evaluation
-- test decomposed retrieval like `Chroma filtering` plus `Qdrant filtering` before final synthesis
-- compare product-family metadata filtering against plain semantic retrieval
-- require the answer layer to abstain or qualify when one side of a comparison is missing
+- 在 retrieval evaluation 里加入按比较双方分开的 coverage 检查
+- 在最终综合之前，先测试拆解式 retrieval，例如 `Chroma filtering` 加 `Qdrant filtering`
+- 对比按 product family 做 metadata filtering 与普通 semantic retrieval 的差异
+- 当比较问题只取回了一边证据时，要求答案层 abstain 或明确降格表述

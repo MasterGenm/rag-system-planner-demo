@@ -2,24 +2,24 @@
 
 ## Symptom
 
-The query and the source material refer to the same thing using different names, acronyms, aliases, or business and technical terms, so retrieval and answer assembly fail to connect them.
+query 和 source material 指向的是同一件事，但双方使用了不同名字、缩写、别名或业务/技术术语，导致 retrieval 和 answer assembly 没能把它们对上。
 
 ## Likely Causes
 
-- alias mapping or ontology support is missing
-- metadata does not normalize terminology
-- query rewriting preserves wording but not concept equivalence
+- 缺少 alias mapping 或 ontology support
+- metadata 没有做 terminology normalization
+- query rewriting 保留了原词，但没有保留 concept equivalence
 
 ## Investigation Order
 
-1. inspect whether the user wording and source wording point to the same underlying entity
-2. check whether aliases exist in the corpus but were never normalized
-3. add terminology normalization before changing the whole architecture
+1. 检查用户措辞和 source 措辞是否指向同一个 underlying entity
+2. 检查 alias 是否其实存在于 corpus 里，只是从未被 normalize
+3. 在修改整个架构之前，先加入 terminology normalization
 
 ## Common False Diagnoses
 
-- assuming embeddings alone should always bridge terminology gaps
-- blaming chunking when the failure is vocabulary alignment
+- 误以为 embeddings 单独就一定能跨过术语鸿沟
+- 实际失败点是 vocabulary alignment，却去怪 chunking
 
 ## Related Pages
 
@@ -28,4 +28,4 @@ The query and the source material refer to the same thing using different names,
 
 ## Source Trail
 
-- `14-rag-failures` synonymy and jargon taxonomy
+- `14-rag-failures` 里的 synonymy / jargon taxonomy

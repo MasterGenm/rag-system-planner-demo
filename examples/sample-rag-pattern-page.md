@@ -1,13 +1,13 @@
-# Sample Pattern Page
+# 示例：模式页面
 
-## Pattern
+## 模式
 
-Section-aware chunking with heading-path metadata.
+带标题路径元数据的分节感知切块。
 
-## Why It Matters
+## 为什么重要
 
-This pattern improves citation precision and usually makes debugging easier because retrieved chunks carry a more meaningful location trail.
+这个模式可以提高引用精度，也通常会让排障更容易，因为检索出来的 chunk 会带着更有意义的位置链路。
 
-## When To Avoid
+## 什么时候不适合用
 
-Skip the extra structure when the corpus is tiny or when OCR quality is too weak to preserve reliable headings.
+当语料很小，或者 OCR 质量太差、无法稳定保留标题时，就不要再额外加这层结构。

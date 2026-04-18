@@ -2,36 +2,36 @@
 
 ## Context
 
-Architecture comparison case taken from the `open-support-copilot` retrieval-eval slice.
+这个架构比较案例来自 `open-support-copilot` 的 retrieval-eval slice。
 
 ## Symptom
 
-The comparison answer asks whether a support copilot should stay on Chroma or move to Qdrant, but the retrieved evidence collapses toward the Chroma side and leaves too little Qdrant evidence in view.
+问题在问 support copilot 应该继续留在 `Chroma` 还是迁移到 `Qdrant`，但 retrieved evidence 明显向 `Chroma` 一侧塌缩，导致 `Qdrant` 侧证据太少。
 
 ## Observed
 
-- gold evidence spans four URLs across both Chroma and Qdrant
-- in the Chroma backend audit, `Recall@5 = 0.5000` and both matched URLs are Chroma-side pages
-- in the Qdrant backend audit, `Recall@5 = 0.2500` and the visible matched URL is still a Chroma-side page
-- neither backend surfaces a balanced top-5 comparison set for the query
+- gold evidence 横跨 `Chroma` 与 `Qdrant` 双方，共四个 URL
+- 在 `Chroma` backend 审计里，`Recall@5 = 0.5000`，而且命中的两个 URL 都是 `Chroma` 页面
+- 在 `Qdrant` backend 审计里，`Recall@5 = 0.2500`，可见命中的 URL 仍然是 `Chroma` 页面
+- 两个 backend 都没能为这个 query 提供平衡的 top-5 比较证据集
 
 ## Inferred
 
-- this fits `Scattered Evidence Cutoff` better than a pure ranking miss
-- the retriever stays inside one local evidence neighborhood instead of gathering both sides required for a comparative answer
-- retrieval breadth and query decomposition matter before any larger architecture change
+- 这个案例更符合 `Scattered Evidence Cutoff`，而不是单纯的 ranking miss
+- retriever 一直停留在单个局部证据邻域里，没有把比较问题需要的双方证据都收齐
+- 在任何更大的架构变更之前，retrieval breadth 和 query decomposition 更值得优先检查
 
 ## Unknown
 
-- whether a decomposed comparison query would recover both Chroma and Qdrant evidence without changing the backend
-- whether metadata filters by product or source family would improve breadth
-- whether reranking would help once both sides are present
+- 如果不改 backend，只做拆解式 comparison query，是否能同时召回 `Chroma` 和 `Qdrant` 证据
+- 按 product 或 source family 做 metadata filters，是否能改善 breadth
+- 当双方证据都已出现后，reranking 是否还能进一步改进
 
 ## Durable Lessons
 
-- comparison questions need breadth checks, not just topical relevance checks
-- `Recall@k` should be inspected against evidence coverage by comparison side
-- architecture answers should fail closed when one side of the comparison is absent from retrieval
+- comparison 问题需要 breadth checks，而不只是 topic relevance checks
+- `Recall@k` 应该结合比较双方各自的 evidence coverage 一起看
+- 当 comparison 的一边根本没进 retrieval 时，架构类答案应该 fail closed
 
 ## Related Pages
 

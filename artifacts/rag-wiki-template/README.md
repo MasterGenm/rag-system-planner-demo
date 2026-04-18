@@ -1,21 +1,21 @@
 # RAG Wiki Artifact Template
 
-Copyable workspace for persistent RAG knowledge.
+这是一个可直接复制的持久化 RAG 工作区模板。
 
-## Purpose
+## 用途
 
-Use this workspace to store:
+用这个工作区保存：
 
-- raw evidence in `sources/`
-- synthesized RAG knowledge in `wiki/`
-- saved answers and memos in `queries/`
+- `sources/` 里的原始证据
+- `wiki/` 里的综合型 RAG 知识
+- `queries/` 里的已保存答案与备忘录
 
-## Start Here
+## 从这里开始
 
-1. Read `AGENTS.md`.
-2. Read `index.md`.
-3. Add raw material to `sources/`.
-4. Use the templates in `templates/` when you want a durable ingest, lint, or index-refresh note.
-5. Ask the agent to ingest, query, lint, or refresh the workspace index.
+1. 先读 `AGENTS.md`。
+2. 再读 `index.md`。
+3. 把第一份真实材料放进 `sources/`。
+4. 当你要写 durable 的 ingest、lint 或 index-refresh 记录时，使用 `templates/` 里的模板。
+5. 让 agent 执行 ingest、query、lint，或刷新工作区索引。
 
-If you are using this scaffold for the first time, read [ADOPTION.md](ADOPTION.md) next.
+如果这是你第一次使用这个 scaffold，下一步读 [ADOPTION.md](ADOPTION.md)。

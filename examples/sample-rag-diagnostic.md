@@ -3,72 +3,72 @@
 ## 症状概述
 
 - 用户反馈“搜得到相关文档，但经常答不到点上”
-- 正确证据偶尔在候选集里，但不在 top-ranked 结果中
-- citation 经常指向相邻段落，而不是精确证据段
-- 加了更多 retrieval stages 之后，延迟明显上升
+- 正确证据偶尔已经进入候选集，但不在排序最靠前的结果中
+- 引用经常指向相邻段落，而不是精确证据段
+- 加了更多检索阶段之后，延迟明显上升
 
 ## 工作假设
 
-### 已观察到（Observed）
+### 已观察到
 
-- top-rank precision 弱于 candidate recall
-- citation anchor 粒度偏粗
+- 排名最前结果的精度弱于候选召回
+- 引用锚点粒度偏粗
 
-### 推断中（Inferred）
+### 推断中
 
-- chunking 可能过粗，导致细粒度问题不容易被精确命中
-- 团队可能把 ranking 问题误判成“整个架构不够高级”
+- 切块可能过粗，导致细粒度问题不容易被精确命中
+- 团队可能把排序问题误判成“整个架构不够高级”
 
-### 仍未知（Unknown）
+### 仍未知
 
 - embedding 是否是当前最主要瓶颈
-- hybrid retrieval 对 hard keyword cases 的收益是否足够大
+- 混合检索对困难关键词样例的收益是否足够大
 
 ## 缺失证据
 
-- 缺一个固定困难样例评测集（hard-case eval set）
-- 缺 retrieval trace，无法区分“召回失败”还是“排序失败”
-- 缺 stage-level latency breakdown
+- 缺一个固定困难样例评测集
+- 缺检索追踪，无法区分“召回失败”还是“排序失败”
+- 缺分阶段延迟拆解
 
 ## 排查顺序
 
-1. 先确认正确 chunk 是否已经出现在 candidate pool 中  
-2. 再看 chunking、metadata 和 citation anchor  
-3. 如果 candidate recall 已经够，再评估 reranking  
+1. 先确认正确 chunk 是否已经出现在候选池中
+2. 再看切块、元数据和引用锚点
+3. 如果候选召回已经够，再评估重排
 4. 最后才讨论是否需要更大范围架构升级
 
 ## 推荐改动
 
-### 现在（Now）
+### 现在
 
-- 增加 trace：chunk ids、scores、filters、citation anchors
-- 建一个 citation-heavy hard-case set
-- 调整 chunking 粒度和 section-aware metadata
+- 增加追踪：chunk ids、scores、filters、引用锚点
+- 建一个引用密集型困难样例集
+- 调整切块粒度和分节感知元数据
 
-### 下一步（Next）
+### 下一步
 
-- 如果 candidate recall 足够而 top precision 差，引入 reranking 实验
-- 对 keyword-heavy 查询单独测试 hybrid retrieval
+- 如果候选召回足够而 Top-1 精度差，引入重排实验
+- 对关键词密集型查询单独测试混合检索
 
-### 以后（Later）
+### 以后
 
-- 只有在 baseline retrieval + ranking 调整仍然无效时，才讨论更高复杂度路线
+- 只有在基线检索加排序调整仍然无效时，才讨论更高复杂度路线
 
 ## 评测补充
 
 - `Recall@k`
-- top-rank precision
-- citation correctness
-- 各配置版本的 latency 对比
+- 排名最前结果的精度
+- 引用正确率
+- 各配置版本的延迟对比
 
 ## 可观测性补充
 
-- retrieval trace
-- per-stage latency
-- empty retrieval rate
-- citation failure rate
+- 检索追踪
+- 分阶段延迟
+- 空检索比例
+- 引用失败率
 
 ## 风险与预期影响
 
-- 如果没有 hard-case eval，团队会继续根据个别案例反复重构
-- 如果 chunking 不先修，直接加 reranking 只能改善排序，不能彻底解决 citation 质量问题
+- 如果没有困难样例评测，团队会继续根据个别案例反复重构
+- 如果切块不先修，直接加重排只能改善排序，不能彻底解决引用质量问题

@@ -2,24 +2,24 @@
 
 ## Symptom
 
-The system can retrieve facts about A and facts about B, but it misses the hidden connection that comes from their common neighbor or shared dependency.
+系统能分别取回关于 A 和关于 B 的事实，但看不到来自共同邻居或共享依赖的那条隐藏连接。
 
 ## Likely Causes
 
-- retrieval is limited to direct similarity instead of relational overlap
-- the answerer does not test for shared intermediate entities
-- evidence review is too local and misses cross-candidate intersection
+- retrieval 被限制在直接相似性上，而没有看 relational overlap
+- answerer 没有检查 shared intermediate entities
+- evidence review 太局部，漏掉了 cross-candidate intersection
 
 ## Investigation Order
 
-1. inspect whether the question depends on a shared intermediate node or concept
-2. verify that evidence for both sides was present but never intersected
-3. add intersection-style reasoning before jumping to a full graph stack
+1. 检查这个问题是否依赖 shared intermediate node 或 concept
+2. 核验双方证据是否其实都在，但从未被 intersect 起来
+3. 在跳到完整 graph stack 之前，先加入 intersection-style reasoning
 
 ## Common False Diagnoses
 
-- assuming the corpus is missing evidence when the evidence is present but not joined
-- moving immediately to graph RAG without testing smaller compositional fixes
+- 证据其实存在、只是没被 join，却误以为 corpus 缺证据
+- 不测试更小的 compositional fixes，就直接跳到 graph RAG
 
 ## Related Pages
 
@@ -29,4 +29,4 @@ The system can retrieve facts about A and facts about B, but it misses the hidde
 
 ## Source Trail
 
-- `14-rag-failures` intersection taxonomy
+- `14-rag-failures` 里的 intersection taxonomy

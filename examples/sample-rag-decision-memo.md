@@ -1,23 +1,23 @@
-# Sample Decision Memo
+# 示例：决策备忘录
 
-## Decision Context
+## 决策背景
 
-The team wants to move from plain retrieval to agentic RAG because answers are often weak.
+团队想从朴素检索直接升级到智能体化 RAG，因为当前答案质量经常偏弱。
 
-## Options Compared
+## 比较选项
 
-- improve chunking and metadata
-- add reranking
-- add agentic orchestration
+- 改进切块和元数据
+- 增加重排
+- 增加智能体编排
 
-## Recommendation
+## 推荐结论
 
-Improve chunking and metadata first, then test reranking before discussing agentic orchestration.
+先改切块和元数据，再测试重排，之后再讨论智能体编排。
 
-## Why This Fits
+## 为什么这样更合适
 
-The system lacks retrieval traces and a hard-case evaluation set, so jumping to agentic behavior would add complexity before the baseline is evidence-limited.
+当前系统还缺少检索追踪和困难样例评测集。如果现在直接上智能体行为，只会在基线证据不足的情况下先增加复杂度。
 
-## What Would Change The Decision
+## 什么情况下会改变结论
 
-The decision would change if retrieval and ranking were already instrumented, tuned, and still inadequate for real branching workflows.
+如果检索和排序已经完成埋点、调优，而且仍然不足以支撑真实分支工作流，这个结论才会改变。

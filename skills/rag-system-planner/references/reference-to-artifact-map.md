@@ -1,61 +1,61 @@
 # Reference To Artifact Map
 
-Use this file to decide how static guidance should be promoted into the durable artifact workspace.
+用这份文件判断：静态 guidance 应该如何被提升进 durable artifact workspace。
 
 ## Mapping
 
 - `intake-checklist.md`
-  Promote durable project facts into `wiki/case-notes/` when they are likely to matter again.
+  当某些 durable project facts 很可能再次重要时，把它们提升到 `wiki/case-notes/`。
 - `retrieval-design.md`
-  Promote reusable chunking, metadata, retrieval, reranking, citation, and abstention guidance into `wiki/patterns/`.
+  把可复用的 chunking、metadata、retrieval、reranking、citation 和 abstention guidance 提升到 `wiki/patterns/`。
 - `diagnosis-playbook.md`
-  Promote recurring symptom classes and investigation ladders into `wiki/failure-modes/`.
-  In active diagnosis, use `wiki/failure-modes/triage-matrix.md` as the entry point and then promote lasting conclusions into one canonical failure page.
+  把会重复出现的 symptom classes 和 investigation ladders 提升到 `wiki/failure-modes/`。
+  在 active diagnosis 中，先从 `wiki/failure-modes/triage-matrix.md` 进入，再把持久结论提升进某一个 canonical failure page。
 - `eval-design.md`
-  Promote hard-case definitions, metric recipes, and review procedures into `wiki/evaluations/`.
+  把 hard-case definitions、metric recipes 和 review procedures 提升到 `wiki/evaluations/`。
 - `observability-design.md`
-  Promote trace requirements, stage-level latency guidance, and debugging signals into `wiki/evaluations/` or a related case note.
+  把 trace requirements、stage-level latency guidance 和 debugging signals 提升到 `wiki/evaluations/` 或相关 case note。
 - `embedding-choice.md`
-  Promote recurring representation boundaries into `wiki/stack-decisions/`.
+  把会重复出现的 representation boundary 提升到 `wiki/stack-decisions/`。
 - `vector-db-choice.md`
-  Promote durable storage and filtering tradeoffs into `wiki/stack-decisions/`.
+  把 durable 的 storage 与 filtering 权衡提升到 `wiki/stack-decisions/`。
 - `agent-framework-choice.md`
-  Promote upgrade boundaries and "not now" decisions into `wiki/stack-decisions/`.
+  把升级边界和 `not now` 决策提升到 `wiki/stack-decisions/`。
 - `multimodal-retrieval.md`
-  Promote modality-routing patterns into `wiki/patterns/` and recurring OCR or screenshot failure classes into `wiki/failure-modes/`.
+  把 modality-routing patterns 提升到 `wiki/patterns/`；把会反复出现的 OCR 或 screenshot failure classes 提升到 `wiki/failure-modes/`。
 
 ## Promotion Heuristic
 
-Choose the destination by the primary reuse value:
+按“主要复用价值”选择目标位置：
 
-- use `patterns/` for reusable ways of building
-- use `failure-modes/` for reusable ways of debugging
-- use `evaluations/` for reusable ways of measuring and tracing
-- use `stack-decisions/` for recurring architecture boundaries
-- use `case-notes/` for project-specific history and evidence
+- `patterns/`：用于可复用的构建方式
+- `failure-modes/`：用于可复用的调试方式
+- `evaluations/`：用于可复用的测量和 tracing 方式
+- `stack-decisions/`：用于会重复出现的架构边界
+- `case-notes/`：用于项目特定的历史和证据
 
-If the artifact is still too temporary or scoped, save it under `queries/` first and promote it later.
+如果 artifact 仍然太临时、太 scoped，就先保存到 `queries/`，以后再提升。
 
 ## Planner Handoff Targeting
 
-When planner hands work to artifact-maintenance, choose one primary destination first:
+当 planner hand off 给 artifact-maintenance 时，先选一个 primary destination：
 
-- `patterns/` when the lesson is a reusable build or retrieval rule
-- `failure-modes/` when the lesson is a reusable debugging class or investigation ladder
-- `evaluations/` when the lesson is a measurement, trace, or review rule
-- `stack-decisions/` when the lesson is a recurring architecture boundary or "not now" choice
-- `case-notes/` when the lesson is tied to one project, one incident, or one source bundle
-- `queries/` when the result is useful but not yet stable enough to canonize
+- `patterns/`：当经验是可复用的构建规则或检索规则
+- `failure-modes/`：当经验是可复用的调试类别或 investigation ladder
+- `evaluations/`：当经验是测量、trace 或 review 规则
+- `stack-decisions/`：当经验是重复出现的架构边界或 `not now` 决策
+- `case-notes/`：当经验绑定在一个项目、一个 incident 或一组 source
+- `queries/`：当结果有用，但还不够稳定，不适合 canonicalize
 
-If more than one page type could fit, update the smallest reusable canonical page and keep extra project-specific detail in a case note or query memo.
+如果一个结果看起来能落进多个页面类型，优先更新“最小且可复用”的 canonical page，把额外的项目细节放进 case note 或 query memo。
 
 ## Handoff Payload
 
-The planner handoff should make these fields explicit:
+planner handoff 至少应显式包含这些字段：
 
-- question or symptom
-- `observed`, `inferred`, and `unknown` claims
+- question 或 symptom
+- `observed`、`inferred` 和 `unknown` claims
 - evidence touched
 - primary target artifact type
-- secondary targets if any
-- whether the write is `canonical` or `query-only`
+- secondary targets（如果有）
+- 写入是 `canonical` 还是 `query-only`

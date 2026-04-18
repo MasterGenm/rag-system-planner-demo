@@ -1,175 +1,175 @@
 # Artifact Scaffold Adoption Guide
 
-Use this guide when you want to go from zero to your first durable RAG artifact.
+当你想从零开始落下第一份 durable RAG artifact 时，使用这份指南。
 
-This is a phase 2 onboarding document.
-It does not add new behavior to the skill.
-It only turns the existing phase 1 workspace into a clearer first-session path.
+这是一份 phase 2 onboarding 文档。
+它不会给 skill 增加新行为。
+它只是把现有的 phase 1 workspace 变成一条更清晰的首轮使用路径。
 
-## When To Use This Scaffold
+## 什么时候该用这个 Scaffold
 
-Use [rag-wiki-template](./README.md) when at least one of these is true:
+当至少满足以下一条时，使用 [rag-wiki-template](./README.md)：
 
-- you expect the same failure modes or stack decisions to come up again
-- you want diagnosis work to accumulate instead of restarting from chat
-- you want a place to keep raw evidence, reusable conclusions, and saved memos together
-- you want later planner runs to start from maintained artifacts instead of rediscovering the same lesson
+- 你预期同一类 failure mode 或 stack decision 以后还会反复出现
+- 你希望 diagnosis 工作可以持续积累，而不是每次都从聊天重新开始
+- 你想把原始证据、可复用结论和已保存 memo 放在同一个地方
+- 你希望后续 planner 运行能直接从维护过的 artifacts 起步，而不是重新发现同一条经验
 
-If you only need a one-off answer, you can stop at [../../skills/rag-system-planner/SKILL.md](../../skills/rag-system-planner/SKILL.md) and stay chat-only.
+如果你只需要一次性答案，可以停在 [../../skills/rag-system-planner/SKILL.md](../../skills/rag-system-planner/SKILL.md)，保持 chat-only。
 
-## First Session Path
+## 首次使用路径
 
-Follow this order:
+按这个顺序走：
 
-1. Read [AGENTS.md](AGENTS.md).
-2. Read [index.md](index.md).
-3. Read the relevant hub page under `wiki/`.
-4. Add one real source file to `sources/`.
-5. Choose one small maintenance path: `ingest` or `query`.
-6. Create one durable artifact.
-7. Append a short completed entry to [log.md](log.md).
+1. 读 [AGENTS.md](AGENTS.md)。
+2. 读 [index.md](index.md)。
+3. 读 `wiki/` 下面相关的 hub 页面。
+4. 往 `sources/` 里放一份真实 source 文件。
+5. 选择一条小范围 maintenance 路径：`ingest` 或 `query`。
+6. 创建一份 durable artifact。
+7. 在 [log.md](log.md) 里追加一条简短的已完成记录。
 
-Do not try to populate the whole scaffold in one session.
-The goal is one real source, one real judgment, and one durable page.
+不要试图在一次 session 里把整个 scaffold 全部填满。
+目标是一份真实 source、一个真实判断、以及一页 durable 页面。
 
-## What Goes Where
+## 各目录放什么
 
 - `sources/`
-  Raw evidence. Keep it immutable-by-default.
+  原始证据。默认按不可变处理。
 - `wiki/`
-  Reusable knowledge. Put recurring patterns, failure modes, evaluations, stack decisions, and case notes here.
+  可复用知识。把 recurring patterns、failure modes、evaluations、stack decisions 和 case notes 放在这里。
 - `queries/`
-  Saved answers that are useful but not yet stable or broad enough to become canonical pages.
+  有保存价值，但还不够稳定或不够通用、暂时不能升级为 canonical page 的答案。
 - `index.md`
-  Thin root navigation.
+  精简的根导航页。
 - `log.md`
-  Completed maintenance operations only.
+  只记录已完成的 maintenance 操作。
 
-## Step 1: Add The First Source
+## 第一步：加入第一份 Source
 
-Add one raw input to [sources/](sources/).
+往 [sources/](sources/) 里加入一份原始输入。
 
-Good first sources:
+好的第一份 source 往往是：
 
-- an incident note
-- a retrieval trace excerpt
-- an eval output
-- a design or architecture note
+- 一份 incident note
+- 一段 retrieval trace 摘录
+- 一份 eval 输出
+- 一份设计或架构说明
 
-Use a date-prefixed filename when practical.
-Do not rewrite the source into analysis before storing it.
+合适时优先使用日期前缀文件名。
+在存进去之前，不要先把 source 改写成分析结论。
 
-## Step 2: Choose The First Workstream
+## 第二步：选择第一条工作流
 
-Use `query` when you are answering a specific question and the result may or may not become canonical.
+当你在回答一个具体问题，而且结果可能会、也可能不会升级为 canonical 时，使用 `query`。
 
-Start from:
+从这里开始：
 
 - [templates/query-note-template.md](templates/query-note-template.md)
 
-Use `ingest` when you already know the source contains reusable knowledge that should update the workspace.
+当你已经知道某份 source 里包含可复用知识、应该回写到 workspace 时，使用 `ingest`。
 
-Start from:
+从这里开始：
 
 - [templates/ingest-note-template.md](templates/ingest-note-template.md)
 
-Use `lint` or `index` only after real content exists.
+只有在工作区已经有真实内容之后，再使用 `lint` 或 `index`。
 
-Start from:
+从这里开始：
 
 - [templates/lint-report-template.md](templates/lint-report-template.md)
 - [templates/index-refresh-note-template.md](templates/index-refresh-note-template.md)
 
-## Step 3: Read Before You Write
+## 第三步：先读后写
 
-Before creating a new durable page:
+在新建 durable 页面之前：
 
-1. Read [wiki/failure-modes/README.md](wiki/failure-modes/README.md) if the issue is diagnostic.
-2. Read [wiki/failure-modes/triage-matrix.md](wiki/failure-modes/triage-matrix.md) when the symptom is still fuzzy.
-3. Read [wiki/evaluations/README.md](wiki/evaluations/README.md) if the main lesson is about measurement or trace review.
-4. Prefer updating one existing canonical page over creating a near-duplicate.
+1. 如果问题是诊断型的，先读 [wiki/failure-modes/README.md](wiki/failure-modes/README.md)。
+2. 如果症状还很模糊，先读 [wiki/failure-modes/triage-matrix.md](wiki/failure-modes/triage-matrix.md)。
+3. 如果主要经验和测量、trace review 有关，先读 [wiki/evaluations/README.md](wiki/evaluations/README.md)。
+4. 优先更新已有 canonical page，而不是创建一个近似重复页。
 
-## Step 4: Create The First Durable Artifact
+## 第四步：创建第一份 Durable Artifact
 
-Use [templates/page-template.md](templates/page-template.md) when you need a new canonical page in `wiki/`.
+如果你需要在 `wiki/` 里创建新的 canonical page，使用 [templates/page-template.md](templates/page-template.md)。
 
-Good first durable artifacts:
+好的第一份 durable artifact 往往是：
 
-- one case note tied to one incident
-- one failure page update tied to recurring evidence
-- one evaluation page update tied to a reusable review rule
+- 一份与单个 incident 绑定的 case note
+- 一次由重复证据支撑的 failure page 更新
+- 一次由可复用 review 规则支撑的 evaluation page 更新
 
-Promotion rule:
+升级规则：
 
-- keep temporary or narrow results in `queries/`
-- move reusable conclusions into `wiki/`
+- 临时的、范围窄的结果先放在 `queries/`
+- 可复用结论再升级进 `wiki/`
 
-Always keep a visible source trail.
+始终保留一条清晰可见的 source trail。
 
-## Step 5: Record The Operation
+## 第五步：记录这次操作
 
-After a real maintenance pass completes:
+一次真实 maintenance pass 完成后：
 
-1. add a short entry to [log.md](log.md)
-2. update [index.md](index.md) or a hub page only if navigation changed
+1. 在 [log.md](log.md) 里加一条简短记录
+2. 只有导航真的变了时，才更新 [index.md](index.md) 或 hub 页面
 
-Use [templates/maintenance-run-template.md](templates/maintenance-run-template.md) when you want a compact record of:
+当你需要一份简洁的操作记录时，使用 [templates/maintenance-run-template.md](templates/maintenance-run-template.md)，记录：
 
-- what changed
-- what evidence was used
-- what still remains open
+- 这次改了什么
+- 用了哪些证据
+- 还有哪些缺口没补上
 
-## Recommended First Durable Artifact
+## 推荐的第一份 Durable Artifact
 
-The best default first run is:
+默认最好的第一轮是：
 
-1. put one source into `sources/`
-2. create one ingest note
-3. update or create one canonical page in `wiki/`
-4. append one log entry
+1. 把一份 source 放进 `sources/`
+2. 创建一份 ingest note
+3. 在 `wiki/` 里更新或创建一页 canonical page
+4. 追加一条 log 记录
 
-If the first interaction is mainly question-answering, the best default is:
+如果第一次交互本质上是问答，那么默认最好的方式是：
 
-1. save the answer in `queries/`
-2. promote it into `wiki/` only if it becomes reusable
+1. 先把答案存进 `queries/`
+2. 只有当它开始变得可复用时，再升级进 `wiki/`
 
-## Example Reading Order
+## 示例阅读顺序
 
-For the shortest onboarding path, read these in order:
+想走最短 onboarding 路径，按这个顺序读：
 
 1. [../../examples/sample-rag-end-to-end.md](../../examples/sample-rag-end-to-end.md)
 2. [../../examples/sample-rag-planner-handoff.md](../../examples/sample-rag-planner-handoff.md)
 3. [../../examples/sample-rag-real-walkthroughs.md](../../examples/sample-rag-real-walkthroughs.md)
 4. [../../examples/sample-rag-artifact-maintenance-ops.md](../../examples/sample-rag-artifact-maintenance-ops.md)
 
-After that, use these as shape references:
+然后再把这些作为形态参考：
 
 - [../../examples/sample-rag-case-note.md](../../examples/sample-rag-case-note.md)
 - [../../examples/sample-rag-pattern-page.md](../../examples/sample-rag-pattern-page.md)
 - [../../examples/sample-rag-wiki-index.md](../../examples/sample-rag-wiki-index.md)
 
-Keep these out of the main adoption path:
+这两份不要放进主 adoption 路径：
 
 - [../../examples/sample-rag-plan.md](../../examples/sample-rag-plan.md)
 - [../../examples/sample-rag-diagnostic.md](../../examples/sample-rag-diagnostic.md)
 
-Those are useful final outputs, but they do not teach the durable workflow as directly.
+它们是有用的最终输出，但不如前面的材料那样直接展示 durable workflow。
 
-## First Evaluation Path
+## 第一条 Evaluation 路径
 
-After the first source and first durable page exist, use this shorter path for an initial evaluation-oriented pass:
+当第一份 source 和第一份 durable page 都已经存在后，用这条更短的 evaluation 路径开始：
 
-1. Read [wiki/evaluations/README.md](wiki/evaluations/README.md).
-2. Read [wiki/evaluations/hard-case-trace-review.md](wiki/evaluations/hard-case-trace-review.md).
-3. Save the first reusable evaluation conclusion in `wiki/evaluations/` or `queries/`, depending on how stable it is.
+1. 读 [wiki/evaluations/README.md](wiki/evaluations/README.md)。
+2. 读 [wiki/evaluations/hard-case-trace-review.md](wiki/evaluations/hard-case-trace-review.md)。
+3. 把第一条可复用的 evaluation 结论保存到 `wiki/evaluations/` 或 `queries/`，取决于它目前有多稳定。
 
-## Success Criteria
+## 成功标准
 
-This guide worked if, after one session, you can point to:
+如果一轮 session 结束后，你能指向这些东西，这份指南就算生效：
 
-- one raw source in `sources/`
-- one saved memo in `queries/` or one canonical page in `wiki/`
-- one updated navigation surface if needed
-- one completed line in `log.md`
+- `sources/` 里的一份原始 source
+- `queries/` 里的一份已保存 memo，或 `wiki/` 里的一页 canonical page
+- 一处更新过的导航面，如果确实需要
+- `log.md` 里一条完成记录
 
-At that point, later planner runs can start from the workspace instead of starting from zero.
+到这一步，后续 planner 运行就可以从 workspace 起步，而不是从零开始。

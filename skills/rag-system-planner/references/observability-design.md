@@ -1,63 +1,63 @@
 # Observability Design
 
-Observability is not optional for diagnosis mode. You cannot reliably improve a RAG system if you cannot see what it retrieved, how long each stage took, and what evidence was available to the model.
+在 diagnosis 模式下，observability 不是可选项。如果你看不见系统检索了什么、每个 stage 花了多久、模型当时能看到什么证据，你就无法可靠地改进一个 RAG 系统。
 
 ## Minimum Signals
 
-Track at least:
+至少追踪：
 
-- Query text or normalized query form
-- Retrieved document or chunk identifiers
+- Query text 或规范化后的 query form
+- Retrieved document 或 chunk identifiers
 - Retrieval scores
-- Metadata filters used
-- Reranking decisions if present
+- 使用过的 metadata filters
+- 如果存在，记录 reranking decisions
 - Prompt assembly metadata
 - Model response latency
-- Token usage if relevant
-- Returned citations
+- 如果相关，再记录 token usage
+- 返回给用户的 citations
 
 ## Minimum Dashboards
 
-Have visibility into:
+至少要能看见：
 
 - Retrieval latency
 - Generation latency
 - End-to-end latency
-- Empty or low-confidence retrieval rate
+- Empty 或 low-confidence retrieval rate
 - Citation failure rate
-- Error rate by stage
+- 分 stage 的错误率
 
 ## LangSmith Vs Phoenix
 
 ### LangSmith
 
-Prefer when:
+以下情况优先：
 
-- The system already uses LangChain heavily
-- You want polished tracing and experiment workflows
-- Hosted tooling is acceptable
+- 系统已经大量使用 LangChain
+- 你需要更成熟的 tracing 和 experiment workflow
+- 可以接受 hosted tooling
 
 ### Phoenix
 
-Prefer when:
+以下情况优先：
 
-- You want an open-source observability option
-- You need flexible tracing and evaluations without committing to LangChain
-- You want a framework-neutral monitoring story
+- 你想要开源 observability 方案
+- 你需要灵活的 tracing 和 evaluation，但不想绑定 LangChain
+- 你想保留一个 framework-neutral 的 monitoring 方案
 
 ## Common Gaps
 
-- Logging only the final answer
-- Not storing retrieved chunk identifiers
-- Not logging filter conditions
-- No separation between retrieval and generation latency
-- No trace linking bad answers to missing evidence
+- 只记录最终答案
+- 不保存 retrieved chunk identifiers
+- 不记录 filter conditions
+- 不区分 retrieval latency 和 generation latency
+- 没有把 bad answers 与 missing evidence 关联到同一条 trace 上
 
 ## Recommendation Pattern
 
-Always specify:
+始终明确说明：
 
-1. What to trace
-2. What to aggregate
-3. What to alert on
-4. Which tool fits the chosen stack
+1. 要 trace 什么
+2. 要聚合什么
+3. 要对什么做告警
+4. 在当前 chosen stack 下，哪种工具更合适

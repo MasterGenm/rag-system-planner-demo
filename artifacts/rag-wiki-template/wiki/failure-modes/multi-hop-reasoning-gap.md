@@ -2,24 +2,24 @@
 
 ## Symptom
 
-The system retrieves relevant facts, but it fails to connect them into the reasoning chain needed to answer the question.
+系统确实取回了相关事实，但没能把它们连成回答问题所需的 reasoning chain。
 
 ## Likely Causes
 
-- chunks containing linked facts are retrieved separately and never composed
-- top-k retrieval surfaces isolated fragments without a bridge
-- the answer layer lacks an explicit way to chain evidence across steps
+- 包含相关事实的 chunks 被分别取回，却从未被组合起来
+- top-k retrieval 只露出彼此孤立的片段，没有 bridge
+- answer layer 缺少跨步骤串联证据的显式机制
 
 ## Investigation Order
 
-1. verify that the intermediate facts are both present in the candidate pool
-2. inspect whether the answer required an `A -> B -> C` chain that was never assembled
-3. check whether the system needs structured decomposition before any architecture upgrade discussion
+1. 先确认中间事实确实都已经在 candidate pool 里
+2. 检查答案是否依赖一个从未被真正组装出来的 `A -> B -> C` 链
+3. 在讨论架构升级前，先检查系统是否需要 structured decomposition
 
 ## Common False Diagnoses
 
-- blaming the base model when the missing step is evidence composition
-- jumping straight to graph or agentic RAG before confirming candidate coverage
+- 缺的是 evidence composition，却先去怪基础模型
+- candidate coverage 还没确认，就直接跳到 graph 或 agentic RAG
 
 ## Related Pages
 
@@ -29,4 +29,4 @@ The system retrieves relevant facts, but it fails to connect them into the reaso
 
 ## Source Trail
 
-- `14-rag-failures` multi-hop reasoning taxonomy
+- `14-rag-failures` 里的 multi-hop reasoning taxonomy

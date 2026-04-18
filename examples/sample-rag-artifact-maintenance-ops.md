@@ -1,24 +1,24 @@
-# Sample Artifact-Maintenance Operations
+# 示例：工件维护操作
 
-## Purpose
+## 目的
 
-Show what a scoped maintenance loop looks like after the execution contract lands.
+展示执行契约落地后，一个受控的维护循环长什么样。
 
-## Example Sequence
+## 示例流程
 
 1. `ingest`
-   - read `artifacts/rag-wiki-template/index.md`
-   - read the incoming source extract
-   - update the matching canonical failure or case-note page
-   - preserve the source trail
+   - 读取 `artifacts/rag-wiki-template/index.md`
+   - 读取新进入的原始摘录
+   - 更新匹配的规范化失败模式页面或案例记录页面
+   - 保留来源链路
 2. `lint`
-   - inspect the touched pages for unsupported claims, stale relationships, or duplicate conclusions
-   - record explicit findings or cleanup
+   - 检查触达页面里是否存在缺少证据支撑的结论、过时关系或重复结论
+   - 记录明确的问题或清理结果
 3. `index`
-   - refresh `index.md` or the relevant folder hub only if navigation changed
-   - keep the root index thin
+   - 只有在导航发生变化时，才刷新 `index.md` 或相关文件夹 hub
+   - 保持根索引简薄
 
-## Why This Matters
+## 这件事为什么重要
 
-This example makes the proposal operational.
-The artifact layer is no longer just "save useful notes". It becomes a repeatable maintenance loop with scoped writes, explicit evidence use, and navigation hygiene.
+这个示例把提案变成了可执行的流程。
+工件层不再只是“保存有用笔记”，而是变成一个可重复的维护循环，包含受限写入、明确的证据使用和清晰的导航卫生。

@@ -2,33 +2,33 @@
 
 ## Context
 
-Support knowledge base with structured product docs, runbooks, and incident writeups.
+一个包含结构化产品文档、runbooks 和 incident writeups 的 support knowledge base。
 
 ## Symptom
 
-Relevant evidence often appears in the candidate pool, but the final answer cites the wrong adjacent section or an over-broad chunk.
+相关证据往往已经进入 candidate pool，但最终答案引用的却是错误的相邻章节，或一个范围过宽的 chunk。
 
 ## Observed
 
-- candidate recall is often acceptable
-- citation anchors are coarse
-- stage-level traces are incomplete
+- candidate recall 往往可以接受
+- citation anchors 过粗
+- stage-level traces 不完整
 
 ## Inferred
 
-- section boundaries and heading-path metadata are too weak
-- ranking quality and citation assembly are being conflated
+- section boundaries 和 heading-path metadata 偏弱
+- ranking 质量和 citation assembly 被混在一起判断了
 
 ## Unknown
 
-- whether reranking alone would fix the issue
-- whether answer assembly is dropping precise evidence spans
+- 单独加强 reranking 是否就足够
+- answer assembly 是否在丢弃精确 evidence spans
 
 ## Durable Lessons
 
-- citation quality deserves its own evaluation track
-- section-aware chunking should be tested before heavier architecture changes
-- trace review must separate candidate quality from answer assembly quality
+- citation quality 应该有自己独立的 evaluation track
+- 在更重的架构变更之前，先测试 section-aware chunking
+- trace review 必须把 candidate quality 和 answer assembly quality 分开
 
 ## Related Pages
 

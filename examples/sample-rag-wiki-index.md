@@ -1,21 +1,21 @@
-# Sample RAG Wiki Index
+# 示例：知识库索引
 
-## Patterns
+## 模式
 
-- section-aware chunking
+- 分节感知切块
 
-## Failure Modes
+## 失败模式
 
-- good recall, weak ranking
+- 召回够用，但排序偏弱
 
-## Stack Decisions
+## 栈决策
 
-- when not to use agentic RAG
+- 什么时候不该使用智能体化 RAG
 
-## Evaluations
+## 评测
 
-- hard-case evaluation set
+- 困难样例评测集
 
-## Case Notes
+## 案例记录
 
-- support KB citation drift
+- 支持知识库引用漂移

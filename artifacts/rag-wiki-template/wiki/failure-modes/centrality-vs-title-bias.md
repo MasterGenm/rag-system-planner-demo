@@ -2,24 +2,24 @@
 
 ## Symptom
 
-The system identifies the most obvious or highest-status actor instead of the most important connector, influencer, or bottleneck in the actual evidence network.
+系统会优先选出最显眼、头衔最高的角色，而不是实际证据网络里最重要的 connector、influencer 或 bottleneck。
 
 ## Likely Causes
 
-- answering overweights surface titles or prominence words
-- there is no mechanism to inspect relationship topology
-- retrieval is local to descriptions and misses communication or dependency structure
+- answering 过度依赖表层头衔或显著性词汇
+- 系统没有机制去检查 relationship topology
+- retrieval 只围绕局部描述展开，漏掉了 communication 或 dependency structure
 
 ## Investigation Order
 
-1. inspect whether the answer chose the highest title rather than the true bridge node
-2. verify whether the evidence needed topology-aware analysis rather than title matching
-3. test smaller structural features before discussing a full graph upgrade
+1. 检查答案是不是选了头衔最高的人，而不是真正的桥接节点
+2. 核验这类证据是否需要 topology-aware analysis，而不是 title matching
+3. 在讨论完整 graph upgrade 前，先测试更小的 structural features
 
 ## Common False Diagnoses
 
-- treating a topology problem as a generic ranking problem
-- defaulting to agentic or graph systems without first confirming the task type
+- 把 topology 问题误当成普通 ranking 问题
+- 在没有确认任务类型前，就默认上 agentic 或 graph 系统
 
 ## Related Pages
 
@@ -29,4 +29,4 @@ The system identifies the most obvious or highest-status actor instead of the mo
 
 ## Source Trail
 
-- `14-rag-failures` centrality taxonomy
+- `14-rag-failures` 里的 centrality taxonomy

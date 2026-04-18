@@ -2,27 +2,27 @@
 
 ## Summary
 
-Do not add agentic orchestration when a simpler retrieval pipeline has not yet been proven insufficient.
+如果更简单的 retrieval pipeline 还没有被证明确实不够，就不要引入 agentic orchestration。
 
-## Signals That Simpler Fixes Come First
+## 哪些信号说明应该先修简单层
 
-- no retrieval traces
-- no hard-case evaluation set
-- weak chunking or metadata design
-- poor citation behavior that can be explained without orchestration
+- 没有 retrieval traces
+- 没有 hard-case evaluation set
+- chunking 或 metadata 设计明显偏弱
+- citation 行为很差，而且这种问题在不加 orchestration 的前提下就能解释清楚
 
-## What Agentic RAG Buys
+## Agentic RAG 能买来什么
 
 - branching workflows
 - tool use
-- decomposition across steps
+- 跨多个步骤的 decomposition
 
-## What It Costs
+## 它的代价是什么
 
 - latency
-- debugging complexity
-- observability burden
-- more failure surfaces
+- 调试复杂度
+- observability 负担
+- 更多 failure surface
 
 ## Related Pages
 
@@ -30,4 +30,4 @@ Do not add agentic orchestration when a simpler retrieval pipeline has not yet b
 
 ## Source Trail
 
-- bounded-complexity principle from rag-system-planner
+- 来自 `rag-system-planner` 的 bounded-complexity 原则

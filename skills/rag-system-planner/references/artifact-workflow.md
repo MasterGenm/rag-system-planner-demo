@@ -1,39 +1,39 @@
 # Artifact Workflow
 
-Use this reference for the durable workspace lifecycle.
-For exact operation requirements, read `artifact-maintenance-contract.md`.
-For the shortest runbooks, read `artifact-operation-checklists.md`.
+当你需要理解 durable workspace 的生命周期时，使用这份 reference。
+如果要看精确操作要求，读取 `artifact-maintenance-contract.md`。
+如果只需要最短 runbook，读取 `artifact-operation-checklists.md`。
 
-## Core Model
+## 核心模型（Core Model）
 
-Represent durable RAG knowledge in three layers:
+把 durable 的 RAG 知识表示成三层：
 
 1. `sources/`
-   Raw evidence such as specs, traces, evaluation outputs, incident notes, and architecture writeups.
+   原始证据，例如 specs、traces、evaluation outputs、incident notes 和 architecture writeups。
 2. `wiki/`
-   Synthesized operational knowledge such as patterns, failure modes, evaluation notes, stack decisions, and case notes.
+   综合后的操作性知识，例如 patterns、failure modes、evaluation notes、stack decisions 和 case notes。
 3. `queries/`
-   Saved one-off memos or comparisons worth keeping, which may later be promoted into `wiki/`.
+   值得保存的一次性 memo 或 comparison，之后有机会再晋升到 `wiki/`。
 
-## Lifecycle
+## 生命周期（Lifecycle）
 
-1. Planner reads the workspace before reasoning from scratch.
-2. Planner makes a bounded judgment.
-3. Planner hands off durable findings when the artifact update threshold is met.
-4. Artifact-maintenance runs `ingest`, `query`, `lint`, or `index`.
-5. Later planner sessions start from the maintained workspace instead of rediscovering the same lesson.
+1. Planner 在从零推理之前先读 workspace。
+2. Planner 做出一个有边界的判断。
+3. 当达到 artifact update threshold 时，planner hand off durable findings。
+4. Artifact-maintenance 执行 `ingest`、`query`、`lint` 或 `index`。
+5. 后续的 planner 会话从已维护好的 workspace 出发，而不是重新发现同一条经验。
 
-## Shared Rules
+## 共享规则（Shared Rules）
 
-- Inputs should be workspace-relative whenever possible.
-- `sources/` is raw evidence and should stay immutable-by-default.
-- For large inputs, navigate before reading deeply. Do not synthesize from a blind dump when targeted reading is possible.
-- Important claims in `wiki/` or `queries/` should show a visible evidence trail.
-- Prefer updating one canonical page over creating near-duplicates.
-- Treat source staleness as a real state. If a source changes, the relationship should be refreshed or marked stale rather than silently assumed current.
-- `index.md` and `log.md` are part of the maintenance contract, not optional cleanup.
+- 输入尽量使用 workspace-relative 路径。
+- `sources/` 是原始证据，默认应保持不可变。
+- 对大 source，先导航，再深入阅读；当可以有目标地读取时，不要从盲目 dump 中做综合。
+- `wiki/` 或 `queries/` 中的重要结论应带有可见的 evidence trail。
+- 优先更新一个 canonical page，而不是创建近似重复页。
+- 把 source staleness 当成真实状态。如果 source 变了，就刷新关系或把它标成 stale，不要悄悄假设它仍然有效。
+- `index.md` 和 `log.md` 是维护合同的一部分，不是可选清理项。
 
-## Not Now
+## 现在先不做（Not Now）
 
-This workbench does not yet implement MinerU-style tooling such as automatic ingest trackers, stale-source detection, or deep-reading helpers.
-The immediate goal is to make the maintenance contract sharp enough that those tools can be added later without changing the conceptual model.
+这个 workbench 还没有实现 MinerU 风格的工具，例如自动 ingest trackers、stale-source detection 或 deep-reading helpers。
+当前目标是先把 maintenance contract 做到足够清晰，这样以后再加这些工具时，不需要改变概念模型。

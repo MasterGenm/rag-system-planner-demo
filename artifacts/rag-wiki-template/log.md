@@ -1,11 +1,11 @@
 # Log
 
 ## 2026-04-09
-- setup: initialized artifact template
-- seed: added example pattern, failure mode, and stack decision pages
-- seed: added evaluation page, case note, sample source, and sample diagnostic note
-- taxonomy: expanded failure-modes into a 14-class durable taxonomy
-- lint: removed legacy duplicate failure pages and added a triage matrix plus failure-mode template
-- research: shortlisted Kaggle-visible RAG datasets and selected a public mirror for immediate use
-- example: added a dataset-backed ranking failure walkthrough for developer-doc authentication queries
-- example: added a retrieval-eval-backed scattered-evidence walkthrough for architecture comparison queries
+- setup：初始化 artifact template
+- seed：加入示例 pattern、failure mode 与 stack decision 页面
+- seed：加入 evaluation 页面、case note、sample source 和 sample diagnostic note
+- taxonomy：把 failure-modes 扩展成 14 类 durable taxonomy
+- lint：移除旧的重复 failure 页面，并加入 triage matrix 与 failure-mode template
+- research：筛选 Kaggle 可见的 RAG 数据集，并选定一个可立即使用的公开镜像
+- example：加入一个基于数据集的 developer-doc 认证查询 ranking failure walkthrough
+- example：加入一个基于 retrieval-eval 的架构比较 scattered-evidence walkthrough

@@ -1,3 +1,3 @@
 # Patterns
 
-Use this folder for reusable design patterns that apply across many RAG systems.
+这个目录用于保存能跨多个 RAG 系统复用的设计模式。

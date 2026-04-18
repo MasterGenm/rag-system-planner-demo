@@ -2,25 +2,25 @@
 
 ## Symptom
 
-The system struggles with questions about what is not allowed, not present, or safely excluded.
+系统在处理“不允许什么”“不存在什么”或“可以安全排除什么”这类问题时表现很差。
 
 ## Likely Causes
 
-- retrieval favors explicit mentions of risky or present items
-- prompts are weak at proving absence
-- evaluation rarely includes negation-sensitive cases
+- retrieval 更偏爱那些显式提到“存在项”或“风险项”的文本
+- prompts 不擅长证明 absence
+- evaluation 很少包含 negation-sensitive cases
 
 ## Investigation Order
 
-1. define the full candidate set relevant to the question
-2. inspect whether the system can separate excluded items from allowed items
-3. check whether the answer is inferring safety without a real exclusion logic
-4. treat absence-sensitive tasks as hard cases, not ordinary semantic retrieval
+1. 定义与问题相关的完整 candidate set
+2. 检查系统是否能把 excluded items 和 allowed items 区分开
+3. 检查答案是否在没有真实 exclusion logic 的前提下擅自推断“安全”
+4. 把这类 absence-sensitive 任务当成 hard cases，而不是普通 semantic retrieval
 
 ## Common False Diagnoses
 
-- treating absence as ordinary recall
-- assuming more similar documents can prove a negative claim
+- 把 absence 问题误当成普通 recall
+- 误以为更多相似文档就能证明一个 negative claim
 
 ## Related Pages
 
@@ -29,4 +29,4 @@ The system struggles with questions about what is not allowed, not present, or s
 
 ## Source Trail
 
-- fareedkhan 14-rag-failures taxonomy
+- fareedkhan `14-rag-failures` taxonomy
