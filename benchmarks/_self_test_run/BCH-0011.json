@@ -1,0 +1,9 @@
+{
+  "mode": "diagnosis",
+  "failure_family": "observability",
+  "evidence_labels": ["observed", "unknown"],
+  "next_action_class": "add_observability",
+  "recommendations": [
+    "Capture retrieved ids, scores, and prompt assembly metadata before assigning root cause."
+  ]
+}

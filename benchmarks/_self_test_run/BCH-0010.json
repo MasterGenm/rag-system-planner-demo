@@ -1,0 +1,9 @@
+{
+  "mode": "diagnosis",
+  "failure_family": "generation",
+  "evidence_labels": ["observed", "inferred"],
+  "next_action_class": "tighten_answer_policy",
+  "recommendations": [
+    "Add no-answer cases and strengthen abstention behavior."
+  ]
+}

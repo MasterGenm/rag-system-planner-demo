@@ -1,0 +1,9 @@
+{
+  "mode": "diagnosis",
+  "failure_family": "retrieval",
+  "evidence_labels": ["observed", "unknown"],
+  "next_action_class": "investigate_chunking",
+  "recommendations": [
+    "Inspect OCR extraction and modality-specific retrieval traces."
+  ]
+}

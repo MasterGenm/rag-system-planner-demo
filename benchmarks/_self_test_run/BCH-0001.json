@@ -1,0 +1,9 @@
+{
+  "mode": "greenfield",
+  "failure_family": "not_applicable",
+  "evidence_labels": [],
+  "next_action_class": "define_metadata_baseline",
+  "recommendations": [
+    "Start with citation-aware metadata and a plain retrieval baseline."
+  ]
+}

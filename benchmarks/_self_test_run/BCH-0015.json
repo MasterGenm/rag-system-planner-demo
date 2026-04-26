@@ -1,0 +1,9 @@
+{
+  "mode": "comparison",
+  "failure_family": "not_applicable",
+  "evidence_labels": [],
+  "next_action_class": "inspect_ranking",
+  "recommendations": [
+    "Confirm candidate recall before testing reranking."
+  ]
+}

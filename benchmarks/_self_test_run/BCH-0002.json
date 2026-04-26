@@ -1,0 +1,9 @@
+{
+  "mode": "greenfield",
+  "failure_family": "not_applicable",
+  "evidence_labels": [],
+  "next_action_class": "build_eval_set",
+  "recommendations": [
+    "Create a small API question benchmark before comparing chunking variants."
+  ]
+}

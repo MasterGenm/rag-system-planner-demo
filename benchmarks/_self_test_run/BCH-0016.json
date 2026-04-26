@@ -1,0 +1,9 @@
+{
+  "mode": "comparison",
+  "failure_family": "not_applicable",
+  "evidence_labels": [],
+  "next_action_class": "defer_agentic_upgrade",
+  "recommendations": [
+    "Defer orchestration until traces and hard-case evaluations exist."
+  ]
+}

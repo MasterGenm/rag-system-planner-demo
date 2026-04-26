@@ -1,0 +1,9 @@
+{
+  "mode": "diagnosis",
+  "failure_family": "observability",
+  "evidence_labels": ["observed", "unknown"],
+  "next_action_class": "add_observability",
+  "recommendations": [
+    "Add stage-level timings before choosing an optimization target."
+  ]
+}
