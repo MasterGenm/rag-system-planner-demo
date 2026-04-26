@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: python -m pip install pytest jsonschema
+
+      - name: Run tests
+        run: pytest -q
+
+      - name: Validate plan schema
+        run: python -c "import json, jsonschema; jsonschema.Draft202012Validator.check_schema(json.load(open('schemas/plan_input.schema.json')))"
+
+      - name: Validate diagnostic schema
+        run: python -c "import json, jsonschema; jsonschema.Draft202012Validator.check_schema(json.load(open('schemas/diagnostic_input.schema.json')))"
+
+      - name: Check benchmark coverage
+        run: python benchmarks/_check_coverage.py
+
+      - name: Score benchmark self-test
+        run: python benchmarks/score_run.py --runs benchmarks/_self_test_run --threshold 0
