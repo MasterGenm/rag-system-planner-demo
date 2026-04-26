@@ -1,0 +1,23 @@
+{
+  "case_id": "BCH-0015",
+  "mode": "comparison",
+  "input": {
+    "title": "Reranking Decision",
+    "problem_summary": "The team sees relevant evidence in candidates but weak top-ranked results.",
+    "assumptions": [
+      "Candidate recall is acceptable",
+      "Top-1 precision is weak"
+    ],
+    "risks": [
+      "Reranking should not be used to hide broken chunking"
+    ]
+  },
+  "expected": {
+    "mode": "comparison",
+    "failure_family": "not_applicable",
+    "evidence_labels_must_appear": [],
+    "must_avoid": [],
+    "next_action_class": "inspect_ranking"
+  },
+  "rationale": "这是是否引入 reranking 的比较，应先确认候选召回与排序问题边界。"
+}

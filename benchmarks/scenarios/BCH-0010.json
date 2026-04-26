@@ -1,0 +1,35 @@
+{
+  "case_id": "BCH-0010",
+  "mode": "diagnosis",
+  "input": {
+    "title": "Missing Abstention Diagnostic",
+    "symptoms": [
+      "No retrieved document directly answers the query",
+      "The assistant still gives a confident answer"
+    ],
+    "hypotheses": {
+      "observed": [
+        "System answers when evidence is insufficient"
+      ],
+      "inferred": [
+        "Abstention policy is too weak"
+      ]
+    },
+    "recommended_changes": {
+      "now": [
+        "Add no-answer cases to evaluation"
+      ]
+    }
+  },
+  "expected": {
+    "mode": "diagnosis",
+    "failure_family": "generation",
+    "evidence_labels_must_appear": [
+      "observed",
+      "inferred"
+    ],
+    "must_avoid": [],
+    "next_action_class": "tighten_answer_policy"
+  },
+  "rationale": "系统应拒答但没有拒答，属于答案层策略问题。"
+}

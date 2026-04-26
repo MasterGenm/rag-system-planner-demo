@@ -1,0 +1,33 @@
+{
+  "case_id": "BCH-0009",
+  "mode": "diagnosis",
+  "input": {
+    "title": "Unsupported Synthesis Diagnostic",
+    "symptoms": [
+      "Retrieved chunks are relevant",
+      "Final answer adds a causal explanation not present in evidence"
+    ],
+    "hypotheses": {
+      "observed": [
+        "Answer includes unsupported relationship"
+      ],
+      "unknown": [
+        "Whether prompt assembly hides citation boundaries"
+      ]
+    },
+    "missing_evidence": [
+      "Prompt assembly snapshot"
+    ]
+  },
+  "expected": {
+    "mode": "diagnosis",
+    "failure_family": "generation",
+    "evidence_labels_must_appear": [
+      "observed",
+      "unknown"
+    ],
+    "must_avoid": [],
+    "next_action_class": "tighten_answer_policy"
+  },
+  "rationale": "证据相关但答案合成越界，应优先收紧 grounded answer policy。"
+}

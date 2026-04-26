@@ -1,0 +1,32 @@
+{
+  "case_id": "BCH-0003",
+  "mode": "greenfield",
+  "input": {
+    "title": "Policy RAG Plan",
+    "problem_summary": "A compliance team wants answers over policy documents with version-sensitive citations.",
+    "assumptions": [
+      "Policy versions can conflict",
+      "Users need inspectable citations"
+    ],
+    "observability": [
+      "record version metadata",
+      "record citation anchors"
+    ],
+    "rollout": {
+      "Phase 0": [
+        "Define version metadata"
+      ],
+      "Phase 1": [
+        "Trace citation failures"
+      ]
+    }
+  },
+  "expected": {
+    "mode": "greenfield",
+    "failure_family": "not_applicable",
+    "evidence_labels_must_appear": [],
+    "must_avoid": [],
+    "next_action_class": "add_observability"
+  },
+  "rationale": "政策语料容易出现版本冲突，规划阶段要先定义可追踪字段和引用信号。"
+}

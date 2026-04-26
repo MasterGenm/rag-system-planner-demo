@@ -1,0 +1,26 @@
+{
+  "case_id": "BCH-0016",
+  "mode": "comparison",
+  "input": {
+    "title": "Agentic RAG Upgrade Decision",
+    "problem_summary": "A team wants to add agentic RAG because answer quality is uneven.",
+    "assumptions": [
+      "No fixed hard-case evaluation exists yet",
+      "Retrieval traces are incomplete"
+    ],
+    "risks": [
+      "Agentic orchestration can increase latency and failure surface"
+    ]
+  },
+  "expected": {
+    "mode": "comparison",
+    "failure_family": "not_applicable",
+    "evidence_labels_must_appear": [],
+    "must_avoid": [
+      "graph_rag",
+      "multi_agent_rewrite"
+    ],
+    "next_action_class": "defer_agentic_upgrade"
+  },
+  "rationale": "缺少评测和 trace 时，应延后 agentic 升级，先补 baseline 证据。"
+}

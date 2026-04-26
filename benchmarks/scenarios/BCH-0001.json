@@ -1,0 +1,38 @@
+{
+  "case_id": "BCH-0001",
+  "mode": "greenfield",
+  "input": {
+    "title": "Internal Support KB Plan",
+    "problem_summary": "A support team wants a RAG baseline over product docs, runbooks, and incident notes.",
+    "assumptions": [
+      "Citation quality matters more than advanced orchestration",
+      "The first launch can use text-only retrieval"
+    ],
+    "recommended_stack": [
+      "Section-aware chunking",
+      "Metadata-rich vector index"
+    ],
+    "risks": [
+      "Premature agentic workflow could hide missing retrieval traces"
+    ],
+    "rollout": {
+      "Phase 0": [
+        "Build a hard-case set"
+      ],
+      "Phase 1": [
+        "Ship plain retrieval with citations"
+      ]
+    }
+  },
+  "expected": {
+    "mode": "greenfield",
+    "failure_family": "not_applicable",
+    "evidence_labels_must_appear": [],
+    "must_avoid": [
+      "graph_rag",
+      "multi_agent_rewrite"
+    ],
+    "next_action_class": "define_metadata_baseline"
+  },
+  "rationale": "这是新系统规划，应优先建立带引用和元数据的 baseline，而不是直接升级到 agentic RAG。"
+}

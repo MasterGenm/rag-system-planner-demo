@@ -1,0 +1,34 @@
+{
+  "case_id": "BCH-0013",
+  "mode": "diagnosis",
+  "input": {
+    "title": "OCR Evidence Miss Diagnostic",
+    "symptoms": [
+      "Questions about screenshots fail",
+      "Text-only documents answer correctly"
+    ],
+    "hypotheses": {
+      "observed": [
+        "Screenshot-derived evidence is absent from candidates"
+      ],
+      "unknown": [
+        "Whether OCR extraction or modality routing failed"
+      ]
+    },
+    "missing_evidence": [
+      "OCR quality samples",
+      "Modality-specific retrieval traces"
+    ]
+  },
+  "expected": {
+    "mode": "diagnosis",
+    "failure_family": "retrieval",
+    "evidence_labels_must_appear": [
+      "observed",
+      "unknown"
+    ],
+    "must_avoid": [],
+    "next_action_class": "investigate_chunking"
+  },
+  "rationale": "视觉证据没有进入候选集，应先检查抽取和路由，而不是直接改答案层。"
+}

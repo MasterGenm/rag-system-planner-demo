@@ -1,0 +1,41 @@
+{
+  "case_id": "BCH-0007",
+  "mode": "diagnosis",
+  "input": {
+    "title": "Developer Docs Ranking Drift",
+    "symptoms": [
+      "Relevant authentication chunks appear in top 10 but not top 5",
+      "Top-ranked chunks are semantically nearby endpoint docs"
+    ],
+    "hypotheses": {
+      "observed": [
+        "Recall@10 is healthy while Recall@5 is zero"
+      ],
+      "inferred": [
+        "Ranking does not separate authentication-specific evidence from nearby endpoint evidence"
+      ],
+      "unknown": [
+        "Whether heading-path metadata would fix top-rank precision"
+      ]
+    },
+    "recommended_changes": {
+      "now": [
+        "Audit first relevant rank"
+      ]
+    }
+  },
+  "expected": {
+    "mode": "diagnosis",
+    "failure_family": "ranking",
+    "evidence_labels_must_appear": [
+      "observed",
+      "inferred",
+      "unknown"
+    ],
+    "must_avoid": [
+      "multi_agent_rewrite"
+    ],
+    "next_action_class": "inspect_ranking"
+  },
+  "rationale": "证据已召回但排序靠后，符合 ranking drift。"
+}

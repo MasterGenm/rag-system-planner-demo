@@ -1,0 +1,32 @@
+{
+  "case_id": "BCH-0004",
+  "mode": "greenfield",
+  "input": {
+    "title": "Bilingual Support RAG Plan",
+    "problem_summary": "A team wants one RAG workflow over English and Chinese support articles.",
+    "assumptions": [
+      "Queries may use either language",
+      "Domain aliases are common"
+    ],
+    "retrieval_design": {
+      "Metadata": [
+        "language",
+        "product_area",
+        "alias_set"
+      ]
+    },
+    "rollout": {
+      "Phase 0": [
+        "Define language and alias metadata"
+      ]
+    }
+  },
+  "expected": {
+    "mode": "greenfield",
+    "failure_family": "not_applicable",
+    "evidence_labels_must_appear": [],
+    "must_avoid": [],
+    "next_action_class": "define_metadata_baseline"
+  },
+  "rationale": "多语言和别名问题应先通过元数据和评测覆盖约束，而不是先换复杂框架。"
+}

@@ -1,0 +1,35 @@
+{
+  "case_id": "BCH-0005",
+  "mode": "diagnosis",
+  "input": {
+    "title": "Low Candidate Recall Diagnostic",
+    "symptoms": [
+      "Correct policy passages rarely appear in top 10",
+      "Answers are often generic even when the query is specific"
+    ],
+    "hypotheses": {
+      "observed": [
+        "Correct documents are absent from retrieved candidates"
+      ],
+      "unknown": [
+        "Whether chunk boundaries hide the relevant section"
+      ]
+    },
+    "missing_evidence": [
+      "Chunk ids for failed queries"
+    ]
+  },
+  "expected": {
+    "mode": "diagnosis",
+    "failure_family": "retrieval",
+    "evidence_labels_must_appear": [
+      "observed",
+      "unknown"
+    ],
+    "must_avoid": [
+      "graph_rag"
+    ],
+    "next_action_class": "investigate_chunking"
+  },
+  "rationale": "正确证据没有进入候选集，优先诊断 retrieval 和 chunking，而不是升级 graph。"
+}

@@ -1,0 +1,33 @@
+{
+  "case_id": "BCH-0012",
+  "mode": "diagnosis",
+  "input": {
+    "title": "High Latency Without Stage Timings",
+    "symptoms": [
+      "End-to-end latency p95 doubled",
+      "No logs distinguish retrieval, reranking, and generation time"
+    ],
+    "hypotheses": {
+      "observed": [
+        "Only total latency is recorded"
+      ],
+      "unknown": [
+        "Whether reranking or generation is the bottleneck"
+      ]
+    },
+    "missing_evidence": [
+      "Stage-level timings"
+    ]
+  },
+  "expected": {
+    "mode": "diagnosis",
+    "failure_family": "observability",
+    "evidence_labels_must_appear": [
+      "observed",
+      "unknown"
+    ],
+    "must_avoid": [],
+    "next_action_class": "add_observability"
+  },
+  "rationale": "缺少阶段耗时，不能可靠决定要优化哪一层。"
+}

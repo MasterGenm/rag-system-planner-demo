@@ -1,0 +1,17 @@
+id,mode,failure_family,source
+BCH-0001,greenfield,not_applicable,synthetic
+BCH-0002,greenfield,not_applicable,synthetic
+BCH-0003,greenfield,not_applicable,synthetic
+BCH-0004,greenfield,not_applicable,synthetic
+BCH-0005,diagnosis,retrieval,synthetic
+BCH-0006,diagnosis,retrieval,synthetic
+BCH-0007,diagnosis,ranking,artifact-seed
+BCH-0008,diagnosis,ranking,synthetic
+BCH-0009,diagnosis,generation,synthetic
+BCH-0010,diagnosis,generation,synthetic
+BCH-0011,diagnosis,observability,synthetic
+BCH-0012,diagnosis,observability,synthetic
+BCH-0013,diagnosis,retrieval,synthetic
+BCH-0014,comparison,not_applicable,artifact-seed
+BCH-0015,comparison,not_applicable,synthetic
+BCH-0016,comparison,not_applicable,synthetic

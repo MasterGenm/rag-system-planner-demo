@@ -1,0 +1,32 @@
+{
+  "case_id": "BCH-0008",
+  "mode": "diagnosis",
+  "input": {
+    "title": "Citation Anchor Drift Diagnostic",
+    "symptoms": [
+      "Answers cite neighboring sections instead of the exact evidence paragraph",
+      "Candidate chunks contain the right topic but the cited anchor is too broad"
+    ],
+    "hypotheses": {
+      "observed": [
+        "Citation anchors are coarse"
+      ],
+      "inferred": [
+        "Chunk granularity and ranking precision are being mixed together"
+      ]
+    },
+    "missing_evidence": [
+      "Exact citation anchor logs"
+    ]
+  },
+  "expected": {
+    "mode": "diagnosis",
+    "failure_family": "ranking",
+    "evidence_labels_must_appear": [
+      "observed"
+    ],
+    "must_avoid": [],
+    "next_action_class": "inspect_ranking"
+  },
+  "rationale": "主要问题是候选与引用锚点精度，而不是完全缺证据。"
+}

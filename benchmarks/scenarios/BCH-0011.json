@@ -1,0 +1,36 @@
+{
+  "case_id": "BCH-0011",
+  "mode": "diagnosis",
+  "input": {
+    "title": "Missing Trace Diagnostic",
+    "symptoms": [
+      "Users report wrong answers",
+      "The team only logs final answer text"
+    ],
+    "hypotheses": {
+      "observed": [
+        "No retrieved chunk ids are saved"
+      ],
+      "unknown": [
+        "Whether the failure is retrieval or generation"
+      ]
+    },
+    "missing_evidence": [
+      "Retrieval scores",
+      "Prompt assembly metadata"
+    ]
+  },
+  "expected": {
+    "mode": "diagnosis",
+    "failure_family": "observability",
+    "evidence_labels_must_appear": [
+      "observed",
+      "unknown"
+    ],
+    "must_avoid": [
+      "graph_rag"
+    ],
+    "next_action_class": "add_observability"
+  },
+  "rationale": "没有 trace 时不能下根因判断，应先补可观测性。"
+}

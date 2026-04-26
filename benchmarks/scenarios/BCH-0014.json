@@ -1,0 +1,23 @@
+{
+  "case_id": "BCH-0014",
+  "mode": "comparison",
+  "input": {
+    "title": "Chroma vs Qdrant Decision",
+    "problem_summary": "A support copilot needs to decide whether to stay on Chroma or move to Qdrant as filtering needs grow.",
+    "assumptions": [
+      "Current workload is small but filter usage is increasing",
+      "The team has retrieval eval slices"
+    ],
+    "risks": [
+      "Switching storage before measuring filter misses could hide a ranking problem"
+    ]
+  },
+  "expected": {
+    "mode": "comparison",
+    "failure_family": "not_applicable",
+    "evidence_labels_must_appear": [],
+    "must_avoid": [],
+    "next_action_class": "compare_vector_store"
+  },
+  "rationale": "这是选型比较，应先用 workload 和 filtering 需求约束决策。"
+}
