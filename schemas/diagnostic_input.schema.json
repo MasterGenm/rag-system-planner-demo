@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/rag-system-planner/diagnostic_input.schema.json",
+  "title": "RAG diagnostic renderer input",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "symptoms": {
+      "$ref": "#/$defs/stringArray"
+    },
+    "hypotheses": {
+      "type": "object",
+      "propertyNames": {
+        "enum": [
+          "observed",
+          "inferred",
+          "unknown"
+        ]
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/stringArray"
+      }
+    },
+    "missing_evidence": {
+      "$ref": "#/$defs/stringArray"
+    },
+    "investigation_order": {
+      "$ref": "#/$defs/stringArray"
+    },
+    "recommended_changes": {
+      "type": "object",
+      "propertyNames": {
+        "enum": [
+          "now",
+          "next",
+          "later"
+        ]
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/stringArray"
+      }
+    },
+    "evaluation_additions": {
+      "$ref": "#/$defs/stringArray"
+    },
+    "observability_additions": {
+      "$ref": "#/$defs/stringArray"
+    },
+    "risks": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/stringArray"
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/renderableValue"
+          }
+        }
+      ]
+    }
+  },
+  "$defs": {
+    "stringArray": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "renderableValue": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/$defs/stringArray"
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/renderableValue"
+          }
+        }
+      ]
+    }
+  }
+}

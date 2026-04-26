@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/rag-system-planner/plan_input.schema.json",
+  "title": "RAG plan renderer input",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "title": {
+      "type": "string",
+      "default": "RAG Solution Package"
+    },
+    "problem_summary": {
+      "type": "string"
+    },
+    "assumptions": {
+      "$ref": "#/$defs/stringArray"
+    },
+    "recommended_stack": {
+      "$ref": "#/$defs/stringArray"
+    },
+    "architecture": {
+      "$ref": "#/$defs/renderableValue"
+    },
+    "retrieval_design": {
+      "$ref": "#/$defs/renderableValue"
+    },
+    "agent_guidance": {
+      "$ref": "#/$defs/renderableValue"
+    },
+    "evaluation": {
+      "$ref": "#/$defs/renderableValue"
+    },
+    "observability": {
+      "$ref": "#/$defs/renderableValue"
+    },
+    "risks": {
+      "$ref": "#/$defs/renderableValue"
+    },
+    "rollout": {
+      "type": "object",
+      "propertyNames": {
+        "enum": [
+          "Phase 0",
+          "Phase 1",
+          "Phase 2",
+          "Phase 3",
+          "Phase 4",
+          "Phase 5",
+          "now",
+          "next",
+          "later"
+        ]
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/stringArray"
+      }
+    }
+  },
+  "$defs": {
+    "stringArray": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "renderableValue": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/$defs/stringArray"
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/renderableValue"
+          }
+        }
+      ]
+    }
+  }
+}
