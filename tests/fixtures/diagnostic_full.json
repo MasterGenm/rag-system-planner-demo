@@ -1,0 +1,54 @@
+{
+  "title": "Support KB Diagnostic",
+  "symptoms": [
+    "Answers miss precise citation",
+    "Latency increased"
+  ],
+  "hypotheses": {
+    "unknown": [
+      "Embedding weakness"
+    ],
+    "observed": [
+      "Relevant chunks appear after rank 5"
+    ],
+    "inferred": [
+      "Ranking drift"
+    ]
+  },
+  "missing_evidence": [
+    "Stage timings"
+  ],
+  "investigation_order": [
+    "Audit first relevant rank",
+    "Inspect citation anchors"
+  ],
+  "recommended_changes": {
+    "later": [
+      "Consider graph only after baseline fixes fail"
+    ],
+    "now": [
+      "Add retrieval traces"
+    ],
+    "next": [
+      "Test reranking"
+    ]
+  },
+  "evaluation_additions": [
+    "First relevant rank",
+    "Citation correctness"
+  ],
+  "observability_additions": [
+    "chunk ids",
+    "scores"
+  ],
+  "risks": {
+    "now": [
+      "Overfitting to one trace"
+    ],
+    "later": {
+      "Escalation": [
+        "Unjustified agentic workflow"
+      ]
+    }
+  }
+}

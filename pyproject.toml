@@ -1,0 +1,9 @@
+[dependency-groups]
+dev = [
+  "pytest>=8.0",
+  "jsonschema>=4.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

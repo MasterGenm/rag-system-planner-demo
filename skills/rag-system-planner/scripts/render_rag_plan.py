@@ -147,7 +147,7 @@ def main() -> int:
     if args.output:
         output_path = Path(args.output)
         output_path.parent.mkdir(parents=True, exist_ok=True)
-        output_path.write_text(content, encoding="utf-8")
+        output_path.write_text(content, encoding="utf-8", newline="\n")
     else:
         sys.stdout.write(content)
     return 0

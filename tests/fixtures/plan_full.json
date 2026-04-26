@@ -1,0 +1,59 @@
+{
+  "title": "Support KB RAG Plan",
+  "problem_summary": "Design a bounded RAG baseline.",
+  "assumptions": [
+    "Medium corpus",
+    "Daily updates"
+  ],
+  "recommended_stack": [
+    "Python retrieval service",
+    "Section-aware chunks"
+  ],
+  "architecture": [
+    "Ingest docs",
+    "Index chunks"
+  ],
+  "retrieval_design": {
+    "Chunking": [
+      "Use headings",
+      "Keep anchors"
+    ],
+    "Citation": {
+      "Anchors": [
+        "source title",
+        "section path"
+      ]
+    }
+  },
+  "agent_guidance": "Keep orchestration out until branching is proven.",
+  "evaluation": [
+    "Recall@5",
+    "Citation correctness"
+  ],
+  "observability": [
+    "retrieved chunk ids",
+    "stage latency"
+  ],
+  "risks": {
+    "now": [
+      "Missing trace coverage"
+    ],
+    "later": [
+      "Premature agentic workflow"
+    ]
+  },
+  "rollout": {
+    "Phase 2": [
+      "Add reranking if top rank precision is weak"
+    ],
+    "Phase 0": [
+      "Collect hard cases"
+    ],
+    "Phase 1": [
+      "Ship plain retrieval with citations"
+    ],
+    "Phase 5": [
+      "Review stale artifacts"
+    ]
+  }
+}
