@@ -6,6 +6,10 @@ case_type: retrospective_application
 source_published_at: 2026-04-20
 retrieved_at: 2026-04-27
 estimated_failure_family: retrieval
+last_validated_at: 2026-04-27
+derived_from: [https://medium.com/@pliu27/we-built-an-ai-that-argues-like-the-supreme-court-heres-what-we-learned-80a6823bd134]
+owner: <owner>
+stale_after_days: 365
 ---
 
 ## 背景

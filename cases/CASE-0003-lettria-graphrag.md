@@ -6,6 +6,10 @@ case_type: retrospective_application
 source_published_at: 2025-06-17
 retrieved_at: 2026-04-27
 estimated_failure_family: ranking
+last_validated_at: 2026-04-27
+derived_from: [https://qdrant.tech/blog/case-study-lettria-v2/]
+owner: <owner>
+stale_after_days: 365
 ---
 
 ## 背景

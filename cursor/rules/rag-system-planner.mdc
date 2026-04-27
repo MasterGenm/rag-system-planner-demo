@@ -2,6 +2,10 @@
 description: "Plan and diagnose retrieval-augmented generation systems. Use when comparing vector stores, retrieval strategies, chunking, reranking, evaluation, and observability choices in a RAG application."
 globs:
 alwaysApply: false
+last_validated_at: 2026-04-27
+derived_from: [skills/rag-system-planner/SKILL.md]
+owner: <owner>
+stale_after_days: 180
 ---
 
 # rag-system-planner

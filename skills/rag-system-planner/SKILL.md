@@ -1,6 +1,10 @@
 ---
 name: rag-system-planner
 description: 以受控复杂度规划、诊断并持续沉淀 retrieval-augmented generation（RAG）系统。适用于 greenfield RAG 设计、检索故障诊断、评测规划，以及维护能够长期保存 failure modes、stack decisions 和 case notes 的 durable RAG 工件。
+last_validated_at: 2026-04-27
+derived_from: [skills/rag-system-planner/scripts/render_rag_plan.py, skills/rag-system-planner/scripts/render_rag_diagnostic.py, skills/rag-system-planner/references/diagnosis-playbook.md, skills/rag-system-planner/references/retrieval-design.md, skills/rag-system-planner/references/observability-design.md]
+owner: <owner>
+stale_after_days: 180
 ---
 
 # RAG System Planner
