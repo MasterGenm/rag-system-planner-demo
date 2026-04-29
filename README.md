@@ -17,6 +17,12 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/MasterGenm/rag-system-planner-demo/actions/workflows/ci.yml"><img src="https://github.com/MasterGenm/rag-system-planner-demo/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://github.com/MasterGenm/rag-system-planner-demo/releases"><img src="https://img.shields.io/github/v/release/MasterGenm/rag-system-planner-demo?style=flat-square" alt="Release"></a>
+  <a href="https://github.com/MasterGenm/rag-system-planner-demo/blob/main/CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-keep_a_changelog-blue?style=flat-square" alt="Changelog"></a>
+</p>
+
+<p align="center">
   <img src="https://img.shields.io/badge/Claude_Code-black?style=flat-square&logo=anthropic&logoColor=white" alt="Claude Code">
   <img src="https://img.shields.io/badge/OpenAI_Codex_CLI-412991?style=flat-square&logo=openai&logoColor=white" alt="OpenAI Codex CLI">
   <img src="https://img.shields.io/badge/Cursor-000?style=flat-square&logo=cursor&logoColor=white" alt="Cursor">
