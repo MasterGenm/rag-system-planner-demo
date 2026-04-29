@@ -6,7 +6,7 @@ case_type: retrospective_application
 source_published_at: 2025-06-17
 retrieved_at: 2026-04-27
 estimated_failure_family: ranking
-last_validated_at: 2026-04-27
+last_validated_at: 2026-04-29
 derived_from: [https://qdrant.tech/blog/case-study-lettria-v2/]
 owner: MasterGenm
 stale_after_days: 365
@@ -79,3 +79,7 @@ Lettria 面向金融、航空航天、制药、法律等高准确性行业做复
 ## 学到的教训
 
 此 case 揭示 Skill 的克制升级原则在哪些语境下需要补充例外条件：当场景同时具备高风险行业、复杂半结构化文档、强 lineage/auditability 要求、vector-only baseline 明确不足、并且团队能验证 graph extraction 与双写一致性时，`must_avoid: graph_rag` 应从硬性避免变成语境化延后。这个观察只记录在 case 中，本批次不修改 Skill。
+
+## v0.1.1 吸收注记
+
+本 case 揭示的 5 项语境化豁免条件已在 v0.1.1 吸收，详见 `CHANGELOG.md` 与 `skills/rag-system-planner/SKILL.md` 的“语境化升级豁免”段。BCH-0017 是对应的回归测试场景，用于确保 `must_avoid: graph_rag` 在 Lettria-like 场景下可被语境化延后为 bounded experiment，而不是直接生产化。

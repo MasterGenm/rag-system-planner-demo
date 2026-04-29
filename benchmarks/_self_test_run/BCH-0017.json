@@ -1,0 +1,11 @@
+{
+  "mode": "comparison",
+  "failure_family": "not_applicable",
+  "evidence_labels": [
+    "observed"
+  ],
+  "next_action_class": "compare_vector_store",
+  "recommendations": [
+    "vector-only baseline 不足；conditions for contextual exception are met; proceed with bounded_experiment comparing GraphRAG vs hybrid retrieval on a fixed hard-case set, not direct productionization."
+  ]
+}

@@ -1,7 +1,7 @@
 ---
 name: rag-system-planner
 description: 以受控复杂度规划、诊断并持续沉淀 retrieval-augmented generation（RAG）系统。适用于 greenfield RAG 设计、检索故障诊断、评测规划，以及维护能够长期保存 failure modes、stack decisions 和 case notes 的 durable RAG 工件。
-last_validated_at: 2026-04-27
+last_validated_at: 2026-04-29
 derived_from: [skills/rag-system-planner/scripts/render_rag_plan.py, skills/rag-system-planner/scripts/render_rag_diagnostic.py, skills/rag-system-planner/references/diagnosis-playbook.md, skills/rag-system-planner/references/retrieval-design.md, skills/rag-system-planner/references/observability-design.md]
 owner: MasterGenm
 stale_after_days: 180
@@ -292,3 +292,27 @@ Artifact-maintenance 是知识复利层；当出现可复用结论时，planner 
 - 明确指出哪些推荐是 inference，而不是 evidence。
 - 不要声称那些并未真实测量过的 benchmark numbers。
 - 当某个结论很可能再次重要时，不要让它死在对话里。
+
+## 语境化升级豁免（Contextual Escalation Exception）
+
+默认情况下，向 GraphRAG、multi-agent rewrite 等高复杂度架构的升级应被推迟。
+
+仅当下列 5 项条件全部被实测证据证实时，可将 `must_avoid: graph_rag` 或 `must_avoid: multi_agent_rewrite` 从硬性避免放宽为语境化延后，并允许进入固定 hard-case set 上的 bounded experiment：
+
+1. 场景属于高风险或受监管行业，例如金融、法律、医疗、航空航天。
+2. 语料包含表格、图表、专业术语等复杂半结构化结构。
+3. 业务输出对 lineage 与 auditability 有明确硬性要求。
+4. vector-only baseline 已被实测验证不足，并附具体数字或可观察的失败模式。
+5. 团队具备 graph extraction、双写一致性、payload 索引等工程能力的可验证证据。
+
+即使 5 项条件全部满足，也不直接建议生产化升级；豁免的含义是允许进入受控对照实验阶段。
+
+### Bounded Experiment 边界
+
+当不满足上述 5 项中的任意一项时，仍可对升级方案进行 bounded experiment 来收集证据，但必须满足：
+
+- 在固定 hard-case set 上对照。
+- 与 baseline 同时跑，不替换 baseline。
+- 实验产出明确的 win/loss/inconclusive 判定。
+
+bounded experiment 不是升级承诺，是证据收集。

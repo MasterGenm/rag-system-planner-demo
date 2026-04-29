@@ -2,7 +2,7 @@
 description: "Plan and diagnose retrieval-augmented generation systems. Use when comparing vector stores, retrieval strategies, chunking, reranking, evaluation, and observability choices in a RAG application."
 globs:
 alwaysApply: false
-last_validated_at: 2026-04-27
+last_validated_at: 2026-04-29
 derived_from: [skills/rag-system-planner/SKILL.md]
 owner: MasterGenm
 stale_after_days: 180
@@ -34,6 +34,7 @@ Use this rule when the task is about designing or debugging a RAG system rather 
 3. prefer the smallest working baseline
 4. require side-by-side evidence before expensive upgrades
 5. state what is intentionally *not* being added yet
+6. when escalation to graph or multi-agent is considered: see SKILL.md "语境化升级豁免" - 5 conditions must all hold; even then, only bounded experiment, not productionization
 
 ## Retrieval Heuristics
 

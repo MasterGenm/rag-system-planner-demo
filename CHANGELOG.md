@@ -7,6 +7,26 @@ and this project adheres to Semantic Versioning.
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-04-29
+
+### Changed
+
+- (Skill) `skills/rag-system-planner/SKILL.md`: added "语境化升级豁免" subsection with 5 trigger conditions and bounded-experiment boundary, derived from CASE-0003 and CASE-0001 findings recorded in v0.1.0.
+- (Skill) `cursor/rules/rag-system-planner.mdc`: added a single-line pointer to the SKILL.md exception clause.
+- (benchmarks) `benchmarks/score_run.py`: `score_escalation_restraint` now recognizes `expected.allow_escalation_exception` and contextual exception declarations (`bounded_experiment` / `escalation_exception_declared` / `语境化延后`).
+- (benchmarks) `benchmarks/rubric.md`: documented the new exception-aware scoring branch.
+
+### Added
+
+- (benchmarks) `benchmarks/scenarios/BCH-0017.json`: regulated-domain comparison scenario where the 5 exception conditions are all satisfied; covers the new exception path.
+- (benchmarks) `benchmarks/_self_test_run/BCH-0017.json`: full-mark self-test output for BCH-0017.
+- (tests) `tests/test_score_run.py`: three new tests for exception-aware scoring branches.
+
+### Notes
+
+- v0.0 -> v0.1.0 -> v0.1.1 闭环：v0.1.0 通过 CASE-0003 与 CASE-0001 揭示的反例已在本版本吸收。CASE-0002 揭示的 "Skill 单一 failure_family 输出需要配套记录次要 failure signals" 留待 v0.2。
+- v0.1.0 的 16 个 benchmark 场景与 self-test 输出未变更，向后兼容；新评分逻辑通过 `expected.allow_escalation_exception` 字段缺省值（False）保持 v0.1.0 结果不变。
+
 ## [0.1.0] - 2026-04-27
 
 ### Added

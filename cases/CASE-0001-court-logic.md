@@ -6,7 +6,7 @@ case_type: retrospective_application
 source_published_at: 2026-04-20
 retrieved_at: 2026-04-27
 estimated_failure_family: retrieval
-last_validated_at: 2026-04-27
+last_validated_at: 2026-04-29
 derived_from: [https://medium.com/@pliu27/we-built-an-ai-that-argues-like-the-supreme-court-heres-what-we-learned-80a6823bd134]
 owner: MasterGenm
 stale_after_days: 365
@@ -75,3 +75,7 @@ Court Logic 是 UC Berkeley MIDS capstone 项目，目标是把 2021-2025 年完
 ## 学到的教训
 
 这个 case 中 Skill 表现较好：它会优先调查 chunking/context continuity，而不是直接要求更复杂架构。真正有价值的补充是把 `must_avoid` 表述得更细：避免过早生产化 GraphRAG，但允许在固定 hard-case set 上做 bounded experiment。
+
+## v0.1.1 吸收注记
+
+本 case 揭示的 bounded experiment 边界已在 v0.1.1 吸收，详见 `CHANGELOG.md` 与 `skills/rag-system-planner/SKILL.md` 的“语境化升级豁免”和“Bounded Experiment 边界”段。BCH-0017 间接覆盖了“先保留克制默认，但允许固定 hard-case set 对照实验”的回归路径。

@@ -46,6 +46,12 @@ CLOSE_FAMILIES = {
     "not_applicable": set(),
 }
 
+ESCALATION_EXCEPTION_KEYWORDS = {
+    "escalation_exception_declared",
+    "bounded_experiment",
+    "语境化延后",
+}
+
 
 def load_json(path: Path) -> dict:
     with path.open(encoding="utf-8") as handle:
@@ -129,7 +135,16 @@ def score_escalation_restraint(output: dict, expected: dict) -> int:
         return 2
 
     output_text = "\n".join(collect_strings(output)).lower()
-    return 0 if any(item in output_text for item in blocked) else 2
+    triggered = any(item in output_text for item in blocked)
+    if not triggered:
+        return 2
+
+    exception_declared = any(keyword in output_text for keyword in ESCALATION_EXCEPTION_KEYWORDS)
+    if expected.get("allow_escalation_exception", False) and exception_declared:
+        return 2
+    if exception_declared:
+        return 1
+    return 0
 
 
 def score_next_action(output: dict, expected: dict) -> int:

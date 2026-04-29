@@ -35,11 +35,11 @@ def write_output(run_dir: Path, case_id: str, payload: dict) -> None:
 def test_self_test_run_scores_full_marks(score_run_module):
     records, average, log_path = score_run_module.run_score(ROOT / "benchmarks" / "_self_test_run")
 
-    assert len(records) == 16
+    assert len(records) == 17
     assert average == 10.0
     assert all(record["total"] == 10 for record in records)
     assert log_path.exists()
-    assert len(log_path.read_text(encoding="utf-8").strip().splitlines()) == 16
+    assert len(log_path.read_text(encoding="utf-8").strip().splitlines()) == 17
 
 
 def test_threshold_failure_returns_nonzero(score_run_module, capsys):
@@ -72,6 +72,54 @@ def test_must_avoid_trigger_zeroes_escalation_dimension(score_run_module, tmp_pa
 
     assert record["scores"]["escalation_restraint"] == 0
     assert record["total"] == 8
+
+
+def test_must_avoid_with_exception_allowed_and_declared_scores_two(score_run_module):
+    scenario = score_run_module.load_scenarios()["BCH-0017"]
+    output = {
+        "mode": "comparison",
+        "failure_family": "not_applicable",
+        "evidence_labels": ["observed"],
+        "next_action_class": "compare_vector_store",
+        "recommendations": ["Use graph_rag only as a bounded_experiment."],
+    }
+
+    record = score_run_module.score_case("BCH-0017", scenario, output)
+
+    assert record["scores"]["escalation_restraint"] == 2
+    assert record["total"] == 10
+
+
+def test_must_avoid_with_exception_allowed_but_undeclared_scores_zero(score_run_module):
+    scenario = score_run_module.load_scenarios()["BCH-0017"]
+    output = {
+        "mode": "comparison",
+        "failure_family": "not_applicable",
+        "evidence_labels": ["observed"],
+        "next_action_class": "compare_vector_store",
+        "recommendations": ["Use graph_rag for regulated document intelligence."],
+    }
+
+    record = score_run_module.score_case("BCH-0017", scenario, output)
+
+    assert record["scores"]["escalation_restraint"] == 0
+    assert record["total"] == 8
+
+
+def test_must_avoid_with_exception_disallowed_but_declared_scores_one(score_run_module):
+    scenario = score_run_module.load_scenarios()["BCH-0005"]
+    output = {
+        "mode": "diagnosis",
+        "failure_family": "retrieval",
+        "evidence_labels": ["observed", "unknown"],
+        "next_action_class": "investigate_chunking",
+        "recommendations": ["Use graph_rag as a bounded_experiment."],
+    }
+
+    record = score_run_module.score_case("BCH-0005", scenario, output)
+
+    assert record["scores"]["escalation_restraint"] == 1
+    assert record["total"] == 9
 
 
 def test_partial_evidence_labels_score_one(score_run_module):

@@ -1,0 +1,30 @@
+{
+  "case_id": "BCH-0017",
+  "mode": "comparison",
+  "input": {
+    "title": "Regulated Document Intelligence Stack Choice",
+    "problem_summary": "金融 / 法律 / 制药等高风险行业的复杂监管文档智能场景，比较 vector-only RAG 与 GraphRAG 的合理性。",
+    "assumptions": [
+      "vector-only baseline 已实测约 70% accuracy，不满足业务 audit-grade 要求",
+      "语料含表格、图表、专业术语和监管上下文",
+      "业务侧明确要求 lineage 与 audit trail",
+      "团队已验证 graph extraction、Neo4j/Qdrant 双写一致性、payload indexing"
+    ],
+    "recommended_stack": [
+      "此处由 Skill 给出"
+    ]
+  },
+  "expected": {
+    "mode": "comparison",
+    "failure_family": "not_applicable",
+    "evidence_labels_must_appear": [
+      "observed"
+    ],
+    "must_avoid": [
+      "graph_rag"
+    ],
+    "allow_escalation_exception": true,
+    "next_action_class": "compare_vector_store"
+  },
+  "rationale": "Lettria-like 场景。must_avoid 默认含 graph_rag，但 5 项豁免条件全部触发，应允许语境化延后并进入 bounded experiment 而非直接否决。"
+}
