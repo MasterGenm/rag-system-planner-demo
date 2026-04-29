@@ -8,7 +8,7 @@ retrieved_at: 2026-04-27
 estimated_failure_family: generation
 last_validated_at: 2026-04-27
 derived_from: [https://blog.stackademic.com/building-a-robust-rag-system-a-comprehensive-architecture-guide-cb27fda02e0b]
-owner: <owner>
+owner: MasterGenm
 stale_after_days: 365
 ---
 

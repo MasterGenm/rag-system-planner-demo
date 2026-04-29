@@ -8,7 +8,7 @@ retrieved_at: 2026-04-27
 estimated_failure_family: ranking
 last_validated_at: 2026-04-27
 derived_from: [https://qdrant.tech/blog/case-study-lettria-v2/]
-owner: <owner>
+owner: MasterGenm
 stale_after_days: 365
 ---
 

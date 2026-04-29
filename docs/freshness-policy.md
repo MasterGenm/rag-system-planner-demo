@@ -1,7 +1,7 @@
 ---
 last_validated_at: 2026-04-27
 derived_from: [docs/plans/2026-04-26-implementation-spec.md]
-owner: <owner>
+owner: MasterGenm
 stale_after_days: 180
 ---
 
